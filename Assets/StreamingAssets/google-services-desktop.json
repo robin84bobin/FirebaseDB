@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1036694325886",
+    "firebase_url": "https://text-quest.firebaseio.com",
+    "project_id": "text-quest",
+    "storage_bucket": "text-quest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036694325886:android:4afdfd116f177693",
+        "android_client_info": {
+          "package_name": "com.toybox.quest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036694325886-dmgugj6kdumhptkr9k049p6vkfd372j5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_l8c4ohU5n1U-x4dwUuLWiYfoqnnGRps"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
