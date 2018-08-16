@@ -16,28 +16,7 @@ public class FirebaseStart : MonoBehaviour {
         CheckDependencies();
     }
 
-    private static void SetSettings()
-    {
-        firebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
-        //firebaseApp.SetEditorP12FileName
-        //firebaseApp.Options.AppId = "1:1036694325886:android:4afdfd116f177693";
-        //firebaseApp.Options.ProjectId = "text-quest";
-        database = Firebase.Database.FirebaseDatabase.DefaultInstance.RootReference;
-
-        CRUDTest();
-    }
-
-    private static void CRUDTest()
-    {
-        database.Child("Chapters").Child("1").GetValueAsync().ContinueWith(OnGetChild);
-    }
-
-    private static void OnGetChild(Task<DataSnapshot> task)
-    {
-        Debug.Log(" Chapter One: " + task.Result.Value.ToString());
-    }
-
-    private static void CheckDependencies()
+     private static void CheckDependencies()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
@@ -61,5 +40,25 @@ public class FirebaseStart : MonoBehaviour {
 
             SetSettings();
         });
+    }
+
+    private static void SetSettings()
+    {
+        firebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
+        database = Firebase.Database.FirebaseDatabase.DefaultInstance.RootReference;
+
+        CRUDTest();
+    }
+
+    private static void CRUDTest()
+    {
+        database.Child("Chapters").GetValueAsync().ContinueWith(OnGetChild);
+    }
+
+    private static void OnGetChild(Task<DataSnapshot> task)
+    {
+        string val = InternalNewtonsoft.Json.JsonConvert.SerializeObject(task.Result.Value);
+
+        Debug.Log(" Chapters: " + val);
     }
 }
