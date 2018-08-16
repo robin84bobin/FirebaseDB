@@ -106,7 +106,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\FirebaseStart.cs" />
+    <Compile Include="Assets\Scripts\App.cs" />
+    <Compile Include="Assets\Scripts\Data\BaseStorage.cs" />
+    <Compile Include="Assets\Scripts\Data\DB\FireBaseDBProxy.cs" />
+    <Compile Include="Assets\Scripts\Data\DB\IDataBaseProxy.cs" />
+    <Compile Include="Assets\Scripts\Data\GameData.cs" />
+    <Compile Include="Assets\Scripts\Startup\StartupController.cs" />
+    <Compile Include="Assets\Scripts\Startup\Steps\StepBase.cs" />
+    <Compile Include="Assets\Scripts\Startup\Steps\StepDataDownload.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
