@@ -8,22 +8,28 @@ namespace Assets.Scripts.Commands
 {
     public class InitStorageCommand<T> : Command where T : Item, new()
     {
-        private DataStorage<T> _storage;
+        private BaseStorage<T> _storage;
 
-        public InitStorageCommand(DataStorage<T> storage)
+        public InitStorageCommand(BaseStorage<T> storage)
         {
             _storage = storage;
         }
 
-        public override void Do()
+        public override void Execute()
         {
-            BaseStorage.dbProxy.Get<T>(_storage.sourceName, OnGetData);
+            GameData.Instance.dbProxy.Get<T>(_storage.sourceName, OnGetData);
         }
 
-        private void OnGetData(List<T> dataList)
+        private void OnGetData(Dictionary<int, T> items)
         {
-            _storage.SetData(dataList.ToArray());
+            _storage.SetData(items);
             Complete();
+        }
+
+        protected override void Release()
+        {
+            base.Release();
+            _storage = null;
         }
 
     }

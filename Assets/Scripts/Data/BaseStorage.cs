@@ -7,19 +7,7 @@ using UnityEngine;
 namespace Data
 {
 
-    public class BaseStorage
-    {
-        public static IDataBaseProxy dbProxy;
-
-        public bool readOnly { get; protected set; }
-        /// <summary>
-        /// имя таблицы/коллекции для получения данных
-        /// </summary>
-        public string sourceName { get; protected set; }
-    }
-
-
-    public class DataStorage<T> : BaseStorage where T : Item, new()
+    public class BaseStorage<T>  where T : Item, new()
     {
         public int Count
         {
@@ -27,6 +15,11 @@ namespace Data
         }
 
 
+        public bool readOnly { get; protected set; }
+        /// <summary>
+        /// имя таблицы/коллекции для получения данных
+        /// </summary>
+        public string sourceName { get; protected set; }
 
         private Dictionary<int, T> _items = new Dictionary<int, T>();
 
@@ -47,33 +40,13 @@ namespace Data
             }
         }
 
-        public DataStorage(string sourceName, bool readOnly = true)
+        public BaseStorage(string sourceName, bool readOnly = true)
         {
             this.sourceName = sourceName;
             this.readOnly = readOnly;
 
             GameData.Instance.RegisterStorage(this);
-            GameData.Instance.OnJsonDataLoaded += SetData;
             GameData.Instance.OnDataParseComplete += InitItems;
-        }
-
-        private void SetData(JToken j)
-        {
-            if (string.IsNullOrEmpty(sourceName))
-            {
-                Debug.LogError(ToString() + " : no sourceName in storage had been set: " + sourceName);
-                return;
-            }
-
-            JToken jToken = j.SelectToken(sourceName);
-            if (jToken == null)
-            {
-                Debug.LogError(ToString() + " : no source data was found by: " + sourceName);
-                return;
-            }
-
-            T[] a = jToken.ToObject<T[]>();
-            SetData(a);
         }
 
         /// <summary>
@@ -90,20 +63,9 @@ namespace Data
         }
 
 
-        public void SetData(T[] dataArray)
+        public void SetData(Dictionary<int, T> items)
         {
-            _items = new Dictionary<int, T>();
-            foreach (T newItem in dataArray)
-            {
-                if (_items.ContainsKey(newItem.Id))
-                {
-                    Debug.Log(string.Format("Map {0} already contains key {1}! Skiping...", typeof(T).Name,
-                        newItem.Id));
-                    continue;
-                }
-
-                _items.Add(newItem.Id, newItem);
-            }
+            _items = items;
         }
 
         public T GetRandom(Func<T, bool> condition = null)

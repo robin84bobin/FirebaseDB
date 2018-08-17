@@ -109,12 +109,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\App.cs" />
-    <Compile Include="Assets\Scripts\Commands\CommandManager.cs" />
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandManager.cs" />
     <Compile Include="Assets\Scripts\Commands\InitStorageCommand.cs" />
     <Compile Include="Assets\Scripts\Data\BaseStorage.cs" />
-    <Compile Include="Assets\Scripts\Data\DB\FireBaseDBProxy.cs" />
-    <Compile Include="Assets\Scripts\Data\DB\IDataBaseProxy.cs" />
+    <Compile Include="Assets\Scripts\Data\DataTypes\NpcMessageData.cs" />
+    <Compile Include="Assets\Scripts\Data\DataTypes\StepData.cs" />
+    <Compile Include="Assets\Scripts\Data\DataTypes\TriggerData.cs" />
+    <Compile Include="Assets\Scripts\Data\DataBaseProxy\FireBaseDBProxy.cs" />
+    <Compile Include="Assets\Scripts\Data\DataBaseProxy\IDataBaseProxy.cs" />
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Startup\StartupController.cs" />
     <Compile Include="Assets\Scripts\Startup\Steps\StepBase.cs" />

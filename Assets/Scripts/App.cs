@@ -15,11 +15,11 @@ public class App : MonoBehaviour
 
     private void OnLoadFail()
     {
-        throw new NotImplementedException();
+       // throw new NotImplementedException();
     }
 
     private void OnLoadSuccess()
     {
-        throw new NotImplementedException();
+       // throw new NotImplementedException();
     }
 }

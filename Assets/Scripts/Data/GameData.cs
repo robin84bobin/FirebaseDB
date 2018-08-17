@@ -8,7 +8,7 @@ namespace Data
 {
     public class GameData
     {
-        
+        public IDataBaseProxy dbProxy { get; private set; }
 
         private static GameData _instance;
         public static GameData Instance
@@ -23,8 +23,11 @@ namespace Data
             }
         }
 
+        public static BaseStorage<StepData> Steps = new BaseStorage<StepData>("steps");
+        public static BaseStorage<TriggerData> Triggers = new BaseStorage<TriggerData>("trigger");
+        public static BaseStorage<NpcMessageData> NpcMessages = new BaseStorage<NpcMessageData>("npcMessage");
 
-        public event Action<JToken> OnJsonDataLoaded = delegate { };
+
         public event Action OnDataParseComplete = delegate { };
         public event Action OnInitSuccess = delegate { };
         public event Action OnInitFail = delegate { };
@@ -35,11 +38,8 @@ namespace Data
             OnInitFail += onFail;
 
             //TODO define DB proxy type in config or so
-            IDataBaseProxy dbProxy = new FireBaseDBProxy();
+            dbProxy = new FireBaseDBProxy();
             dbProxy.Init(OnDBInitComplete);
-            BaseStorage.dbProxy = dbProxy;
-
-            Debug.Log(ToString() + " :: Init : " + dbProxy.ToString());
         }
 
         private void OnDBInitComplete()
@@ -48,7 +48,7 @@ namespace Data
         }
 
         List<Command> initStorageCommands = new List<Command>();
-        internal void RegisterStorage<T>(DataStorage<T> dataStorage) where T : Item, new()
+        internal void RegisterStorage<T>(BaseStorage<T> dataStorage) where T : Item, new()
         {
             InitStorageCommand<T> command = new InitStorageCommand<T>(dataStorage);
             initStorageCommands.Add(command);
@@ -57,7 +57,8 @@ namespace Data
 
         private void OnStoragesInited()
         {
-            throw new NotImplementedException();
+            initStorageCommands = null;
+            GameData.Instance.OnDataParseComplete.Invoke();
         }
 
 

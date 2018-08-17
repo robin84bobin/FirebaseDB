@@ -20,19 +20,19 @@ namespace Data
 
         public void Init(Action callback)
         {
+            Debug.Log(ToString() + ". Init()");
             _onInitCallback = callback;
             CheckDependencies();
         }
 
         private void CheckDependencies()
         {
-            Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {
                 var dependencyStatus = task.Result;
                 if (dependencyStatus == Firebase.DependencyStatus.Available)
                 {
                     _firebaseApp = FirebaseApp.DefaultInstance;
-                    SetSettings();
                 }
                 else
                 {
@@ -50,27 +50,39 @@ namespace Data
             _firebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
             _database = FirebaseDatabase.DefaultInstance.RootReference;
 
+            _onInitCallback.Invoke();
         }
 
         #endregion
 
 
 
-        public void Get<T>(string sourceName, Action<List<T>> callback) where T : Item, new()
+        public void Get<T>(string sourceName, Action<Dictionary<int, T>> callback) where T : Item, new()
         {
-            _database.Child("sourceName").GetValueAsync().ContinueWith(
-                (t) => { ProcessDataGet<T>(t, callback); }
+            _database.Child(sourceName).GetValueAsync().ContinueWith(
+                (t) => {
+                    ConvertData(t, callback);
+                }
              );
         }
 
-        private void ProcessDataGet<T>(Task<DataSnapshot> t, Action<List<T>> callback) where T : Item, new()
+        private void ConvertData<T>(Task<DataSnapshot> t, Action<Dictionary<int, T>> callback) where T : Item, new()
         {
-            List<T> resultList = new List<T>();
+            Dictionary<int,T> items = new Dictionary<int,T>();
 
             string jString = t.Result.GetRawJsonValue();
-            resultList = JsonConvert.DeserializeObject<List<T>>(jString);
+            List<T> list = JsonConvert.DeserializeObject<List<T>>(jString);
 
-            callback.Invoke(resultList);
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] == null)
+                    continue;
+                T item = list[i];
+                item.Id = i;
+                items.Add(item.Id, item);
+            }
+
+            callback.Invoke(items);
         }
     }
 }

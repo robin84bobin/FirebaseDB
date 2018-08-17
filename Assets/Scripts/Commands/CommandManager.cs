@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Assets.Scripts.Commands
 {
@@ -17,27 +18,32 @@ namespace Assets.Scripts.Commands
             {
                 if (i < commands.Length - 1)   
                 {
-                    commands[i].OnComplete += () => Do(commands[i + 1]);
+                    Command nextCommand = commands[i + 1];
+                    commands[i].OnComplete += () => Execute(nextCommand);
                 }
                 else if (i == commands.Length - 1)
                 {
-                    commands[i].OnComplete += completeCallback;
+                    commands[i].OnComplete += 
+                        () => {
+                            completeCallback.Invoke();
+                        };
                 }
             }
 
-            Do(commands[0]);
+            Execute(commands.First());
         }
 
-        public static void Do(Command c)
+        public static void Execute(Command command)
         {
-            c.Do();
+            command.Execute();
             //TODO add to undo stack
+            //AddToUndoStack(command)
         }
 
-        public static void DoAsync(Command c, Action completeCallback)
+        public static void ExecuteAsync(Command command, Action completeCallback)
         {
-            c.OnComplete += completeCallback;
-            Do(c);
+            command.OnComplete += completeCallback;
+            Execute(command);
         }
 
 
