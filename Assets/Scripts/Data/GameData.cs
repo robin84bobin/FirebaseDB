@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Assets.Scripts.Commands;
 using InternalNewtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -6,7 +8,7 @@ namespace Data
 {
     public class GameData
     {
-        IDataBaseProxy dbProxy;
+        
 
         private static GameData _instance;
         public static GameData Instance
@@ -32,29 +34,30 @@ namespace Data
             OnInitSuccess += onSuccess;
             OnInitFail += onFail;
 
-            dbProxy = new FireBaseDBProxy();
-            dbProxy.Init(onDataBaseInit);
+            //TODO define DB proxy type in config or so
+            IDataBaseProxy dbProxy = new FireBaseDBProxy();
+            dbProxy.Init(OnDBInitComplete);
+            BaseStorage.dbProxy = dbProxy;
 
             Debug.Log(ToString() + " :: Init : " + dbProxy.ToString());
         }
 
-        private void onDataBaseInit(string json)
+        private void OnDBInitComplete()
         {
-            Debug.Log(ToString() + " :: OnGetData :");
-            Debug.Log(json);
+            CommandManager.DoSequence(OnStoragesInited, initStorageCommands.ToArray());
+        }
 
-            try
-            {
-                JObject j = JObject.Parse(json);
-                OnJsonDataLoaded.Invoke(j["dictionary"]);
-                OnDataParseComplete.Invoke();
-                OnInitSuccess.Invoke();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("OnGetData error: " + e.Message);
-                OnInitFail.Invoke();
-            }
+        List<Command> initStorageCommands = new List<Command>();
+        internal void RegisterStorage<T>(DataStorage<T> dataStorage) where T : Item, new()
+        {
+            InitStorageCommand<T> command = new InitStorageCommand<T>(dataStorage);
+            initStorageCommands.Add(command);
+        }
+
+
+        private void OnStoragesInited()
+        {
+            throw new NotImplementedException();
         }
 
 

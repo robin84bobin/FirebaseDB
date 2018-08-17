@@ -13,12 +13,14 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.1.2p4</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -107,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\App.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandManager.cs" />
+    <Compile Include="Assets\Scripts\Commands\Command.cs" />
+    <Compile Include="Assets\Scripts\Commands\InitStorageCommand.cs" />
     <Compile Include="Assets\Scripts\Data\BaseStorage.cs" />
     <Compile Include="Assets\Scripts\Data\DB\FireBaseDBProxy.cs" />
     <Compile Include="Assets\Scripts\Data\DB\IDataBaseProxy.cs" />

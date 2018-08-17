@@ -6,15 +6,26 @@ using UnityEngine;
 
 namespace Data
 {
-    public class BaseStorage<T> where T : Item, new()
+
+    public class BaseStorage
+    {
+        public static IDataBaseProxy dbProxy;
+
+        public bool readOnly { get; protected set; }
+        /// <summary>
+        /// имя таблицы/коллекции для получения данных
+        /// </summary>
+        public string sourceName { get; protected set; }
+    }
+
+
+    public class DataStorage<T> : BaseStorage where T : Item, new()
     {
         public int Count
         {
             get { return _items.Count; }
         }
 
-        public readonly bool readOnly;
-        public readonly string sourceName;
 
 
         private Dictionary<int, T> _items = new Dictionary<int, T>();
@@ -36,10 +47,12 @@ namespace Data
             }
         }
 
-        public BaseStorage(string sourceName, bool readOnly = true)
+        public DataStorage(string sourceName, bool readOnly = true)
         {
             this.sourceName = sourceName;
             this.readOnly = readOnly;
+
+            GameData.Instance.RegisterStorage(this);
             GameData.Instance.OnJsonDataLoaded += SetData;
             GameData.Instance.OnDataParseComplete += InitItems;
         }

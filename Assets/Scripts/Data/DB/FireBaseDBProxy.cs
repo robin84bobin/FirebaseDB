@@ -1,7 +1,9 @@
 ﻿using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
+using InternalNewtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -12,9 +14,11 @@ namespace Data
         FirebaseApp _firebaseApp { get; set; }
         DatabaseReference _database { get; set; }
 
-        Action<string> _onInitCallback;
+        Action _onInitCallback;
 
-        public void Init(Action<string> callback)
+        #region INITIALIZING
+
+        public void Init(Action callback)
         {
             _onInitCallback = callback;
             CheckDependencies();
@@ -46,20 +50,27 @@ namespace Data
             _firebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
             _database = FirebaseDatabase.DefaultInstance.RootReference;
 
-            CRUDTest();
         }
 
-        private void CRUDTest()
+        #endregion
+
+
+
+        public void Get<T>(string sourceName, Action<List<T>> callback) where T : Item, new()
         {
-            _database.Child("Chapters").GetValueAsync().ContinueWith(OnGetChild);
+            _database.Child("sourceName").GetValueAsync().ContinueWith(
+                (t) => { ProcessDataGet<T>(t, callback); }
+             );
         }
 
-        private void OnGetChild(Task<DataSnapshot> task)
+        private void ProcessDataGet<T>(Task<DataSnapshot> t, Action<List<T>> callback) where T : Item, new()
         {
-            string val = InternalNewtonsoft.Json.JsonConvert.SerializeObject(task.Result.Value);
+            List<T> resultList = new List<T>();
 
-            Debug.Log(" Chapters: " + val);
+            string jString = t.Result.GetRawJsonValue();
+            resultList = JsonConvert.DeserializeObject<List<T>>(jString);
+
+            callback.Invoke(resultList);
         }
-
     }
 }
