@@ -40,7 +40,7 @@ namespace Data
             }
         }
 
-        public BaseStorage(string sourceName, bool readOnly = true)
+        public BaseStorage(string sourceName, bool readOnly = false)
         {
             this.sourceName = sourceName;
             this.readOnly = readOnly;
@@ -62,11 +62,42 @@ namespace Data
             }
         }
 
+        #region SET DATA METHODS
+
+        public void Set(T item, int Id, bool saveNow = false)
+        {
+            if (_items.ContainsKey(Id))
+            {
+                _items[Id] = item;
+                Debug.Log(string.Format("Replace data in '{0}' storage eg. objectId:{1} already exists", sourceName, Id));
+            }
+            else
+            {
+                _items.Add(Id, item);
+                Debug.Log(string.Format("Add data in '{0}' storage  objectId:{1}", sourceName, Id));
+            }
+
+            if (saveNow) SaveData();
+        }
+
+        public void SaveData()
+        {
+            if (readOnly)
+            {
+                Debug.LogError("Can't write into read only storage: " + GetType().Name);
+                return;
+            }
+            DataBaseProxy.Instance.SaveCollection(sourceName, _items);
+        }
 
         public void SetData(Dictionary<int, T> items)
         {
             _items = items;
         }
+
+        #endregion
+
+        #region GET DATA METHODS
 
         public T GetRandom(Func<T, bool> condition = null)
         {
@@ -105,6 +136,7 @@ namespace Data
             return _items.Values.FirstOrDefault(predicate);
         }
 
+        #endregion 
 
         #region foreach methods realization 
 
@@ -150,7 +182,7 @@ namespace Data
 
     public class Item
     {
-        public int Id { get; internal set; }
+        public int Id = -1;
 
         internal virtual void Init()
         {

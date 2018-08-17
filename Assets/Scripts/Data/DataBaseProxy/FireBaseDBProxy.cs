@@ -12,7 +12,7 @@ namespace Data
     internal class FireBaseDBProxy : IDataBaseProxy
     {
         FirebaseApp _firebaseApp { get; set; }
-        DatabaseReference _database { get; set; }
+        DatabaseReference _dbRoot { get; set; }
 
         Action _onInitCallback;
 
@@ -48,7 +48,7 @@ namespace Data
         private void SetSettings()
         {
             _firebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
-            _database = FirebaseDatabase.DefaultInstance.RootReference;
+            _dbRoot = FirebaseDatabase.DefaultInstance.RootReference;
 
             _onInitCallback.Invoke();
         }
@@ -59,7 +59,7 @@ namespace Data
 
         public void Get<T>(string sourceName, Action<Dictionary<int, T>> callback) where T : Item, new()
         {
-            _database.Child(sourceName).GetValueAsync().ContinueWith(
+            _dbRoot.Child(sourceName).GetValueAsync().ContinueWith(
                 (t) => {
                     ConvertData(t, callback);
                 }
@@ -83,6 +83,12 @@ namespace Data
             }
 
             callback.Invoke(items);
+        }
+
+        public void SaveCollection<T>(string sourceName, Dictionary<int, T> items) where T : Item, new()
+        {
+            string jString = JsonConvert.SerializeObject(items);
+            _dbRoot.Child(sourceName).SetRawJsonValueAsync(jString);
         }
     }
 }

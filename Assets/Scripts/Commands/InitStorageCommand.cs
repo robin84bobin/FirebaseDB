@@ -17,7 +17,7 @@ namespace Assets.Scripts.Commands
 
         public override void Execute()
         {
-            GameData.Instance.dbProxy.Get<T>(_storage.sourceName, OnGetData);
+            DataBaseProxy.Instance.Get<T>(_storage.sourceName, OnGetData);
         }
 
         private void OnGetData(Dictionary<int, T> items)

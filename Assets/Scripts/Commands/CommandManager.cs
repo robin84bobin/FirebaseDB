@@ -10,9 +10,9 @@ namespace Assets.Scripts.Commands
         /// <summary>
         /// do sequence of commands
         /// </summary>
-        /// <param name="completeCallback"></param>
+        /// <param name="onSequenceComplete"></param>
         /// <param name="commands"></param>
-        public static void DoSequence(Action completeCallback, params Command[] commands)
+        public static void DoSequence(Action onSequenceComplete, params Command[] commands)
         {
             for (int i = 0; i < commands.Length; i++)
             {
@@ -22,12 +22,7 @@ namespace Assets.Scripts.Commands
                     commands[i].OnComplete += () => Execute(nextCommand);
                 }
                 else if (i == commands.Length - 1)
-                {
-                    commands[i].OnComplete += 
-                        () => {
-                            completeCallback.Invoke();
-                        };
-                }
+                    commands[i].OnComplete += () => { onSequenceComplete.Invoke(); };
             }
 
             Execute(commands.First());

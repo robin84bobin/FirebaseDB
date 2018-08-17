@@ -117,7 +117,7 @@
     <Compile Include="Assets\Scripts\Data\DataTypes\StepData.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes\TriggerData.cs" />
     <Compile Include="Assets\Scripts\Data\DataBaseProxy\FireBaseDBProxy.cs" />
-    <Compile Include="Assets\Scripts\Data\DataBaseProxy\IDataBaseProxy.cs" />
+    <Compile Include="Assets\Scripts\Data\DataBaseProxy\DataBaseProxy.cs" />
     <Compile Include="Assets\Scripts\Data\GameData.cs" />
     <Compile Include="Assets\Scripts\Startup\StartupController.cs" />
     <Compile Include="Assets\Scripts\Startup\Steps\StepBase.cs" />

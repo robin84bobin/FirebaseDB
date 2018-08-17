@@ -5,7 +5,7 @@ namespace Data
     public class StepData : Item
     {
         public string type;
-        public string typeId;
+        public int typeId;
     }
 
 }

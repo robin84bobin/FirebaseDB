@@ -8,7 +8,6 @@ namespace Data
 {
     public class GameData
     {
-        public IDataBaseProxy dbProxy { get; private set; }
 
         private static GameData _instance;
         public static GameData Instance
@@ -38,8 +37,7 @@ namespace Data
             OnInitFail += onFail;
 
             //TODO define DB proxy type in config or so
-            dbProxy = new FireBaseDBProxy();
-            dbProxy.Init(OnDBInitComplete);
+            DataBaseProxy.Instance.Init(OnDBInitComplete);
         }
 
         private void OnDBInitComplete()
@@ -58,7 +56,10 @@ namespace Data
         private void OnStoragesInited()
         {
             initStorageCommands = null;
-            GameData.Instance.OnDataParseComplete.Invoke();
+            OnDataParseComplete.Invoke();
+
+            StepData s = new StepData() { type = "errorType", typeId = int.MinValue };
+            Steps.Set(s, 10, true);
         }
 
 
