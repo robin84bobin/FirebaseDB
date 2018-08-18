@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Data
+namespace Data.DataBase
 {
     public interface IDataBaseProxy
     {
@@ -15,20 +15,30 @@ namespace Data
         /// get data list of current type 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="sourceName"> data table/collection name in database</param>
+        /// <param name="collectionName"> data table/collection name in database</param>
         /// <param name="callback"> returns data list </param>
-        void Get<T>(string sourceName, Action<Dictionary<int, T>> callback) where T : Item, new();
+        void Get<T>(string collectionName, Action<Dictionary<int, T>> callback) where T : Item, new();
 
         /// <summary>
         /// save data items to database
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="sourceName"></param>
+        /// <param name="collectionName"></param>
         /// <param name="items"></param>
-        void SaveCollection<T>(string sourceName, Dictionary<int, T> items) where T : Item, new();
+        void SaveCollection<T>(string collectionName, Dictionary<int, T> items) where T : Item, new();
+
+        /// <summary>
+        /// save data item to database
+        /// </summary>
+        /// <param name="collectionName"></param>
+        /// <param name="item"></param>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        void Save<T>(string collectionName, T item, int id = -1) where T : Item, new();
+
     }
 
-    public class DataBaseProxy
+    public static class DataBaseProxy
     {
         private static IDataBaseProxy _instance;
 

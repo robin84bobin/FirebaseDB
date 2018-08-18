@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.Commands;
+using Data.DataBase;
 using InternalNewtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -8,16 +9,10 @@ namespace Data
 {
     public class GameData
     {
-
         private static GameData _instance;
-        public static GameData Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new GameData();
-                }
+        public static GameData Instance {
+            get {
+                if (_instance == null) _instance = new GameData();
                 return _instance;
             }
         }
@@ -25,7 +20,18 @@ namespace Data
         public static BaseStorage<StepData> Steps = new BaseStorage<StepData>("steps");
         public static BaseStorage<TriggerData> Triggers = new BaseStorage<TriggerData>("trigger");
         public static BaseStorage<NpcMessageData> NpcMessages = new BaseStorage<NpcMessageData>("npcMessage");
-
+        
+        List<Command> initStorageCommands = new List<Command>();
+        /// <summary>
+        /// register storage to init data later
+        /// </summary>
+        /// <param name="dataStorage"></param>
+        /// <typeparam name="T"></typeparam>
+        internal void RegisterStorage<T>(BaseStorage<T> dataStorage) where T : Item, new()
+        {
+            InitStorageCommand<T> command = new InitStorageCommand<T>(dataStorage);
+            initStorageCommands.Add(command);
+        }
 
         public event Action OnDataParseComplete = delegate { };
         public event Action OnInitSuccess = delegate { };
@@ -36,23 +42,16 @@ namespace Data
             OnInitSuccess += onSuccess;
             OnInitFail += onFail;
 
-            //TODO define DB proxy type in config or so
             DataBaseProxy.Instance.Init(OnDBInitComplete);
         }
 
+        
         private void OnDBInitComplete()
         {
-            CommandManager.DoSequence(OnStoragesInited, initStorageCommands.ToArray());
+            CommandManager.ExecuteSequence(OnStoragesInited, initStorageCommands.ToArray());
         }
 
-        List<Command> initStorageCommands = new List<Command>();
-        internal void RegisterStorage<T>(BaseStorage<T> dataStorage) where T : Item, new()
-        {
-            InitStorageCommand<T> command = new InitStorageCommand<T>(dataStorage);
-            initStorageCommands.Add(command);
-        }
-
-
+        
         private void OnStoragesInited()
         {
             initStorageCommands = null;

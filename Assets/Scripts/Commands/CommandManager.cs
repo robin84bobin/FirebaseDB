@@ -12,7 +12,7 @@ namespace Assets.Scripts.Commands
         /// </summary>
         /// <param name="onSequenceComplete"></param>
         /// <param name="commands"></param>
-        public static void DoSequence(Action onSequenceComplete, params Command[] commands)
+        public static void ExecuteSequence(Action onSequenceComplete, params Command[] commands)
         {
             for (int i = 0; i < commands.Length; i++)
             {

@@ -1,13 +1,13 @@
-﻿using Firebase;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
 using InternalNewtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Data
+namespace Data.DataBase
 {
     internal class FireBaseDBProxy : IDataBaseProxy
     {
@@ -57,9 +57,9 @@ namespace Data
 
 
 
-        public void Get<T>(string sourceName, Action<Dictionary<int, T>> callback) where T : Item, new()
+        public void Get<T>(string collectionName, Action<Dictionary<int, T>> callback) where T : Item, new()
         {
-            _dbRoot.Child(sourceName).GetValueAsync().ContinueWith(
+            _dbRoot.Child(collectionName).GetValueAsync().ContinueWith(
                 (t) => {
                     ConvertData(t, callback);
                 }
@@ -78,17 +78,27 @@ namespace Data
                 if (list[i] == null)
                     continue;
                 T item = list[i];
-                item.Id = i;
-                items.Add(item.Id, item);
+                if (item.id < 0)
+                    item.id = i;
+                items.Add(item.id, item);
             }
 
             callback.Invoke(items);
         }
 
-        public void SaveCollection<T>(string sourceName, Dictionary<int, T> items) where T : Item, new()
+        public void SaveCollection<T>(string collectionName, Dictionary<int, T> items) where T : Item, new()
         {
             string jString = JsonConvert.SerializeObject(items);
-            _dbRoot.Child(sourceName).SetRawJsonValueAsync(jString);
+            _dbRoot.Child(collectionName).SetRawJsonValueAsync(jString);
+        }
+
+        public void Save<T>(string collectionName, T item, int id = -1) where T : Item, new()
+        {
+            if (id > 0)
+                item.id = id;
+
+            string jString = JsonConvert.SerializeObject(item);
+            _dbRoot.Child(collectionName).Child(item.id.ToString()).SetRawJsonValueAsync(jString);
         }
     }
 }

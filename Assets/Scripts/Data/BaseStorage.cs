@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace Data
 {
-
-    public class BaseStorage<T>  where T : Item, new()
+    public class BaseStorage<T> where T : Item, new()
     {
         public int Count
         {
@@ -15,35 +14,36 @@ namespace Data
         }
 
 
-        public bool readOnly { get; protected set; }
+        public bool ReadOnly { get; protected set; }
+
         /// <summary>
         /// имя таблицы/коллекции для получения данных
         /// </summary>
-        public string sourceName { get; protected set; }
+        public string CollectionName { get; protected set; }
 
         private Dictionary<int, T> _items = new Dictionary<int, T>();
 
-        public T this[int Id]
+        public T this[int id]
         {
-            get { return Get(Id); }
+            get { return Get(id); }
             set
             {
-                if (readOnly)
+                if (ReadOnly)
                 {
                     Debug.LogError(string.Format("Can't set data to '{0}' readOnly storage - Id:{1}",
-                        typeof(T), Id));
+                        typeof(T), id));
                     return;
                 }
 
-                if (_items.ContainsKey(Id)) _items[Id] = value;
-                else _items.Add(Id, value);
+                if (_items.ContainsKey(id)) _items[id] = value;
+                else _items.Add(id, value);
             }
         }
 
-        public BaseStorage(string sourceName, bool readOnly = false)
+        public BaseStorage(string collectionName, bool readOnly = false)
         {
-            this.sourceName = sourceName;
-            this.readOnly = readOnly;
+            CollectionName = collectionName;
+            ReadOnly = readOnly;
 
             GameData.Instance.RegisterStorage(this);
             GameData.Instance.OnDataParseComplete += InitItems;
@@ -55,7 +55,7 @@ namespace Data
         /// </summary>
         private void InitItems()
         {
-            GameData.Instance.OnInitSuccess -= InitItems;
+            GameData.Instance.OnDataParseComplete -= InitItems;
             foreach (var item in _items)
             {
                 item.Value.Init();
@@ -64,30 +64,38 @@ namespace Data
 
         #region SET DATA METHODS
 
-        public void Set(T item, int Id, bool saveNow = false)
+        public void Set(T item, int id, bool saveNow = false)
         {
-            if (_items.ContainsKey(Id))
+            if (_items.ContainsKey(id))
             {
-                _items[Id] = item;
-                Debug.Log(string.Format("Replace data in '{0}' storage eg. objectId:{1} already exists", sourceName, Id));
+                _items[id] = item;
+                Debug.Log(
+                    string.Format("Replace data in '{0}' storage eg. objectId:{1} already exists", CollectionName, id));
             }
             else
             {
-                _items.Add(Id, item);
-                Debug.Log(string.Format("Add data in '{0}' storage  objectId:{1}", sourceName, Id));
+                item.id = id;
+                _items.Add(id, item);
+                Debug.Log(string.Format("Add data in '{0}' storage  objectId:{1}", CollectionName, id));
             }
 
-            if (saveNow) SaveData();
+            if (saveNow) SaveItem(item);
+        }
+
+        private void SaveItem(T item)
+        {
+            DataBase.DataBaseProxy.Instance.Save(CollectionName, item);
         }
 
         public void SaveData()
         {
-            if (readOnly)
+            if (ReadOnly)
             {
                 Debug.LogError("Can't write into read only storage: " + GetType().Name);
                 return;
             }
-            DataBaseProxy.Instance.SaveCollection(sourceName, _items);
+
+            DataBase.DataBaseProxy.Instance.SaveCollection(CollectionName, _items);
         }
 
         public void SetData(Dictionary<int, T> items)
@@ -101,9 +109,7 @@ namespace Data
 
         public T GetRandom(Func<T, bool> condition = null)
         {
-            List<T> listToSelect = condition == null ?
-                GetAll() :
-                GetAll().Where(condition).ToList();
+            List<T> listToSelect = condition == null ? GetAll() : GetAll().Where(condition).ToList();
             int randomIndex = UnityEngine.Random.Range(0, listToSelect.Count - 1);
             return listToSelect[randomIndex];
         }
@@ -136,7 +142,7 @@ namespace Data
             return _items.Values.FirstOrDefault(predicate);
         }
 
-        #endregion 
+        #endregion
 
         #region foreach methods realization 
 
@@ -182,7 +188,7 @@ namespace Data
 
     public class Item
     {
-        public int Id = -1;
+        public int id = -1;
 
         internal virtual void Init()
         {

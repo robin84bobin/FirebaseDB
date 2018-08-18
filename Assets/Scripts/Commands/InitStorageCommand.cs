@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Data.DataBase;
 
 namespace Assets.Scripts.Commands
 {
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Commands
 
         public override void Execute()
         {
-            DataBaseProxy.Instance.Get<T>(_storage.sourceName, OnGetData);
+            DataBaseProxy.Instance.Get<T>(_storage.CollectionName, OnGetData);
         }
 
         private void OnGetData(Dictionary<int, T> items)
