@@ -1,17 +1,14 @@
-﻿using Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Data;
 using Data.DataBase;
 
-namespace Assets.Scripts.Commands
+namespace Commands
 {
-    public class InitStorageCommand<T> : Command where T : Item, new()
+    public class InitStorageCommand<T> : Command where T : DataItem, new()
     {
-        private BaseStorage<T> _storage;
+        private DataStorage<T> _storage;
 
-        public InitStorageCommand(BaseStorage<T> storage)
+        public InitStorageCommand(DataStorage<T> storage)
         {
             _storage = storage;
         }
@@ -21,7 +18,7 @@ namespace Assets.Scripts.Commands
             DataBaseProxy.Instance.Get<T>(_storage.CollectionName, OnGetData);
         }
 
-        private void OnGetData(Dictionary<int, T> items)
+        private void OnGetData(Dictionary<string, T> items)
         {
             _storage.SetData(items);
             Complete();
@@ -32,6 +29,5 @@ namespace Assets.Scripts.Commands
             base.Release();
             _storage = null;
         }
-
     }
 }

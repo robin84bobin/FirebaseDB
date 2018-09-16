@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Assets.Scripts.Commands
+namespace Commands
 {
     public class CommandManager
     {
@@ -14,11 +14,11 @@ namespace Assets.Scripts.Commands
         /// <param name="commands"></param>
         public static void ExecuteSequence(Action onSequenceComplete, params Command[] commands)
         {
-            for (int i = 0; i < commands.Length; i++)
+            for (var i = 0; i < commands.Length; i++)
             {
-                if (i < commands.Length - 1)   
+                if (i < commands.Length - 1)
                 {
-                    Command nextCommand = commands[i + 1];
+                    var nextCommand = commands[i + 1];
                     commands[i].OnComplete += () => Execute(nextCommand);
                 }
                 else if (i == commands.Length - 1)
@@ -40,7 +40,5 @@ namespace Assets.Scripts.Commands
             command.OnComplete += completeCallback;
             Execute(command);
         }
-
-
     }
 }

@@ -9,12 +9,12 @@ using UnityEngine;
 
 namespace Data.DataBase
 {
-    internal class FireBaseDBProxy : IDataBaseProxy
+    internal class FireBaseDbProxy : IDataBaseProxy
     {
-        FirebaseApp _firebaseApp { get; set; }
-        DatabaseReference _dbRoot { get; set; }
+        private FirebaseApp FirebaseApp { get; set; }
+        private DatabaseReference DbRoot { get; set; }
 
-        Action _onInitCallback;
+        private Action _onInitCallback;
 
         #region INITIALIZING
 
@@ -30,14 +30,14 @@ namespace Data.DataBase
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {
                 var dependencyStatus = task.Result;
-                if (dependencyStatus == Firebase.DependencyStatus.Available)
+                if (dependencyStatus == DependencyStatus.Available)
                 {
-                    _firebaseApp = FirebaseApp.DefaultInstance;
+                    FirebaseApp = FirebaseApp.DefaultInstance;
                 }
                 else
                 {
-                    UnityEngine.Debug.LogError(System.String.Format(
-                      "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                    Debug.LogError(string.Format(
+                        "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
                     // Firebase Unity SDK is not safe to use here.
                 }
 
@@ -47,8 +47,8 @@ namespace Data.DataBase
 
         private void SetSettings()
         {
-            _firebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
-            _dbRoot = FirebaseDatabase.DefaultInstance.RootReference;
+            FirebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
+            DbRoot = FirebaseDatabase.DefaultInstance.RootReference;
 
             _onInitCallback.Invoke();
         }
@@ -56,49 +56,43 @@ namespace Data.DataBase
         #endregion
 
 
-
-        public void Get<T>(string collectionName, Action<Dictionary<int, T>> callback) where T : Item, new()
+        public void Get<T>(string collectionName, Action<Dictionary<string, T>> callback) where T : DataItem, new()
         {
-            _dbRoot.Child(collectionName).GetValueAsync().ContinueWith(
-                (t) => {
-                    ConvertData(t, callback);
-                }
-             );
+            DbRoot.Child(collectionName).GetValueAsync().ContinueWith(
+                t => ConvertData(t, callback)
+            );
         }
 
-        private void ConvertData<T>(Task<DataSnapshot> t, Action<Dictionary<int, T>> callback) where T : Item, new()
+        private void ConvertData<T>(Task<DataSnapshot> t, Action<Dictionary<string, T>> callback) where T : DataItem, new()
         {
-            Dictionary<int,T> items = new Dictionary<int,T>();
+            var items = new Dictionary<string, T>();
+            var jString = t.Result.GetRawJsonValue();
+            var list = JsonConvert.DeserializeObject<List<T>>(jString);
 
-            string jString = t.Result.GetRawJsonValue();
-            List<T> list = JsonConvert.DeserializeObject<List<T>>(jString);
-
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 if (list[i] == null)
                     continue;
-                T item = list[i];
-                if (item.id < 0)
-                    item.id = i;
-                items.Add(item.id, item);
+                var item = list[i];
+
+                items.Add(item.Id, item);
             }
 
             callback.Invoke(items);
         }
 
-        public void SaveCollection<T>(string collectionName, Dictionary<int, T> items) where T : Item, new()
+        public void SaveCollection<T>(string collectionName, Dictionary<string, T> items) where T : DataItem, new()
         {
-            string jString = JsonConvert.SerializeObject(items);
-            _dbRoot.Child(collectionName).SetRawJsonValueAsync(jString);
+            var jString = JsonConvert.SerializeObject(items);
+            DbRoot.Child(collectionName).SetRawJsonValueAsync(jString);
         }
 
-        public void Save<T>(string collectionName, T item, int id = -1) where T : Item, new()
+        public void Save<T>(string collectionName, T item, string id = "") where T : DataItem, new()
         {
-            if (id > 0)
-                item.id = id;
+            item.Id = id;
 
-            string jString = JsonConvert.SerializeObject(item);
-            _dbRoot.Child(collectionName).Child(item.id.ToString()).SetRawJsonValueAsync(jString);
+            var jString = JsonConvert.SerializeObject(item);
+            DbRoot.Child(collectionName).Child(item.Id.ToString()).SetRawJsonValueAsync(jString);
         }
     }
 }

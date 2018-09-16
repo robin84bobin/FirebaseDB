@@ -17,7 +17,7 @@ namespace Data.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="collectionName"> data table/collection name in database</param>
         /// <param name="callback"> returns data list </param>
-        void Get<T>(string collectionName, Action<Dictionary<int, T>> callback) where T : Item, new();
+        void Get<T>(string collectionName, Action<Dictionary<string, T>> callback) where T : DataItem, new();
 
         /// <summary>
         /// save data items to database
@@ -25,7 +25,7 @@ namespace Data.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="collectionName"></param>
         /// <param name="items"></param>
-        void SaveCollection<T>(string collectionName, Dictionary<int, T> items) where T : Item, new();
+        void SaveCollection<T>(string collectionName, Dictionary<string, T> items) where T : DataItem, new();
 
         /// <summary>
         /// save data item to database
@@ -34,7 +34,7 @@ namespace Data.DataBase
         /// <param name="item"></param>
         /// <param name="id"></param>
         /// <typeparam name="T"></typeparam>
-        void Save<T>(string collectionName, T item, int id = -1) where T : Item, new();
+        void Save<T>(string collectionName, T item, string id = "") where T : DataItem, new();
 
     }
 
@@ -60,7 +60,7 @@ namespace Data.DataBase
         /// <returns></returns>
         private static IDataBaseProxy GetInstance()
         {
-            return new FireBaseDBProxy();
+            return new FireBaseDbProxy();
         }
     }
 }

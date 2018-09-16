@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Startup.Steps
+﻿namespace Startup.Steps
 {
     public enum StepResult
     {
-        Success,
-        Fail
+        SUCCESS,
+        FAIL
     }
 
     public abstract class StepBase
@@ -23,7 +21,7 @@ namespace Startup.Steps
         protected virtual void Complete(StepResult result)
         {
             Completed = true;
-            foreach (Action callback in StartupController.GetStepCallbacks(GetType()))
+            foreach (var callback in StartupController.GetStepCallbacks(GetType()))
             {
                 callback.Invoke();
             }

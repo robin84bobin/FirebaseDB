@@ -1,0 +1,7 @@
+{ "collection": [ 
+{"dataType":"", "objectId":"start", "questStepId":"start", "state":"complete", "chosenVariantId":0},
+{"dataType":"", "objectId":"1", "questStepId":"1", "state":"complete", "chosenVariantId":1},
+{"dataType":"", "objectId":"3", "questStepId":"3", "state":"complete", "chosenVariantId":1},
+{"dataType":"", "objectId":"2", "questStepId":"2", "state":"active", "chosenVariantId":0},
+
+]}

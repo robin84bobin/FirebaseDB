@@ -1,0 +1,18 @@
+{ "collection": [ 
+{"type":"message", "dataType":"", "objectId":"start", "text":"здрасте!", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{"1":{"parentStepId":"start", "targetStepId":"1", "text":"привет"}, "2":{"parentStepId":"start", "targetStepId":"trigger1", "text":"пшол нах"}}},
+{"type":"message", "dataType":"", "objectId":"1", "text":"как дела?", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{"1":{"parentStepId":"1", "targetStepId":"3", "text":"чудненько"}, "2":{"parentStepId":"1", "targetStepId":"2", "text":"не родила"}}},
+{"type":"message", "dataType":"", "objectId":"2", "text":"сударь, вы грубиян!", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{"1":{"parentStepId":"2", "targetStepId":"start", "text":"вы правы, весьма.. давайте попробуем всё сначала"}, "2":{"parentStepId":"2", "targetStepId":"2", "text":"чо нах? ну ка повтори!"}}},
+{"type":"message", "dataType":"", "objectId":"3", "text":"а пойдемте на променад?!", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{"1":{"parentStepId":"3", "targetStepId":"5", "text":"с привеликим удовольствием"}, "2":{"parentStepId":"3", "targetStepId":"2", "text":"а нах не пойдемте?"}}},
+{"type":"message", "dataType":"", "objectId":"4", "text":"", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{}},
+{"type":"message", "dataType":"", "objectId":"5", "text":"Все обнимаются и идут на променад. Хэппи энд.", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{}},
+{"type":"message", "dataType":"", "objectId":"6", "text":"", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{}},
+{"type":"trigger", "dataType":"", "objectId":"trigger1", "triggers":{"bd648624-99f2-48bc-af96-789158d91705":{"condition":"complete", "triggerStepId":"1", "targetStepId":"2", "alterStepId":"start"}}},
+{"type":"trigger", "dataType":"", "objectId":"триггер 111", "triggers":{}},
+{"type":"trigger", "dataType":"", "objectId":"tr2", "triggers":{"037e7271-adec-4ab0-8f6b-a1dc42850bc9":{"condition":"complete", "triggerStepId":"1", "targetStepId":"2", "alterStepId":"start"}}},
+{"type":"trigger", "dataType":"", "objectId":"tr3", "triggers":{"9cec0ae9-32a8-4082-a16f-2ff524573253":{"condition":"complete", "triggerStepId":"1", "targetStepId":"2", "alterStepId":"start"}}},
+{"type":"message", "dataType":"", "objectId":"10", "text":"как дела?", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{"1":{"parentStepId":"10", "targetStepId":"3", "text":"чудненько"}, "2":{"parentStepId":"10", "targetStepId":"2", "text":"не родила"}}},
+{"type":"message", "dataType":"", "objectId":"123", "text":"123", "delayAfterStep":"0", "delayAfterStepMessage":"0", "variants":{"1":{"parentStepId":"123", "targetStepId":"1", "text":"123"}, "2":{"parentStepId":"123", "targetStepId":"3gger", "text":"321"}}},
+{"type":"trigger", "dataType":"", "objectId":"3gger", "triggers":{"ab8e1ad4-2828-413f-ae29-4879d2486828":{"condition":"complete", "triggerStepId":"123", "targetStepId":"1", "alterStepId":"2"}}},
+{"type":"trigger", "dataType":"", "objectId":"3gger2", "triggers":{"4d0b88b6-5fa3-47f8-bc6e-7213a569353d":{"condition":"complete", "triggerStepId":"123", "targetStepId":"1", "alterStepId":"2"}}},
+
+]}

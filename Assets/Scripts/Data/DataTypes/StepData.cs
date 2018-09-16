@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace Data
+﻿namespace Data
 {
-    public class StepData : Item
+    public class StepData : DataItem
     {
-        public string type;
-        public int typeId;
+        public string Type;
+        public string TypeId;
     }
 
 }

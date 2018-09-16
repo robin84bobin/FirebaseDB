@@ -6,22 +6,22 @@ namespace Startup.Steps
     {
         public override void Begin()
         {
-            GameData.Instance.Init(OnLoadSuccess, OnLoadFail);
+            App.Data.Init(OnLoadSuccess);
         }
 
         private void OnLoadSuccess()
         {
-            Complete(StepResult.Success);
+            Complete(StepResult.SUCCESS);
         }
 
         private void OnLoadFail()
         {
-            Complete(StepResult.Fail);
+            Complete(StepResult.FAIL);
         }
         
         public override string GetFailMessage
         {
-            get { return "Can't load data from server"; }
+            get { return "Can't load _messageViewData from server"; }
         }
     }
 }

@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Data;
-using Startup;
-using System;
-using Assets.Scripts.Commands;
+using Assets.Scripts.UI;
 
 public class App : MonoBehaviour
 {
-    // Use this for initialization
+    public static WindowManager UI { get; private set; }
+    public static UserStepsController UserStepsController { get; private set; }
+    public static DataManager Data { get; private set; }
+    
     void Awake()
     {
-        GameData.Instance.Init(OnLoadSuccess, OnLoadFail);
+        DontDestroyOnLoad(gameObject);
+        
+        Data = new DataManager();
+        Data.Init(OnLoadSuccess);
     }
 
     private void OnLoadFail()
@@ -20,6 +23,10 @@ public class App : MonoBehaviour
 
     private void OnLoadSuccess()
     {
-       // throw new NotImplementedException();
+        UserStepsController = new UserStepsController();
+        UserStepsController.Init();
     }
+    
+    
+    
 }
