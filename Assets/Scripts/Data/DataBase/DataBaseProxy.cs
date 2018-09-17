@@ -17,7 +17,7 @@ namespace Data.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="collectionName"> data table/collection name in database</param>
         /// <param name="callback"> returns data list </param>
-        void Get<T>(string collectionName, Action<Dictionary<string, T>> callback) where T : DataItem, new();
+        void Get<T>(string collectionName, Action<Dictionary<string, T>> callback, bool createIfNotExist = true) where T : DataItem, new();
 
         /// <summary>
         /// save data items to database

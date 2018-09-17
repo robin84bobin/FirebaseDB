@@ -25,6 +25,7 @@ namespace Data.DataBase
             CheckDependencies();
         }
 
+ 
         private void CheckDependencies()
         {
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -56,11 +57,20 @@ namespace Data.DataBase
         #endregion
 
 
-        public void Get<T>(string collectionName, Action<Dictionary<string, T>> callback) where T : DataItem, new()
+        public void Get<T>(string collectionName, Action<Dictionary<string, T>> callback, bool createIfNotExist = true) where T : DataItem, new()
         {
+            var test = DbRoot.Child(collectionName);
+            
+            Debug.Log(this.ToString() + ":: Get (" + collectionName + ") = " + test.ToString());
+            
             DbRoot.Child(collectionName).GetValueAsync().ContinueWith(
                 t => ConvertData(t, callback)
             );
+        }
+
+        private void CreateIfNotExist<T>(string collectionName, Action<Dictionary<string, T>> callback) where T : DataItem, new()
+        {
+            throw new NotImplementedException();
         }
 
         private void ConvertData<T>(Task<DataSnapshot> t, Action<Dictionary<string, T>> callback) where T : DataItem, new()
