@@ -22,7 +22,8 @@ namespace Commands
                     commands[i].OnComplete += () => Execute(nextCommand);
                 }
                 else if (i == commands.Length - 1)
-                    commands[i].OnComplete += () => { onSequenceComplete.Invoke(); };
+                    commands[i].OnComplete += onSequenceComplete;
+                    
             }
 
             Execute(commands.First());

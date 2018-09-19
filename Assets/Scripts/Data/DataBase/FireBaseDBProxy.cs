@@ -123,13 +123,13 @@ namespace Data.DataBase
             );
         }
 
-        public void Save<T>(string collectionName, T item, string id = "") where T : DataItem, new()
+        public void Save<T>(string collection, T item, string id = "") where T : DataItem, new()
         {
             item.Id = id;
             var jString = JsonConvert.SerializeObject(item);
             
             //TODO. Почитать возможно надо использовать Push() или Transaction? 
-            DbRoot.Child(collectionName).Child(item.Id).SetRawJsonValueAsync(jString);
+            DbRoot.Child(collection).Child(item.Id).SetRawJsonValueAsync(jString);
         }
     }
 }
