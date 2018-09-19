@@ -13,30 +13,19 @@ namespace Data
         }
 
 
-        public bool ReadOnly { get; protected set; }
+        private bool ReadOnly { get; set; }
 
         /// <summary>
         /// имя таблицы/коллекции в базе данных
         /// </summary>
-        public string CollectionName { get; protected set; }
+        public string CollectionName { get; private set; }
 
         private Dictionary<string, T> _items = new Dictionary<string, T>();
 
         public T this[string id]
         {
             get { return Get(id); }
-            set
-            {
-                if (ReadOnly)
-                {
-                    Debug.LogError(string.Format("Can't set _messageViewData to '{0}' readOnly storage - Id:{1}",
-                        typeof(T), id));
-                    return;
-                }
-
-                if (_items.ContainsKey(id)) _items[id] = value;
-                else _items.Add(id, value);
-            }
+            set { Set(value);}
         }
 
         /// <summary>
@@ -70,17 +59,24 @@ namespace Data
 
         public void Set(T item, string id = "", bool saveNow = false)
         {
+            if (ReadOnly)
+            {
+                Debug.LogError(string.Format("Can't set data to '{0}' readOnly storage - Id:{1}",
+                    typeof(T), id));
+                return;
+            }
+            
             if (_items.ContainsKey(id))
             {
                 _items[id] = item;
                 Debug.Log(
-                    string.Format("Replace _messageViewData in '{0}' storage eg. Id:{1} already exists", CollectionName, id));
+                    string.Format("Replace data in '{0}' storage.  Id:{1} already exists", CollectionName, id));
             }
             else
             {
                 item.Id = id;
                 _items.Add(id, item);
-                Debug.Log(string.Format("Add _messageViewData in '{0}' storage  Id:{1}", CollectionName, id));
+                Debug.Log(string.Format("Add data in '{0}' storage. Id:{1}", CollectionName, id));
             }
 
             if (saveNow) SaveItem(item);

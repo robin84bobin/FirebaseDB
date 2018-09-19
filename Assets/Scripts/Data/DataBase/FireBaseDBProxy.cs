@@ -6,6 +6,7 @@ using Firebase.Database;
 using Firebase.Unity.Editor;
 using InternalNewtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 namespace Data.DataBase
 {
@@ -57,52 +58,78 @@ namespace Data.DataBase
         #endregion
 
 
-        public void Get<T>(string collectionName, Action<Dictionary<string, T>> callback, bool createIfNotExist = true) where T : DataItem, new()
+        public void Get<T>(string collection, Action<Dictionary<string, T>> callback, bool createIfNotExist = true) where T : DataItem, new()
         {
-            var test = DbRoot.Child(collectionName);
+            var test = DbRoot.Child(collection); 
+            Debug.Log(this.ToString() + ":: Get (" + collection + ") = " + test.ToString());
             
-            Debug.Log(this.ToString() + ":: Get (" + collectionName + ") = " + test.ToString());
-            
-            DbRoot.Child(collectionName).GetValueAsync().ContinueWith(
-                t => ConvertData(t, callback)
+            DbRoot.Child(collection).GetValueAsync().ContinueWith(
+                t => GetDataHandler(collection, t, callback, createIfNotExist)
             );
         }
 
-        private void CreateIfNotExist<T>(string collectionName, Action<Dictionary<string, T>> callback) where T : DataItem, new()
-        {
-            throw new NotImplementedException();
-        }
 
-        private void ConvertData<T>(Task<DataSnapshot> t, Action<Dictionary<string, T>> callback) where T : DataItem, new()
+        private void GetDataHandler<T>(
+            string collection, 
+            Task<DataSnapshot> t,
+            Action<Dictionary<string, T>> callback, 
+            bool createIfNotExist = true) where T : DataItem, new()
         {
-            var items = new Dictionary<string, T>();
-            var jString = t.Result.GetRawJsonValue();
-            var list = JsonConvert.DeserializeObject<List<T>>(jString);
-
-            for (var i = 0; i < list.Count; i++)
+            if (t.IsFaulted )
             {
-                if (list[i] == null)
-                    continue;
-                var item = list[i];
-
-                items.Add(item.Id, item);
+                Debug.LogError(this.ToString() + ":: Get Data Failed. Exception: " + t.Exception.ToString());
+                Debug.LogError(this.ToString() + ":: Get Data Failed. Result: " + t.Result);
+                return;
+            }
+            
+            if (t.IsCanceled )
+            {
+                Debug.LogError(this.ToString() + ":: Get Data IsCanceled. Exception: " + t.Exception.ToString());
+                Debug.LogError(this.ToString() + ":: Get Data IsCanceled. Result: " + t.Result);
+                return;
             }
 
-            callback.Invoke(items);
+            if (!t.Result.Exists && createIfNotExist)
+            {
+                Debug.LogError(string.Concat(this.ToString(), ":: Collection not exists: ",collection));
+                Dictionary<string, T> rawDict = new Dictionary<string, T>();
+                rawDict.Add("emptyItem", new T());
+                
+                SaveCollection(collection, rawDict, () =>
+                {
+                    Get(collection, callback, createIfNotExist);
+                });
+                return;
+            }
+            
+            var jString = t.Result.GetRawJsonValue();
+            var items = JsonConvert.DeserializeObject<Dictionary<string, T>>(jString);
+            
+            foreach (var item in items)
+                item.Value.Id = item.Key;
+
+            if (callback != null)
+                callback.Invoke(items);
         }
 
-        public void SaveCollection<T>(string collectionName, Dictionary<string, T> items) where T : DataItem, new()
+        public void SaveCollection<T>(string collection, Dictionary<string, T> items, Action callback = null) where T : DataItem, new()
         {
             var jString = JsonConvert.SerializeObject(items);
-            DbRoot.Child(collectionName).SetRawJsonValueAsync(jString);
+            DbRoot.Child(collection).SetRawJsonValueAsync(jString).ContinueWith(
+                t =>
+                {
+                    if (callback != null) callback.Invoke();
+                }
+            );
         }
 
         public void Save<T>(string collectionName, T item, string id = "") where T : DataItem, new()
         {
             item.Id = id;
-
             var jString = JsonConvert.SerializeObject(item);
-            DbRoot.Child(collectionName).Child(item.Id.ToString()).SetRawJsonValueAsync(jString);
+            
+            //TODO. Почитать возможно надо использовать Push() или Transaction? 
+            DbRoot.Child(collectionName).Child(item.Id).SetRawJsonValueAsync(jString);
         }
     }
 }
