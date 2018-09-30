@@ -19,7 +19,7 @@ namespace Assets.Scripts.UI.Windows
             base.OnShowComplete (param_);
 
             EventManager.Get<LoadProgressEvent> ().Subscribe (OnLoadProgressEvent);
-            EventManager.Get<DataInitCompleteEvent> ().Subscribe (OnLoadComplete);
+            App.InitComplete += OnLoadComplete;
 
             loadingStatusText.text = "please wait...";
             startButton.onClick.AddListener (OnStartButton);
@@ -42,7 +42,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnHide ();
             EventManager.Get<LoadProgressEvent> ().Unsubscribe (OnLoadProgressEvent);
-            EventManager.Get<DataInitCompleteEvent> ().Unsubscribe (OnLoadComplete);
+            App.InitComplete -= OnLoadComplete;
         }
 
         public void OnStartButton ()

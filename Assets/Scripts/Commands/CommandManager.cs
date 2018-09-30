@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Commands
 {
-    public class CommandManager
+    public static class CommandManager
     {
         //TODO undo stack
 

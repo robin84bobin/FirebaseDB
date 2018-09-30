@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.DataTypes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +17,10 @@ public class MessageStepEditor : AbstractStepEditor {
     }
 
     string _id = string.Empty;
-    internal override void Init(StepData stepData)
+    internal override void Init(QuestStepData questStepData)
     {
-        _stepData = stepData;
-        QuestMessageData questMessageData = App.Data.QuestMessageStep[_stepData.TypeId];
+        QuestStepData = questStepData;
+        QuestMessageData questMessageData = App.Data.MessageSteps[QuestStepData.typeId];
         _messageInput.text = questMessageData.text;
         _id = questMessageData.Id;
 
@@ -34,14 +35,14 @@ public class MessageStepEditor : AbstractStepEditor {
     internal override void SaveData()
     {
         GrabDataFromUI();
-        App.Data.Steps.Set(_stepData, _stepData.Id, true);
-        App.Data.QuestMessageStep.Set(_questMessageData, _questMessageData.Id, true);
+        App.Data.Steps.Set(QuestStepData, QuestStepData.Id, true);
+        App.Data.MessageSteps.Set(_questMessageData, _questMessageData.Id, true);
     }
 
-    internal override StepData GetData()
+    internal override QuestStepData GetData()
     {
         GrabDataFromUI();
-        return _stepData;
+        return QuestStepData;
     }
 
     QuestMessageData _questMessageData;

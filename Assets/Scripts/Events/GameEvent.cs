@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Events;
 using UnityEngine;
 
-namespace Assets.Scripts.Events
+namespace Events
 {
     public class GameEvent
     {
@@ -53,7 +54,7 @@ namespace Assets.Scripts.Events
         public void Subscribe( Action<TParam> callback_)
         {
             if (_callbacks.Contains(callback_)){
-                Debug.LogWarning(string.Format ("Dublicate event '{0}' subscription callback: {1}", this.GetType().Name, callback_.ToString()));
+                Debug.LogWarning(string.Format ("Duplicated event '{0}' subscription callback: {1}", this.GetType().Name, callback_.ToString()));
                 return;
             }
 		

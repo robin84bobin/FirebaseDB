@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Events;
+using Events;
 
 public class NewMessageEvent : GameParamEvent<MessageViewData>
 {

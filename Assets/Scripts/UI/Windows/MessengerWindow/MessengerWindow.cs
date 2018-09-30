@@ -17,7 +17,8 @@ public class MessengerWindow : MonoBehaviour {
     void Start()
     {
         ResetView();
-        EventManager.Get<DataInitCompleteEvent>().Subscribe(Init);
+        
+        App.InitComplete += Init;
     }
 
     private void ResetView()
@@ -34,7 +35,8 @@ public class MessengerWindow : MonoBehaviour {
 
     private void Init()
     {
-        EventManager.Get<DataInitCompleteEvent>().Unsubscribe(Init);
+        App.InitComplete -= Init;
+        
         EventManager.Get<NewMessageEvent>().Subscribe(ShowNewMessage);
         EventManager.Get<TypeMessageCompleteEvent>().Subscribe(OnTypeMessageComplete);
         InitMessages();
@@ -48,7 +50,7 @@ public class MessengerWindow : MonoBehaviour {
         }
         else
         {
-            App.UserStepsController.GoToStep("start");
+            App.UserQuestController.GoToStep("start");
         }
        
     }
@@ -70,7 +72,7 @@ public class MessengerWindow : MonoBehaviour {
 
         messages.Clear();
         _scrollPicker.SetData(messages);
-        App.UserStepsController.GoToStep("start");
+        App.UserQuestController.GoToStep("start");
     }
 
     private void InitMessages()
@@ -118,7 +120,7 @@ public class MessengerWindow : MonoBehaviour {
         ResetVariantButtons();
         if (!messageViewData.isUserMsg)
         {
-            QuestMessageData questStep = App.Data.QuestMessageStep[messageViewData.parentQuestStepId];
+            QuestMessageData questStep = App.Data.MessageSteps[messageViewData.parentQuestStepId];
             for (int i = 0; i < _variantButtons.Length; i++)
             {
                 if (i < questStep.variants.Length)

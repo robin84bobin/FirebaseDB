@@ -8,12 +8,12 @@ public class UserQuestStepData : DataItem
     /// <summary>
     /// Quest step id
     /// </summary>
-    public string questStepId;
+    public string questStepId = string.Empty;
     
     /// <summary>
     /// State of quest step
     /// </summary>
-    public string state;
+    public string state = string.Empty;
     
     /// <summary>
     /// variant chosen by user
@@ -36,8 +36,8 @@ public class UserQuestStepData : DataItem
     public QuestMessageData GetQuestStep()
     {
         var step = App.Data.Steps[questStepId];
-        if (step.Type == QuestStepType.MESSAGE)
-            return App.Data.QuestMessageStep[step.TypeId];
+        if (step.stepType == QuestStepType.MESSAGE)
+            return App.Data.MessageSteps[step.typeId];
         return null;
     }
 }

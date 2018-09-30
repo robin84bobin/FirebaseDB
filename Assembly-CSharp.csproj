@@ -3,6 +3,8 @@
   <PropertyGroup>
     <LangVersion>4</LangVersion>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -172,8 +174,7 @@
     <Compile Include="Assets\Scripts\Commands\InitStorageCommand.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\BaseStateMachine.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\IBaseState.cs" />
-    <Compile Include="Assets\Scripts\Controllers\UserStepsController.cs" />
-    <Compile Include="Assets\Scripts\Data\Attributes\DBFieldAttribute.cs" />
+    <Compile Include="Assets\Scripts\Controllers\UserQuestController.cs" />
     <Compile Include="Assets\Scripts\Data\DataBase\DataBaseProxy.cs" />
     <Compile Include="Assets\Scripts\Data\DataBase\FireBaseDBProxy.cs" />
     <Compile Include="Assets\Scripts\Data\DataFactories\JsonFactories\AbstractJsonFactory.cs" />
@@ -182,8 +183,8 @@
     <Compile Include="Assets\Scripts\Data\DataStorage.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes\QuestMessageData.cs" />
+    <Compile Include="Assets\Scripts\Data\DataTypes\QuestStepData.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes\QuestTriggerStepData.cs" />
-    <Compile Include="Assets\Scripts\Data\DataTypes\StepData.cs" />
     <Compile Include="Assets\Scripts\Data\DB\IDataBaseProxy.cs" />
     <Compile Include="Assets\Scripts\Data\DB\JSONProxy.cs" />
     <Compile Include="Assets\Scripts\Data\MessageViewData.cs" />
@@ -211,9 +212,6 @@
     <Compile Include="Assets\Scripts\Extensions\UnityUI\UIExtensions.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Model\QuestStep.cs" />
-    <Compile Include="Assets\Scripts\Startup\StartupController.cs" />
-    <Compile Include="Assets\Scripts\Startup\Steps\StepBase.cs" />
-    <Compile Include="Assets\Scripts\Startup\Steps\StepDataDownload.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItem.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItemsContainer.cs" />
     <Compile Include="Assets\Scripts\UI\MessageView.cs" />

@@ -32,6 +32,6 @@ public class VariantButton : MonoBehaviour {
     private void OnBtnClick()
     {
         if (_variantData == null) return;
-        App.UserStepsController.CompleteStep(_variantData.parentStepId, _variantData.variantId);
+        App.UserQuestController.CompleteStep(_variantData.parentStepId, _variantData.variantId);
     }
 }

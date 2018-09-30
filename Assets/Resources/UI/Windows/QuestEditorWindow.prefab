@@ -3806,8 +3806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d966adc07cb997646afd2967a40b72dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _triggers:
-  - {fileID: 114508284847924786}
+  _triggerEditors: []
 --- !u!114 &114091763974662246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4276,10 +4275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535e547ab1b68d34b9d001b05b3fc2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 114920806354463552}
-  buttonAdd: {fileID: 114841528512628444}
-  buttonRemove: {fileID: 0}
-  buttonGoTo: {fileID: 114379582854616588}
+  Dropdown: {fileID: 114920806354463552}
+  _buttonAdd: {fileID: 114841528512628444}
+  _buttonRemove: {fileID: 0}
+  _buttonGoTo: {fileID: 114379582854616588}
 --- !u!114 &114159299488295406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5085,7 +5084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dropdownType: {fileID: 114148828606890968}
   _dropdownId: {fileID: 114619111584945444}
-  _commonStepEditor: {fileID: 114564418396930330}
+  _messageStepEditor: {fileID: 0}
   _triggerStepEditor: {fileID: 114087798325117404}
 --- !u!114 &114276591039139188
 MonoBehaviour:
@@ -5152,8 +5151,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114437380271056572}
   m_HandleRect: {fileID: 224579682041258486}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0.5
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5432,10 +5431,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535e547ab1b68d34b9d001b05b3fc2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 114762411391617272}
-  buttonAdd: {fileID: 114400134216289372}
-  buttonRemove: {fileID: 0}
-  buttonGoTo: {fileID: 114669916399893220}
+  Dropdown: {fileID: 114762411391617272}
+  _buttonAdd: {fileID: 114400134216289372}
+  _buttonRemove: {fileID: 0}
+  _buttonGoTo: {fileID: 114669916399893220}
 --- !u!114 &114315922868770672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6130,10 +6129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535e547ab1b68d34b9d001b05b3fc2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 114505759788055078}
-  buttonAdd: {fileID: 114019585436528816}
-  buttonRemove: {fileID: 0}
-  buttonGoTo: {fileID: 114163331400750998}
+  Dropdown: {fileID: 114505759788055078}
+  _buttonAdd: {fileID: 114019585436528816}
+  _buttonRemove: {fileID: 0}
+  _buttonGoTo: {fileID: 114163331400750998}
 --- !u!114 &114410844422793702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6876,10 +6875,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535e547ab1b68d34b9d001b05b3fc2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 114131211185164512}
-  buttonAdd: {fileID: 114251347008037286}
-  buttonRemove: {fileID: 0}
-  buttonGoTo: {fileID: 114670089322677548}
+  Dropdown: {fileID: 114131211185164512}
+  _buttonAdd: {fileID: 114251347008037286}
+  _buttonRemove: {fileID: 0}
+  _buttonGoTo: {fileID: 114670089322677548}
 --- !u!114 &114502303528106256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6935,11 +6934,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
   mWidth: 100
   mHeight: 100
@@ -7753,7 +7748,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114263196256649266}
   m_HandleRect: {fileID: 224778912932141558}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.99999946
   m_Size: 0.80109996
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7871,10 +7866,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535e547ab1b68d34b9d001b05b3fc2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 114895180139974732}
-  buttonAdd: {fileID: 114781189044801162}
-  buttonRemove: {fileID: 0}
-  buttonGoTo: {fileID: 0}
+  Dropdown: {fileID: 114895180139974732}
+  _buttonAdd: {fileID: 114781189044801162}
+  _buttonRemove: {fileID: 0}
+  _buttonGoTo: {fileID: 0}
 --- !u!114 &114636740361886958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8611,10 +8606,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535e547ab1b68d34b9d001b05b3fc2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 114592453034817594}
-  buttonAdd: {fileID: 114612934158216330}
-  buttonRemove: {fileID: 0}
-  buttonGoTo: {fileID: 114289425319452632}
+  Dropdown: {fileID: 114592453034817594}
+  _buttonAdd: {fileID: 114612934158216330}
+  _buttonRemove: {fileID: 0}
+  _buttonGoTo: {fileID: 114289425319452632}
 --- !u!114 &114709170539830764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9507,11 +9502,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
   mWidth: 100
   mHeight: 100
@@ -12022,7 +12013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.0325012, y: 1.0499725}
+  m_AnchoredPosition: {x: 2.0325012, y: 1.0499878}
   m_SizeDelta: {x: -35.13501, y: -219.10004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224096463093489684
@@ -13304,9 +13295,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: -17, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &224451277836042376
 RectTransform:
@@ -13783,8 +13774,8 @@ RectTransform:
   m_Father: {fileID: 224025840340284190}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.000000029802322, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13878,9 +13869,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224622761030885324
 RectTransform:
@@ -13975,7 +13966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000057332218}
+  m_AnchoredPosition: {x: 0, y: -0.000034432876}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224672960370502382
@@ -14321,8 +14312,8 @@ RectTransform:
   m_Father: {fileID: 224355747581626308}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.19890004}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14416,7 +14407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224802254488881176

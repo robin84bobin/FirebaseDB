@@ -6,7 +6,7 @@ namespace Assets.Scripts.UI
 {
     public class WindowManager : MonoBehaviour 
     {
-        public Canvas uiRoot;
+        public Canvas UiRoot;
 
         void Awake()
         {
@@ -16,32 +16,34 @@ namespace Assets.Scripts.UI
         private List<BaseWindow> _shownWindows;
         void Init()
         {
-            GameObject.DontDestroyOnLoad(uiRoot.gameObject);
+            if (UiRoot == null) UiRoot = FindObjectOfType<Canvas>();
+            
+            GameObject.DontDestroyOnLoad(UiRoot.gameObject);
             GameObject.DontDestroyOnLoad(this.gameObject);
             _shownWindows = new List<BaseWindow>();
         }
 
-        public GameObject LoadPrefab(string prefabName_)
+        public GameObject LoadPrefab(string prefabName)
         {
-            string path = string.Format ("UI/Windows/{0}", prefabName_);
+            string path = string.Format ("UI/Windows/{0}", prefabName);
             GameObject go = Resources.Load(path) as GameObject;
-            go.name = prefabName_;
+            go.name = prefabName;
             return go;
         }
 
-        public void Show(string windowName_, WindowParams param_ = null)
+        public void Show(string windowName, WindowParams param = null)
         {
             HideAllWindows ();
-            GameObject windowGo = LoadPrefab(windowName_);
+            GameObject windowGo = LoadPrefab(windowName);
             BaseWindow newWindow = InstantiateWindow(windowGo);
-            newWindow.OnShowComplete(param_);
+            newWindow.OnShowComplete(param);
             _shownWindows.Add(newWindow);
         }
 
-        BaseWindow InstantiateWindow(GameObject windowGo_)
+        BaseWindow InstantiateWindow(GameObject windowGameObject)
         {
-            GameObject parent = uiRoot.gameObject;
-            GameObject go = GameObject.Instantiate(windowGo_) as GameObject;
+            GameObject parent = UiRoot.gameObject;
+            GameObject go = GameObject.Instantiate(windowGameObject) as GameObject;
             if (go != null && parent != null)
             {
                 Transform t = go.transform;
@@ -63,12 +65,12 @@ namespace Assets.Scripts.UI
             }
         }
 
-        public void HideWindow (BaseWindow window_)
+        public void HideWindow (BaseWindow window)
         {
-            _shownWindows.Remove(window_);
+            _shownWindows.Remove(window);
 
-            window_.transform.parent = null;
-            GameObject.Destroy(window_.gameObject);
+            window.transform.parent = null;
+            GameObject.Destroy(window.gameObject);
         }
     }
 }

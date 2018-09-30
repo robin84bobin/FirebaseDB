@@ -1,4 +1,6 @@
 ﻿using Data;
+using Data.DataTypes;
+using UI.Windows.QuestEditorWindow.Components.ConcreteStepEditorTabs;
 using UnityEngine;
 
 public class TriggerStepEditor : AbstractStepEditor
@@ -7,9 +9,9 @@ public class TriggerStepEditor : AbstractStepEditor
     [SerializeField] TriggerEditor[] _triggerEditors;
 
     string _id = string.Empty;
-    internal override void Init(StepData stepData)
+    internal override void Init(QuestStepData questStepData)
     {
-        QuestTriggerStepData sourceData = App.Data.QuestTriggerStep[stepData.TypeId];
+        QuestTriggerStepData sourceData = App.Data.TriggerSteps[questStepData.typeId];
         _id = sourceData.Id;
         for (int i = 0; i < _triggerEditors.Length; i++)
         {
@@ -21,14 +23,14 @@ public class TriggerStepEditor : AbstractStepEditor
     internal override void SaveData()
     {
         GrabDataFromUI();
-        App.Data.Steps.Set(_stepData, _stepData.Id, true);
-        App.Data.QuestTriggerStep.Set(_triggerStepData, _triggerStepData.Id, true);
+        App.Data.Steps.Set(QuestStepData, QuestStepData.Id, true);
+        App.Data.TriggerSteps.Set(_triggerStepData, _triggerStepData.Id, true);
     }
 
-    internal override StepData GetData()
+    internal override QuestStepData GetData()
     {
         GrabDataFromUI();
-        return _stepData;
+        return QuestStepData;
     }
 
     QuestTriggerStepData _triggerStepData;

@@ -17,6 +17,7 @@ namespace Data.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"> data table/collection name in database</param>
         /// <param name="callback"> returns data list </param>
+        /// <param name="createIfNotExist"></param>
         void Get<T>(string collection, Action<Dictionary<string, T>> callback, bool createIfNotExist = true) where T : DataItem, new();
 
         /// <summary>
@@ -25,6 +26,7 @@ namespace Data.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>
         /// <param name="items"></param>
+        /// <param name="callback"></param>
         void SaveCollection<T>(string collection, Dictionary<string, T> items, Action callback = null) where T : DataItem, new();
 
         /// <summary>
@@ -33,8 +35,14 @@ namespace Data.DataBase
         /// <param name="collection"></param>
         /// <param name="item"></param>
         /// <param name="id"></param>
+        /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
-        void Save<T>(string collection, T item, string id = "") where T : DataItem, new();
+        void Save<T>(string collection, T item, string id = "", Action<T> callback = null) where T : DataItem, new();
+
+        /// <summary>
+        /// fire event with Type parameter of storage have updated
+        /// </summary>
+        event Action<Type> OnStorageUpdated;
 
     }
 
@@ -44,14 +52,7 @@ namespace Data.DataBase
 
         public static IDataBaseProxy Instance
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = GetInstance();
-                }
-                return _instance;
-            }
+            get { return _instance ?? (_instance = GetInstance()); }
         }
 
         /// <summary>

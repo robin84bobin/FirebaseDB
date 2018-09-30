@@ -91,14 +91,18 @@ namespace Data.DataBase
 
             if (!t.Result.Exists && createIfNotExist)
             {
-                Debug.LogError(string.Concat(this.ToString(), ":: Collection not exists: ",collection));
+                /*Debug.LogError(string.Concat(this.ToString(), ":: Collection not exists: ",collection));
                 Dictionary<string, T> rawDict = new Dictionary<string, T>();
                 rawDict.Add("emptyItem", new T());
                 
                 SaveCollection(collection, rawDict, () =>
                 {
                     Get(collection, callback, createIfNotExist);
-                });
+                });*/
+                
+                if (callback != null)
+                    callback.Invoke(new Dictionary<string, T>());
+                
                 return;
             }
             
@@ -123,13 +127,29 @@ namespace Data.DataBase
             );
         }
 
-        public void Save<T>(string collection, T item, string id = "") where T : DataItem, new()
+        public void Save<T>(string collection, T item, string id = "", Action<T> callback = null) where T : DataItem, new()
         {
-            item.Id = id;
+            if (string.IsNullOrEmpty(item.Id)) 
+                item.Id = id;
             var jString = JsonConvert.SerializeObject(item);
             
             //TODO. Почитать возможно надо использовать Push() или Transaction? 
-            DbRoot.Child(collection).Child(item.Id).SetRawJsonValueAsync(jString);
+            
+            DbRoot.Child(collection).Child(item.Id).SetRawJsonValueAsync(jString).ContinueWith(t =>
+                {
+                    if (t.Exception != null)
+                    {
+                        Debug.LogError(this + " Error Saving:"+ jString +" \n" + t.Exception.ToString());
+                        return;
+                    }
+                    if(callback!=null) 
+                        callback.Invoke(item);
+                    
+                     OnStorageUpdated.Invoke(typeof(T));
+                });
+            
         }
+
+        public event Action<Type> OnStorageUpdated = delegate {  };
     }
 }

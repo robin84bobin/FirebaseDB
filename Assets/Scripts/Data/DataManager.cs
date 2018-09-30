@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Commands;
 using Data.DataBase;
+using Data.DataTypes;
 
 namespace Data
 {
@@ -10,31 +11,32 @@ namespace Data
         public  DataStorage<UserQuestStepData> UserSteps;
         public  DataStorage<MessageViewData> UserMessageHistory;
         
-        public  DataStorage<StepData> Steps;
-        public  DataStorage<QuestTriggerStepData> QuestTriggerStep;
-        public  DataStorage<QuestMessageData> QuestMessageStep;
+        public  DataStorage<QuestStepData> Steps;
+        public  DataStorage<QuestTriggerStepData> TriggerSteps;
+        public  DataStorage<QuestMessageData> MessageSteps;
 
-        public event Action OnDataParseComplete = delegate { };
+        public event Action OnInitComplete = delegate { };
         
-        private List<Command> _initStorageCommands;
+        private List<Command> _initStoragesCommands;
 
         
         public DataManager()
         {
-            _initStorageCommands = new List<Command>();
+            _initStoragesCommands = new List<Command>();
         }
         
         
 
         public void Init(Action onSuccess)
         {
-            OnDataParseComplete += onSuccess;
+            OnInitComplete += onSuccess;
 
-            QuestMessageStep = new DataStorage<QuestMessageData>("message");
-            QuestTriggerStep = new DataStorage<QuestTriggerStepData>("trigger");
-            Steps = new DataStorage<StepData>("steps");
-            UserMessageHistory = new DataStorage<MessageViewData>("user_message_history");
-            UserSteps = new DataStorage<UserQuestStepData>("user_steps");
+            Steps = new DataStorage<QuestStepData>(Collections.STEP);
+            MessageSteps = new DataStorage<QuestMessageData>(Collections.MESSAGE);
+            TriggerSteps = new DataStorage<QuestTriggerStepData>(Collections.TRIGGER);
+            
+            UserSteps = new DataStorage<UserQuestStepData>(Collections.USER_STEP);
+            UserMessageHistory = new DataStorage<MessageViewData>(Collections.USER_MESSAGE);
             
             DataBaseProxy.Instance.Init(OnDbInitComplete);
         }
@@ -48,29 +50,30 @@ namespace Data
         internal void RegisterStorage<T>(DataStorage<T> dataStorage) where T : DataItem, new()
         {
             var command = new InitStorageCommand<T>(dataStorage);
-            _initStorageCommands.Add(command);
+            _initStoragesCommands.Add(command);
         }
 
 
         private void OnDbInitComplete()
         {
-            CommandManager.ExecuteSequence(OnStoragesInited, _initStorageCommands.ToArray());
+            CommandManager.ExecuteSequence( OnInitComplete, _initStoragesCommands.ToArray());
         }
 
-
-        private void OnStoragesInited()
-        {
-            _initStorageCommands = null;
-            OnDataParseComplete.Invoke();
-
-            var s = new StepData() {Type = "errorType", TypeId = ""};
-            Steps.Set(s, "error_Id", true);
-        }
 
         public void ClearUserData()
         {
             UserSteps.Clear();
             UserMessageHistory.Clear();
         }
+    }
+    
+    
+    public struct Collections
+    {
+        public const string STEP = "step";
+        public const string USER_STEP = "user_step";
+        public const string MESSAGE = "message";
+        public const string TRIGGER = "trigger";
+        public const string USER_MESSAGE = "user_message_history";
     }
 }

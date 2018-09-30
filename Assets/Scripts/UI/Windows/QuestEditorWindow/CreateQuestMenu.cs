@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Assets.Scripts.Data;
 using Assets.Scripts.UI;
 using Data;
+using Data.DataTypes;
 
 
 public class CreateQuestMenuParams : WindowParams
 {
-    public StepData templateData;
+    public QuestStepData templateData;
     public Action<string> OnCreateSuccess = delegate { };
 }
 
@@ -51,7 +53,7 @@ public class CreateQuestMenu : BaseWindow {
         //
         if (parameters.templateData != null)
         {   //нельзя менять тип если сохраняем уже существующий шаг
-            _typeDropdown.SelectValue(parameters.templateData.Type);
+            _typeDropdown.SelectValue(parameters.templateData.stepType);
             _typeDropdown.interactable = false;
         }
         else
@@ -91,28 +93,38 @@ public class CreateQuestMenu : BaseWindow {
 
     private void Save()
     {
-        StepData item;
-        if (parameters.templateData != null)
-        {
-            item = parameters.templateData;
-            item.Id = _newId;
-        }
-        else
-        {
-            item = CreateData();
-            item.Id = _newId;
-            item.Type = _newType;
-        }
-        
-        App.Data.Steps.Set(item, _newId, true);
-        //
-        parameters.OnCreateSuccess.Invoke(_newId);
+        QuestStepData item = parameters.templateData ?? new QuestStepData() { stepType = _newType };;
+        item.Id = _newId;
+        item.stepType = _newType;
+        item.typeId = _newId;
+
+        App.Data.Steps.Set(item, item.Id, true, t => CreateRelatedData(item));
     }
 
-    private StepData CreateData()
+    private void CreateRelatedData(QuestStepData item)
     {
-        return new StepData() {Type = _newType};
+        switch (item.stepType)
+        {
+            case Collections.MESSAGE:
+            {
+                var messageData = new QuestMessageData {Id = item.typeId};
+                App.Data.MessageSteps.Set(messageData, messageData.Id, true,
+                    q => parameters.OnCreateSuccess.Invoke(q.Id));
+                break;
+            }
+            case Collections.TRIGGER:
+            {
+                var triggerData = new QuestTriggerStepData() {Id = item.typeId};
+                App.Data.TriggerSteps.Set(triggerData, triggerData.Id, true,
+                    q => parameters.OnCreateSuccess.Invoke(q.Id));
+                break;
+            }
+            default:
+                Debug.LogError(this + " Save(): unknown type: " + item.stepType);
+                break;
+        }
     }
+
 
     public void OnCancelClick()
     {

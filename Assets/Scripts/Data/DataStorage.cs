@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.DataBase;
 using UnityEngine;
 
 namespace Data
@@ -39,7 +40,7 @@ namespace Data
             ReadOnly = readOnly;
 
             App.Data.RegisterStorage(this);
-            App.Data.OnDataParseComplete += InitItems;
+            App.Data.OnInitComplete += InitItems;
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace Data
         /// </summary>
         private void InitItems()
         {
-            App.Data.OnDataParseComplete -= InitItems;
+            App.Data.OnInitComplete -= InitItems;
             foreach (var item in _items)
             {
                 item.Value.Init();
@@ -57,7 +58,7 @@ namespace Data
 
         #region SET DATA METHODS
 
-        public void Set(T item, string id = "", bool saveNow = false)
+        public void Set(T item, string id = "", bool saveNow = false, Action<T> callback = null)
         {
             if (ReadOnly)
             {
@@ -74,18 +75,14 @@ namespace Data
             }
             else
             {
-                item.Id = id;
-                _items.Add(id, item);
+                if (string.IsNullOrEmpty(item.Id))
+                    item.Id = id;
+                _items.Add(item.Id, item);
                 Debug.Log(string.Format("Add data in '{0}' storage. Id:{1}", CollectionName, id));
             }
 
-            if (saveNow) SaveItem(item);
-        }
-
-        
-        private void SaveItem(T item)
-        {
-            DataBase.DataBaseProxy.Instance.Save(CollectionName, item);
+            if (saveNow) 
+                DataBaseProxy.Instance.Save(CollectionName, item, item.Id, callback);
         }
 
         
