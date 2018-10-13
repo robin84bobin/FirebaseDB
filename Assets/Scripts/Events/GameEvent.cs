@@ -5,6 +5,68 @@ using UnityEngine;
 
 namespace Events
 {
+
+    public class GlobalEventParam<TParam>
+    {
+        private object _lockObject = new object();
+
+        private event Action<TParam> Event = delegate { };
+
+        public void Subscribe(Action<TParam> value)
+        {
+            lock (_lockObject)
+            {
+                Event += value;
+            }
+        }
+        
+        public void Undubscribe(Action<TParam> value)
+        {
+            lock (_lockObject)
+            {
+                Event -= value;
+            }
+        }
+
+        public void Publish(TParam eventParam)
+        {
+            //lock (_lockObject) Event.Invoke(p);
+            GlobalEvents.Instance.AddToQueue( new EventParamCallbackWrapper<TParam>(Event, eventParam));
+        }
+    }
+    
+    public class GlobalEvent
+    {
+        private object _lockObject = new object();
+
+        private event Action Event = delegate { };
+
+        public void Subscribe(Action value)
+        {
+            lock (_lockObject)
+            {
+                Event += value;
+            }
+        }
+        
+        public void Unsubscribe(Action value)
+        {
+            lock (_lockObject)
+            {
+                Event -= value;
+            }
+        }
+
+        public void Publish()
+        {
+            //lock (_lockObject) Event.Invoke();
+            
+            GlobalEvents.Instance.AddToQueue( new EventCallbackWrapper(Event));
+        }
+    }
+    
+    
+    
     public class GameEvent
     {
         private readonly List<Action> _callbacks;

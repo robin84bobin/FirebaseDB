@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
 namespace Assets.Scripts.Events
@@ -19,6 +20,8 @@ namespace Assets.Scripts.Events
         }
 
         private object _eventLock = new object();
+        
+        public static GlobalEvent DataInitedEvent = new GlobalEvent();
 
         void Awake()
         {
