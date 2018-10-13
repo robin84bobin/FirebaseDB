@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Events;
-using Assets.Scripts.Events.CustomEvents;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Data;
+using Global;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,8 +36,8 @@ public class MessengerWindow : MonoBehaviour {
     {
         App.InitComplete -= Init;
         
-        GlobalEvents.Get<NewMessageEvent>().Subscribe(ShowNewMessage);
-        GlobalEvents.Get<TypeMessageCompleteEvent>().Subscribe(OnTypeMessageComplete);
+        GlobalEvents.OnMessageNew.Subscribe(ShowNewMessage);
+        GlobalEvents.OnMessageTypeComplete.Subscribe(OnTypeMessageComplete);
         InitMessages();
         _scrollPicker.Init();
 

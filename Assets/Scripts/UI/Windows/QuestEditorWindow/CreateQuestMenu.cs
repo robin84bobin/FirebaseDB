@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using Assets.Scripts.Data;
 using Assets.Scripts.UI;
 using Data;
 using Data.DataTypes;

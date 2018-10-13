@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Events;
-using Assets.Scripts.Events.CustomEvents;
 using Assets.Scripts.UI.Windows;
 using Data.DataTypes;
+using Global;
 using UI.Windows.QuestEditorWindow.Components;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,7 +36,7 @@ namespace UI.Windows.QuestEditorWindow
         {
             Init();
             
-            GlobalEvents.DataInitedEvent.Subscribe(Init);
+            GlobalEvents.OnDataInited.Subscribe(Init);
             //GlobalEvents.Get<DataInitCompleteEvent>().Subscribe(Init);
             //Events.Events.OnDataInitComplete += Init;
             //App.InitComplete += Init;

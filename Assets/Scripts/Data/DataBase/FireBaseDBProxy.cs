@@ -6,7 +6,6 @@ using Firebase.Database;
 using Firebase.Unity.Editor;
 using InternalNewtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 namespace Data.DataBase
 {

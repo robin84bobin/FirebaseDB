@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Events;
-using Assets.Scripts.Events.CustomEvents;
 using Data.DataBase;
 using Data.DataTypes;
 using UnityEngine;

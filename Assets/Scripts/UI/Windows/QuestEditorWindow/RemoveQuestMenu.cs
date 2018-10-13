@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.UI;
 using Assets.Scripts.UI.Windows;
-using Data;
 using UnityEngine;
 using UnityEngine.UI;
 

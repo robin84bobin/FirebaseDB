@@ -1,7 +1,7 @@
 ﻿using System;
-using Assets.Scripts.Events;
 using Data;
 using Data.DataTypes;
+using Global;
 using UnityEngine;
 
 namespace Controllers
@@ -139,7 +139,7 @@ namespace Controllers
             msg.parentQuestStepId = parentQuestStepId;
 
             App.Data.UserMessageHistory.Set(msg);
-            GlobalEvents.Get<NewMessageEvent>().Publish(msg);
+            GlobalEvents.OnMessageNew.Publish(msg);
         }
     }
 }

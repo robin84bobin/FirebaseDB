@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Events;
-using System.Collections;
+﻿using System.Collections;
+using Global;
 using UnityEngine;
 
 public class MessageScrollItem : BaseScrollItem {
@@ -57,6 +57,6 @@ public class MessageScrollItem : BaseScrollItem {
             message.text = text.Substring(0, text.Length - chrLeft);
         }
 
-        GlobalEvents.Get<TypeMessageCompleteEvent>().Publish(_messageViewData);
+        GlobalEvents.OnMessageTypeComplete.Publish(_messageViewData);
     }
 }

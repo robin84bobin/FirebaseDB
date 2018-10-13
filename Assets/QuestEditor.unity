@@ -388,6 +388,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 224778912932141558, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.19889982
+      objectReference: {fileID: 0}
+    - target: {fileID: 224579682041258486, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e32a76c9bc13564985e491a47a9e4d2, type: 2}
   m_IsPrefabAsset: 0
@@ -497,7 +507,7 @@ Transform:
   m_GameObject: {fileID: 1016095091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.003030303, y: 0.003030303, z: 0.003030303}
+  m_LocalScale: {x: 0.0030534351, y: 0.0030534351, z: 0.0030534351}
   m_Children:
   - {fileID: 462911127}
   - {fileID: 1973750727}

@@ -1,5 +1,4 @@
-﻿using Data;
-using Data.DataTypes;
+﻿using Data.DataTypes;
 using UnityEngine;
 
 abstract public class AbstractStepEditor : MonoBehaviour

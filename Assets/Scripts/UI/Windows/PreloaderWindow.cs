@@ -1,5 +1,4 @@
-using Assets.Scripts.Events;
-using Assets.Scripts.Events.CustomEvents;
+using Global;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Windows
@@ -18,7 +17,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShowComplete (param_);
 
-            GlobalEvents.Get<LoadProgressEvent> ().Subscribe (OnLoadProgressEvent);
+            GlobalEvents.OnLoadingProgress.Subscribe (OnLoadProgressEvent);
             App.InitComplete += OnLoadComplete;
 
             loadingStatusText.text = "please wait...";
@@ -41,7 +40,7 @@ namespace Assets.Scripts.UI.Windows
         protected override void OnHide ()
         {
             base.OnHide ();
-            GlobalEvents.Get<LoadProgressEvent> ().Unsubscribe (OnLoadProgressEvent);
+            GlobalEvents.OnLoadingProgress.Undubscribe(OnLoadProgressEvent);
             App.InitComplete -= OnLoadComplete;
         }
 

@@ -1,10 +1,9 @@
 ﻿using System;
-using Assets.Scripts.Events;
-using Assets.Scripts.Events.CustomEvents;
 using UnityEngine;
 using Data;
 using Assets.Scripts.UI;
 using Controllers;
+using Global;
 
 public class App : MonoBehaviour
 {
@@ -40,11 +39,8 @@ public class App : MonoBehaviour
     {
         UserQuestController = new UserQuestController();
         UserQuestController.Init();
-
         
-        GlobalEvents.DataInitedEvent.Publish();
-        
-        //GlobalEvents.Get<DataInitCompleteEvent>().Publish();
+        GlobalEvents.OnDataInited.Publish();
     }
     
     
