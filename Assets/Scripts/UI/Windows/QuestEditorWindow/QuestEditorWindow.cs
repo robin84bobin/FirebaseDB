@@ -36,7 +36,10 @@ namespace UI.Windows.QuestEditorWindow
         void Start ()
         {
             Init();
-            App.InitComplete += Init;
+            
+            GlobalEvents.Get<DataInitCompleteEvent>().Subscribe(Init);
+            //Events.Events.OnDataInitComplete += Init;
+            //App.InitComplete += Init;
         }
 
         private void Init()

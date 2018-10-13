@@ -18,7 +18,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShowComplete (param_);
 
-            EventManager.Get<LoadProgressEvent> ().Subscribe (OnLoadProgressEvent);
+            GlobalEvents.Get<LoadProgressEvent> ().Subscribe (OnLoadProgressEvent);
             App.InitComplete += OnLoadComplete;
 
             loadingStatusText.text = "please wait...";
@@ -41,7 +41,7 @@ namespace Assets.Scripts.UI.Windows
         protected override void OnHide ()
         {
             base.OnHide ();
-            EventManager.Get<LoadProgressEvent> ().Unsubscribe (OnLoadProgressEvent);
+            GlobalEvents.Get<LoadProgressEvent> ().Unsubscribe (OnLoadProgressEvent);
             App.InitComplete -= OnLoadComplete;
         }
 

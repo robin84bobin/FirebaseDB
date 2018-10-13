@@ -37,8 +37,8 @@ public class MessengerWindow : MonoBehaviour {
     {
         App.InitComplete -= Init;
         
-        EventManager.Get<NewMessageEvent>().Subscribe(ShowNewMessage);
-        EventManager.Get<TypeMessageCompleteEvent>().Subscribe(OnTypeMessageComplete);
+        GlobalEvents.Get<NewMessageEvent>().Subscribe(ShowNewMessage);
+        GlobalEvents.Get<TypeMessageCompleteEvent>().Subscribe(OnTypeMessageComplete);
         InitMessages();
         _scrollPicker.Init();
 

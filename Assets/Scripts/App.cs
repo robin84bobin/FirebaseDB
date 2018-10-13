@@ -41,7 +41,7 @@ public class App : MonoBehaviour
         UserQuestController = new UserQuestController();
         UserQuestController.Init();
 
-        InitComplete.Invoke();
+        GlobalEvents.Get<DataInitCompleteEvent>().Publish();
     }
     
     

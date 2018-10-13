@@ -139,7 +139,7 @@ namespace Controllers
             msg.parentQuestStepId = parentQuestStepId;
 
             App.Data.UserMessageHistory.Set(msg);
-            EventManager.Get<NewMessageEvent>().Publish(msg);
+            GlobalEvents.Get<NewMessageEvent>().Publish(msg);
         }
     }
 }

@@ -9,10 +9,10 @@ namespace Assets.Scripts.Events
     }
 
 
-    public sealed class EventManager : MonoBehaviour
+    public sealed class GlobalEvents : MonoBehaviour
     {
-        private static EventManager _instance;
-        public static EventManager Instance {
+        private static GlobalEvents _instance;
+        public static GlobalEvents Instance {
             get {
                 return _instance;
             }

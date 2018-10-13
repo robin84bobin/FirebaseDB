@@ -57,6 +57,6 @@ public class MessageScrollItem : BaseScrollItem {
             message.text = text.Substring(0, text.Length - chrLeft);
         }
 
-        EventManager.Get<TypeMessageCompleteEvent>().Publish(_messageViewData);
+        GlobalEvents.Get<TypeMessageCompleteEvent>().Publish(_messageViewData);
     }
 }
