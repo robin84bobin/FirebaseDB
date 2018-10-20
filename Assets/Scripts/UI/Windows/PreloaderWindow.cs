@@ -40,7 +40,7 @@ namespace Assets.Scripts.UI.Windows
         protected override void OnHide ()
         {
             base.OnHide ();
-            GlobalEvents.OnLoadingProgress.Undubscribe(OnLoadProgressEvent);
+            GlobalEvents.OnLoadingProgress.Unsubscribe(OnLoadProgressEvent);
             App.InitComplete -= OnLoadComplete;
         }
 

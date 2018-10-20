@@ -42,7 +42,7 @@ namespace Data.DataBase
         /// <summary>
         /// fire event with Type parameter of storage have updated
         /// </summary>
-        event Action<Type> OnStorageUpdated;
+        //event Action<Type> OnStorageUpdated;
 
     }
 

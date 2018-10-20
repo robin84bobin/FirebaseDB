@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
+using Global;
 using InternalNewtonsoft.Json;
 using UnityEngine;
 
@@ -90,7 +91,8 @@ namespace Data.DataBase
 
             if (!t.Result.Exists && createIfNotExist)
             {
-                /*Debug.LogError(string.Concat(this.ToString(), ":: Collection not exists: ",collection));
+                /*
+                Debug.LogError(string.Concat(this.ToString(), ":: Collection not exists: ",collection));
                 Dictionary<string, T> rawDict = new Dictionary<string, T>();
                 rawDict.Add("emptyItem", new T());
                 
@@ -144,11 +146,11 @@ namespace Data.DataBase
                     if(callback!=null) 
                         callback.Invoke(item);
                     
-                     OnStorageUpdated.Invoke(typeof(T));
+                    GlobalEvents.OnStorageUpdated.Publish(typeof(T));
                 });
             
         }
 
-        public event Action<Type> OnStorageUpdated = delegate {  };
+        //public event Action<Type> OnStorageUpdated = delegate {  };
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Data.DataBase;
 using Data.DataTypes;
+using Global;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,7 @@ namespace UI.Windows.QuestEditorWindow.Components
         {
             OnQuestSelect = delegate { };
             GotoStep = delegate { };
-            DataBaseProxy.Instance.OnStorageUpdated -= OnStorageUpdate;
+            GlobalEvents.OnStorageUpdated.Subscribe(OnStorageUpdate);
         }
 
         private void OnItemRemoved(Type type, string id)
@@ -118,7 +119,7 @@ namespace UI.Windows.QuestEditorWindow.Components
             UpdateQuestList();
         
             
-            DataBaseProxy.Instance.OnStorageUpdated += OnStorageUpdate;
+            GlobalEvents.OnStorageUpdated.Unsubscribe(OnStorageUpdate);
         }
 
 

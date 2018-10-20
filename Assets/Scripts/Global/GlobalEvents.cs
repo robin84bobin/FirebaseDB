@@ -14,7 +14,7 @@ namespace Global
         public static readonly GlobalEventParam<MessageViewData> OnMessageNew = new GlobalEventParam<MessageViewData>();
         public static readonly GlobalEventParam<MessageViewData> OnMessageTypeComplete = new GlobalEventParam<MessageViewData>();
         public static readonly GlobalEventParam<string> OnRemoveQuestStepEditor = new GlobalEventParam<string>();
-        public static readonly GlobalEventParam<Type> OnStorageUpdateComplete = new GlobalEventParam<Type>();
+        public static readonly GlobalEventParam<Type> OnStorageUpdated = new GlobalEventParam<Type>();
         
     }
     
@@ -61,7 +61,7 @@ namespace Global
             }
         }
         
-        public void Undubscribe(Action<TParam> value)
+        public void Unsubscribe(Action<TParam> value)
         {
             lock (_lockObject)
             {

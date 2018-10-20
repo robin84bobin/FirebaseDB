@@ -391,11 +391,56 @@ Prefab:
     - target: {fileID: 224778912932141558, guid: 8e32a76c9bc13564985e491a47a9e4d2,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.19889982
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224579682041258486, guid: 8e32a76c9bc13564985e491a47a9e4d2,
         type: 2}
       propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224778912932141558, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224778912932141558, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224579682041258486, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224579682041258486, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224614673259751262, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224614673259751262, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224614673259751262, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224435693110991440, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224435693110991440, guid: 8e32a76c9bc13564985e491a47a9e4d2,
+        type: 2}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -507,7 +552,7 @@ Transform:
   m_GameObject: {fileID: 1016095091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0030534351, y: 0.0030534351, z: 0.0030534351}
+  m_LocalScale: {x: 0.0050125313, y: 0.0050125313, z: 0.0050125313}
   m_Children:
   - {fileID: 462911127}
   - {fileID: 1973750727}

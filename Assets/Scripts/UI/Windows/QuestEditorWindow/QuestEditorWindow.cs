@@ -11,7 +11,6 @@ namespace UI.Windows.QuestEditorWindow
 {
     public class QuestEditorWindow : BaseWindow 
     {
-
         #region COMPONENTS
 
         [SerializeField] private Dropdown _dropdownType;
