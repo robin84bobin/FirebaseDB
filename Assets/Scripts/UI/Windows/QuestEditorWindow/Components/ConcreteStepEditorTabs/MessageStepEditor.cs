@@ -60,7 +60,6 @@ public class MessageStepEditor : AbstractStepEditor {
             {
                 varCnt++;
             }
-            
         }
 
         _questMessageData.variants = new QuestVariantData[varCnt];
