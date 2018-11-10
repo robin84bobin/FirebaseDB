@@ -153,9 +153,23 @@ namespace Data.DataBase
                             callback.Invoke(item);
                 }
             );
-            
         }
 
-        //public event Action<Type> OnStorageUpdated = delegate {  };
+        public void Remove<T>(string collection, string id = "", Action<string> callback = null) 
+        {
+            DbRoot.Child(collection).Child(id).RemoveValueAsync().ContinueWith(
+                delegate(Task t)
+                {
+                    if (t.Exception != null)
+                    {
+                        Debug.LogError(this + " Error Removing:" + id + " \n" + t.Exception.ToString());
+                        return;
+                    }
+
+                    if (callback != null)
+                        callback.Invoke(id);
+                }
+            );
+        }
     }
 }

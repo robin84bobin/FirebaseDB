@@ -18,7 +18,7 @@ namespace Global
         //
         public static readonly GlobalEventParam<Type> OnStorageUpdated = new GlobalEventParam<Type>();
         public static readonly GlobalEventParam<DataItem> OnAddStorageItem = new GlobalEventParam<DataItem>();
-        public static readonly GlobalEventParam<DataItem> OnRemoveStorageItem = new GlobalEventParam<DataItem>();
+        public static readonly GlobalEventParam<string> OnRemoveStorageItem = new GlobalEventParam<string>();
     }
     
     

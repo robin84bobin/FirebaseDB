@@ -57,10 +57,12 @@ namespace UI.Windows.QuestEditorWindow.Components
             GlobalEvents.OnRemoveStorageItem.Subscribe(OnRemoveItem);
         }
 
-        private void OnRemoveItem(DataItem item)
+        private void OnRemoveItem(string item)
         {
             if (item.GetType() != typeof(QuestStepData))
                 return;
+            
+            UpdateQuestList();
 
             string selectedId = GetSelectedText();
             if (item.Id == selectedId)
@@ -77,6 +79,11 @@ namespace UI.Windows.QuestEditorWindow.Components
             //запоминаем выделенный id
             string selectedId = GetSelectedText();
             UpdateQuestList();
+            
+            if (Dropdown.options.Exists(o => o.text == selectedId))
+                Select(selectedId);
+            else //если выделенный шаг уже удалили из списка
+                Select(NONE);
         }
 
 

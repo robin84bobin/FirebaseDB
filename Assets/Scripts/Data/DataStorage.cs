@@ -57,6 +57,24 @@ namespace Data
             }
         }
 
+        
+        public void Remove(string id, bool now = false, Action<string> callback = null)
+        {
+            if (_items.ContainsKey(id))
+            {
+                _items.Remove(id);
+                if (now)
+                {
+                    callback += delegate { GlobalEvents.OnRemoveStorageItem.Publish(id);};
+                    DataBaseProxy.Instance.Remove<T>(CollectionName, id, callback);
+                }
+            }
+            else
+                Debug.LogError(this + ":: Try to remove unexisted item: Id = " + id);
+            
+            
+        }
+        
         #region SET DATA METHODS
 
         public void Set(T item, string id = "", bool saveNow = false, Action<T> callback = null)
@@ -97,7 +115,7 @@ namespace Data
                 return;
             }
 
-            DataBase.DataBaseProxy.Instance.SaveCollection(CollectionName, _items);
+            DataBaseProxy.Instance.SaveCollection(CollectionName, _items);
         }
 
         
@@ -151,6 +169,19 @@ namespace Data
 
         #endregion
 
+        public bool Exists(string id)
+        {
+            return _items.ContainsKey(id);
+        }
+
+        
+        public void Clear()
+        {
+            _items.Clear();
+        }
+
+        
+
         
         #region foreach methods realization 
 
@@ -193,25 +224,6 @@ namespace Data
 
         #endregion
 
-        public bool Exists(string id)
-        {
-            return _items.ContainsKey(id);
-        }
-
-        
-        public void Clear()
-        {
-            _items.Clear();
-        }
-
-        
-        public void Remove(string id, bool now = false)
-        {
-            if (_items.ContainsKey(id))
-                _items.Remove(id);
-            else
-                Debug.LogError(this + ":: Try to remove unexisted item: Id = " + id);
-        }
     }
 
     

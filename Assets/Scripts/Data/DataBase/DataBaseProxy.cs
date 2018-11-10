@@ -39,6 +39,14 @@ namespace Data.DataBase
         /// <typeparam name="T"></typeparam>
         void Save<T>(string collection, T item, string id = "", Action<T> callback = null) where T : DataItem, new();
 
+        /// <summary>
+        /// remove data item from database
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="id"></param>
+        /// <param name="callback"></param>
+        /// <typeparam name="T"></typeparam>
+        void Remove<T>(string collection, string id = "", Action<string> callback = null);
     }
 
     public static class DataBaseProxy
