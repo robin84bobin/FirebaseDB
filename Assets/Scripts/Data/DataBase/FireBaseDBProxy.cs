@@ -17,6 +17,8 @@ namespace Data.DataBase
 
         private Action _onInitCallback;
 
+        private object _lockObject = new object();
+        
         #region INITIALIZING
 
         public void Init(Action callback)
@@ -136,18 +138,21 @@ namespace Data.DataBase
             
             //TODO. Почитать возможно надо использовать Push() или Transaction? 
             
-            DbRoot.Child(collection).Child(item.Id).SetRawJsonValueAsync(jString).ContinueWith(t =>
+            callback += delegate { GlobalEvents.OnStorageUpdated.Publish(typeof(T)); };
+            
+            DbRoot.Child(collection).Child(item.Id).SetRawJsonValueAsync(jString).ContinueWith(
+                delegate(Task t)
                 {
                     if (t.Exception != null)
                     {
-                        Debug.LogError(this + " Error Saving:"+ jString +" \n" + t.Exception.ToString());
+                        Debug.LogError(this + " Error Saving:" + jString + " \n" + t.Exception.ToString());
                         return;
                     }
-                    if(callback!=null) 
-                        callback.Invoke(item);
-                    
-                    GlobalEvents.OnStorageUpdated.Publish(typeof(T));
-                });
+    
+                    if (callback != null) 
+                            callback.Invoke(item);
+                }
+            );
             
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data.DataBase;
+using Global;
 using UnityEngine;
 
 namespace Data
@@ -79,6 +80,8 @@ namespace Data
                     item.Id = id;
                 _items.Add(item.Id, item);
                 Debug.Log(string.Format("Add data in '{0}' storage. Id:{1}", CollectionName, id));
+                
+                callback += delegate { GlobalEvents.OnAddStorageItem.Publish(item);};
             }
 
             if (saveNow) 
@@ -216,7 +219,6 @@ namespace Data
     {
         public string Id = String.Empty;
 
-        internal virtual void Init()
-        {}
+        internal virtual void Init(){}
     }
 }

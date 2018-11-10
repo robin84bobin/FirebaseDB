@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Data;
 using UnityEngine;
 
 namespace Global
@@ -7,15 +9,16 @@ namespace Global
     {
         public static readonly GlobalEvent OnDataInited = new GlobalEvent();
         public static readonly GlobalEvent OnStorageLoaded = new GlobalEvent();
-        public static readonly GlobalEventParam<string> OnAddQuestStepEditor = new GlobalEventParam<string>();
+
         public static readonly GlobalEventParam<string> OnLoadingProgress = new GlobalEventParam<string>();
         public static readonly GlobalEventParam<KeyCode> OnButton = new GlobalEventParam<KeyCode>();
         public static readonly GlobalEventParam<Vector3> OnMoveControl = new GlobalEventParam<Vector3>();
         public static readonly GlobalEventParam<MessageViewData> OnMessageNew = new GlobalEventParam<MessageViewData>();
         public static readonly GlobalEventParam<MessageViewData> OnMessageTypeComplete = new GlobalEventParam<MessageViewData>();
-        public static readonly GlobalEventParam<string> OnRemoveQuestStepEditor = new GlobalEventParam<string>();
+        //
         public static readonly GlobalEventParam<Type> OnStorageUpdated = new GlobalEventParam<Type>();
-        
+        public static readonly GlobalEventParam<DataItem> OnAddStorageItem = new GlobalEventParam<DataItem>();
+        public static readonly GlobalEventParam<DataItem> OnRemoveStorageItem = new GlobalEventParam<DataItem>();
     }
     
     
@@ -57,7 +60,7 @@ namespace Global
         {
             lock (_lockObject)
             {
-                Event += value;
+                if (!Event.GetInvocationList().Contains(value)) Event += value;
             }
         }
         
@@ -74,4 +77,6 @@ namespace Global
             EventManager.AddToQueue( new EventParamCallbackWrapper<TParam>(Event, eventParam));
         }
     }
+    
+    
 }

@@ -47,9 +47,9 @@ namespace Global
     {
         private Action _action;
 
-        public EventCallbackWrapper(Action action_)
+        public EventCallbackWrapper(Action action)
         {
-            _action = action_;
+            _action = action;
         }
 
         public void Execute()
@@ -65,10 +65,10 @@ namespace Global
         private Action<TParam> _action;
         private TParam _eventParam;
 
-        public EventParamCallbackWrapper(Action<TParam> action_, TParam eventParam_)
+        public EventParamCallbackWrapper(Action<TParam> action, TParam eventParam)
         {
-            _action = action_;
-            _eventParam = eventParam_;
+            _action = action;
+            _eventParam = eventParam;
         }
 
         public void Execute()

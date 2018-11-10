@@ -39,11 +39,6 @@ namespace Data.DataBase
         /// <typeparam name="T"></typeparam>
         void Save<T>(string collection, T item, string id = "", Action<T> callback = null) where T : DataItem, new();
 
-        /// <summary>
-        /// fire event with Type parameter of storage have updated
-        /// </summary>
-        //event Action<Type> OnStorageUpdated;
-
     }
 
     public static class DataBaseProxy

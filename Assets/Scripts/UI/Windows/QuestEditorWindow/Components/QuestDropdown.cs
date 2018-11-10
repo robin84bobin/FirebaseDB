@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data;
 using Data.DataBase;
 using Data.DataTypes;
 using Global;
@@ -21,74 +22,9 @@ namespace UI.Windows.QuestEditorWindow.Components
         [SerializeField] private Button _buttonRemove;
         [SerializeField] private Button _buttonGoTo;
 
-        public Action<string> OnQuestSelect = delegate { };
+        public event Action<string> OnQuestSelect = delegate { };
 
         #endregion
-
-
-        void OnDestroy()
-        {
-            OnQuestSelect = delegate { };
-            GotoStep = delegate { };
-            GlobalEvents.OnStorageUpdated.Subscribe(OnStorageUpdate);
-        }
-
-        private void OnItemRemoved(Type type, string id)
-        {
-            if (type != typeof(QuestStepData))
-                return;
-
-            string selectedId = GetSelectedText();
-            if (id == selectedId)
-            {
-                Select(NONE);
-            }
-
-        }
-
-
-        private void OnStorageUpdate(Type type)
-        {
-            if (type != typeof(QuestStepData) )
-                return;
-
-            //запоминаем выделенный id
-            string selectedId = GetSelectedText();
-            UpdateQuestList();
-        
-            if (Dropdown.options.Exists(o => o.text == selectedId))
-                Select(selectedId);
-            else //если выделенный шаг уже удалили из списка
-                Select(NONE);
-            //onOptionChanged(dropdown.value);
-        }
-
-        private void UpdateQuestList(bool keepSelected = true)
-        {
-            //get _messageViewData
-            List<QuestStepData> items = App.Data.Steps.GetAll();
-        
-            //create option list
-            List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();
-            optionsList.Add(new Dropdown.OptionData(NONE));
-            for (int i = 0; i < items.Count; i++)
-                optionsList.Add(new Dropdown.OptionData(items[i].Id));
-            //sort list
-            /*optionsList.Sort(delegate (Dropdown.OptionData x, Dropdown.OptionData y) {
-            if (x.text == null && y.text == null) return 0;
-            else if (x.text == null) return -1;
-            else if (y.text == null) return 1;
-            else return x.text.CompareTo(y.text);
-        });*/
-            //fill list
-            Dropdown.ClearOptions();
-            Dropdown.AddOptions(optionsList);
-        }
-
-        internal void ResetView()
-        {
-            Select(NONE);
-        }
 
         public void Init()
         {
@@ -117,11 +53,77 @@ namespace UI.Windows.QuestEditorWindow.Components
             }
 
             UpdateQuestList();
-        
-            
-            GlobalEvents.OnStorageUpdated.Unsubscribe(OnStorageUpdate);
+            GlobalEvents.OnAddStorageItem.Subscribe(OnAddItem);
+            GlobalEvents.OnRemoveStorageItem.Subscribe(OnRemoveItem);
         }
 
+        private void OnRemoveItem(DataItem item)
+        {
+            if (item.GetType() != typeof(QuestStepData))
+                return;
+
+            string selectedId = GetSelectedText();
+            if (item.Id == selectedId)
+            {
+                Select(NONE);
+            }
+        }
+
+        private void OnAddItem(DataItem item)
+        {
+            if (item.GetType() != typeof(QuestStepData) )
+                return;
+            
+            //запоминаем выделенный id
+            string selectedId = GetSelectedText();
+            UpdateQuestList();
+        }
+
+
+            
+
+
+        private void OnStorageUpdate(Type type)
+        {
+            if (type != typeof(QuestStepData) )
+                return;
+
+            //запоминаем выделенный id
+            string selectedId = GetSelectedText();
+            UpdateQuestList();
+        
+            if (Dropdown.options.Exists(o => o.text == selectedId))
+                Select(selectedId);
+            else //если выделенный шаг уже удалили из списка
+                Select(NONE);
+        }
+
+        private void UpdateQuestList(bool keepSelected = true)
+        {
+            //get _messageViewData
+            List<QuestStepData> items = App.Data.Steps.GetAll();
+        
+            //create option list
+            List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();
+            optionsList.Add(new Dropdown.OptionData(NONE));
+            for (int i = 0; i < items.Count; i++)
+                optionsList.Add(new Dropdown.OptionData(items[i].Id));
+            //sort list
+            /*optionsList.Sort(delegate (Dropdown.OptionData x, Dropdown.OptionData y) {
+            if (x.text == null && y.text == null) return 0;
+            else if (x.text == null) return -1;
+            else if (y.text == null) return 1;
+            else return x.text.CompareTo(y.text);
+        });*/
+            //fill list
+            Dropdown.ClearOptions();
+            Dropdown.AddOptions(optionsList);
+        }
+
+        internal void ResetView()
+        {
+            Select(NONE);
+        }
 
 
         private void OnGoToClick()
@@ -162,6 +164,14 @@ namespace UI.Windows.QuestEditorWindow.Components
         public string GetSelectedText()
         {
             return Dropdown.options[Dropdown.value].text;
+        }
+        
+        void OnDestroy()
+        {
+            OnQuestSelect = delegate { };
+            GotoStep = delegate { };
+            GlobalEvents.OnAddStorageItem.Unsubscribe(OnAddItem);
+            GlobalEvents.OnRemoveStorageItem.Unsubscribe(OnRemoveItem);
         }
     }
 }

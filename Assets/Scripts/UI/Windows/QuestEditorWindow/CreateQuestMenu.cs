@@ -44,8 +44,8 @@ public class CreateQuestMenu : BaseWindow {
         _typeDropdown.onValueChanged.AddListener(OnTypeChanged);
 
         List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();
-        optionsList.Add(new Dropdown.OptionData(QuestStepType.MESSAGE.ToString()));
-        optionsList.Add(new Dropdown.OptionData(QuestStepType.TRIGGER.ToString()));
+        optionsList.Add(new Dropdown.OptionData(QuestStepType.MESSAGE));
+        optionsList.Add(new Dropdown.OptionData(QuestStepType.TRIGGER));
         _typeDropdown.ClearOptions();
         _typeDropdown.AddOptions(optionsList);
 
@@ -96,32 +96,7 @@ public class CreateQuestMenu : BaseWindow {
         item.Id = _newId;
         item.stepType = _newType;
         item.typeId = _newId;
-
-        App.Data.Steps.Set(item, item.Id, true, t => CreateRelatedData(item));
-    }
-
-    private void CreateRelatedData(QuestStepData item)
-    {
-        switch (item.stepType)
-        {
-            case Collections.MESSAGE:
-            {
-                var messageData = new QuestMessageData {Id = item.typeId};
-                App.Data.MessageSteps.Set(messageData, messageData.Id, true,
-                    q => parameters.OnCreateSuccess.Invoke(q.Id));
-                break;
-            }
-            case Collections.TRIGGER:
-            {
-                var triggerData = new QuestTriggerStepData() {Id = item.typeId};
-                App.Data.TriggerSteps.Set(triggerData, triggerData.Id, true,
-                    q => parameters.OnCreateSuccess.Invoke(q.Id));
-                break;
-            }
-            default:
-                Debug.LogError(this + " Save(): unknown type: " + item.stepType);
-                break;
-        }
+        item.Save();
     }
 
 
