@@ -154,7 +154,7 @@ namespace Data
         {
             if (!_items.ContainsKey(id))
             {
-                Debug.LogError(string.Format("Can't get _messageViewData from '{0}' storage - Id:{1}", typeof(T), id));
+                Debug.LogError(string.Format("Can't get item from '{0}' storage - Id:{1}", typeof(T), id));
                 return default(T);
             }
 

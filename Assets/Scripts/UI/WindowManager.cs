@@ -17,7 +17,7 @@ namespace Assets.Scripts.UI
         void Init()
         {
             if (UiRoot == null) UiRoot = FindObjectOfType<Canvas>();
-            
+            if (UiRoot == null) return;
             GameObject.DontDestroyOnLoad(UiRoot.gameObject);
             GameObject.DontDestroyOnLoad(this.gameObject);
             _shownWindows = new List<BaseWindow>();

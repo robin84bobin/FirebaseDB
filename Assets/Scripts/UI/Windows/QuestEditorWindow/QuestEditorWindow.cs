@@ -34,11 +34,12 @@ namespace UI.Windows.QuestEditorWindow
         void Start ()
         {
             Init();
-            
             GlobalEvents.OnDataInited.Subscribe(Init);
-            //GlobalEvents.Get<DataInitCompleteEvent>().Subscribe(Init);
-            //Events.Events.OnDataInitComplete += Init;
-            //App.InitComplete += Init;
+        }
+
+        private void OnDestroy()
+        {
+            GlobalEvents.OnDataInited.Unsubscribe(Init);
         }
 
         private void Init()
