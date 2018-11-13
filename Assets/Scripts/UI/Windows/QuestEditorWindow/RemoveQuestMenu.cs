@@ -37,14 +37,20 @@ public class RemoveQuestMenu : BaseWindow {
     {
         RemoveQuestMenuParams params_ = windowsParameters as RemoveQuestMenuParams;
 
-        if (App.Data.Steps.Get(params_.id) == null)
-        {
+        var q = App.Data.Steps.Get(params_.id);
+        if (q == null){
             _errorText.text = "id is not exists!";
             return;
         }
+
+        q.Remove();
         
-        
-        App.Data.Steps.Remove(params_.id, true);
+        App.Data.Steps.Remove(params_.id, true, RemoveRelatedSteps);
         Hide();
+    }
+
+    private void RemoveRelatedSteps(string obj)
+    {
+        throw new System.NotImplementedException();
     }
 }

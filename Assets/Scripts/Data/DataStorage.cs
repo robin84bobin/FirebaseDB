@@ -65,7 +65,7 @@ namespace Data
                 _items.Remove(id);
                 if (now)
                 {
-                    callback += delegate { GlobalEvents.OnRemoveStorageItem.Publish(id);};
+                    callback += delegate { GlobalEvents.OnStorageUpdated.Publish(typeof(T));};
                     DataBaseProxy.Instance.Remove<T>(CollectionName, id, callback);
                 }
             }

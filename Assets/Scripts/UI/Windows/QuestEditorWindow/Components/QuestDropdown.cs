@@ -54,22 +54,9 @@ namespace UI.Windows.QuestEditorWindow.Components
 
             UpdateQuestList();
             GlobalEvents.OnAddStorageItem.Subscribe(OnAddItem);
-            GlobalEvents.OnRemoveStorageItem.Subscribe(OnRemoveItem);
+            GlobalEvents.OnStorageUpdated.Subscribe(OnStorageUpdate);
         }
 
-        private void OnRemoveItem(string item)
-        {
-            if (item.GetType() != typeof(QuestStepData))
-                return;
-            
-            UpdateQuestList();
-
-            string selectedId = GetSelectedText();
-            if (item.Id == selectedId)
-            {
-                Select(NONE);
-            }
-        }
 
         private void OnAddItem(DataItem item)
         {
@@ -87,9 +74,6 @@ namespace UI.Windows.QuestEditorWindow.Components
         }
 
 
-            
-
-
         private void OnStorageUpdate(Type type)
         {
             if (type != typeof(QuestStepData) )
@@ -105,6 +89,7 @@ namespace UI.Windows.QuestEditorWindow.Components
                 Select(NONE);
         }
 
+        
         private void UpdateQuestList(bool keepSelected = true)
         {
             //get _messageViewData
@@ -127,6 +112,7 @@ namespace UI.Windows.QuestEditorWindow.Components
             Dropdown.AddOptions(optionsList);
         }
 
+        
         internal void ResetView()
         {
             Select(NONE);
@@ -143,23 +129,27 @@ namespace UI.Windows.QuestEditorWindow.Components
             GotoStep.Invoke(id);
         }
 
+        
         public void Select(string id)
         {
             Dropdown.SelectValue(id);
         }
 
+        
         private void onOptionChanged(int index)
         {
             Dropdown.OptionData optionData = Dropdown.options[index];
             OnQuestSelect.Invoke(optionData.text);
         }
 
+        
         private void OnRemoveClick()
         {
             string id = GetSelectedText();
             RemoveQuestMenu.Show( id );
         }
 
+        
         private void OnAddClick()
         {
             CreateQuestMenu.Show(new CreateQuestMenuParams()
@@ -168,17 +158,19 @@ namespace UI.Windows.QuestEditorWindow.Components
             });
         }
 
+        
         public string GetSelectedText()
         {
             return Dropdown.options[Dropdown.value].text;
         }
+        
         
         void OnDestroy()
         {
             OnQuestSelect = delegate { };
             GotoStep = delegate { };
             GlobalEvents.OnAddStorageItem.Unsubscribe(OnAddItem);
-            GlobalEvents.OnRemoveStorageItem.Unsubscribe(OnRemoveItem);
+            GlobalEvents.OnStorageUpdated.Unsubscribe(OnStorageUpdate);
         }
     }
 }
