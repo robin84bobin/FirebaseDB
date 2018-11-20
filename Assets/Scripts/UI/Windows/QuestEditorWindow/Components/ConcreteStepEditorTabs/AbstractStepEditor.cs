@@ -1,7 +1,7 @@
 ﻿using Data.DataTypes;
 using UnityEngine;
 
-abstract public class AbstractStepEditor : MonoBehaviour
+public abstract class AbstractStepEditor : MonoBehaviour
 {
     internal abstract void Init(QuestStepData questStepData);
     protected abstract void GrabDataFromUI();

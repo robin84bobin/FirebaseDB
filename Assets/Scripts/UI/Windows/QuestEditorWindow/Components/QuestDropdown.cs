@@ -21,6 +21,11 @@ namespace UI.Windows.QuestEditorWindow.Components
         [SerializeField] private Button _buttonAdd;
         [SerializeField] private Button _buttonRemove;
         [SerializeField] private Button _buttonGoTo;
+        
+        /// <summary>
+        /// for recently added items
+        /// </summary>
+        private string _idSelectOnItemAdd;
 
         public event Action<string> OnQuestSelect = delegate { };
 
@@ -66,7 +71,13 @@ namespace UI.Windows.QuestEditorWindow.Components
             //запоминаем выделенный id
             string selectedId = GetSelectedText();
             UpdateQuestList();
-            
+
+            if (!string.IsNullOrEmpty(_idSelectOnItemAdd) && item.Id == _idSelectOnItemAdd)
+            {
+                Select(_idSelectOnItemAdd);
+                _idSelectOnItemAdd = string.Empty;
+            }
+            else
             if (Dropdown.options.Exists(o => o.text == selectedId))
                 Select(selectedId);
             else //если выделенный шаг уже удалили из списка
@@ -154,7 +165,10 @@ namespace UI.Windows.QuestEditorWindow.Components
         {
             CreateQuestMenu.Show(new CreateQuestMenuParams()
             {
-                OnCreateSuccess = (id) => { Select(id); }
+                OnCreateSuccess = id =>
+                {
+                    _idSelectOnItemAdd = id;
+                }
             });
         }
 

@@ -139,9 +139,9 @@ namespace UI.Windows.QuestEditorWindow
 
         private void OnSelectQuest(string Id)
         {
-            if (_currentEditor != null)
+            if (_currentEditor != null && _currentQuestData != null)
             {
-                //_currentEditor.SaveData();
+                _currentEditor.SaveData();
             }
 
             _currentQuestId = Id;
@@ -162,7 +162,8 @@ namespace UI.Windows.QuestEditorWindow
             ///
 
             _currentQuestData = App.Data.Steps[Id];
-
+            
+            
             if (_currentQuestData == null)
             {
                 _messageStepEditor.gameObject.SetActive(false);

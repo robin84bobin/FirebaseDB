@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using InternalNewtonsoft.Json;
+using UnityEngine;
 
 namespace Data.DataTypes
 {
@@ -13,6 +15,8 @@ namespace Data.DataTypes
         /// Step id of current type.
         /// </summary>
         public string typeId = string.Empty;
+
+        private int _savedBytes;
 
         public void Save()
         {
@@ -37,6 +41,7 @@ namespace Data.DataTypes
             }
         }
 
+
         public void Remove()
         {
             App.Data.Steps.Remove(Id, true, RemoveRelatedData);
@@ -57,6 +62,7 @@ namespace Data.DataTypes
                     break;
             }
         }
+
     }
 
 }

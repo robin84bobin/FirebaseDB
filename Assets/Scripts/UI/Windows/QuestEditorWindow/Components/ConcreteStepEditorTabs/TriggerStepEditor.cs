@@ -11,6 +11,12 @@ public class TriggerStepEditor : AbstractStepEditor
     string _id = string.Empty;
     internal override void Init(QuestStepData questStepData)
     {
+        if (!questStepData.stepType.Equals(QuestStepType.TRIGGER))
+        {
+            Debug.LogError(this.ToString() + " : !questStepData.stepType.Equals(QuestStepType.TRIGGER)");            
+            return;
+        }
+        
         QuestTriggerStepData sourceData = App.Data.TriggerSteps[questStepData.typeId];
         _id = sourceData.Id;
         for (int i = 0; i < _triggerEditors.Length; i++)
@@ -34,6 +40,7 @@ public class TriggerStepEditor : AbstractStepEditor
     }
 
     QuestTriggerStepData _triggerStepData;
+
     protected override void GrabDataFromUI()
     {
         _triggerStepData = new QuestTriggerStepData();

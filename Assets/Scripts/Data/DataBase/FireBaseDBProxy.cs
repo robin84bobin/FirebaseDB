@@ -123,7 +123,7 @@ namespace Data.DataBase
         {
             var jString = JsonConvert.SerializeObject(items);
             DbRoot.Child(collection).SetRawJsonValueAsync(jString).ContinueWith(
-                t =>
+                delegate
                 {
                     if (callback != null) callback.Invoke();
                 }

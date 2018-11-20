@@ -46,6 +46,7 @@ public class MessageStepEditor : AbstractStepEditor {
     }
 
     QuestMessageData _questMessageData;
+
     protected override void GrabDataFromUI()
     {
         _questMessageData = new QuestMessageData();

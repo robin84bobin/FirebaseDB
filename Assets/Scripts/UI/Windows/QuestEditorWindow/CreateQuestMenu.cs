@@ -97,6 +97,9 @@ public class CreateQuestMenu : BaseWindow {
         item.stepType = _newType;
         item.typeId = _newId;
         item.Save();
+        
+        if (parameters.OnCreateSuccess != null)
+            parameters.OnCreateSuccess.Invoke(item.Id);
     }
 
 

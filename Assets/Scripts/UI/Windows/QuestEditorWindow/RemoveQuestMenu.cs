@@ -8,6 +8,11 @@ public class RemoveQuestMenuParams : WindowParams
     public string id;
 }
 
+public class SaveQuestDialog : BaseWindow
+{
+    
+}
+
 public class RemoveQuestMenu : BaseWindow {
 
     [SerializeField] private Text _errorText;
