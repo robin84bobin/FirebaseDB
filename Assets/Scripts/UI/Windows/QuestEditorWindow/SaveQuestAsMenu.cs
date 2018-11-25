@@ -9,6 +9,14 @@ using UnityEngine.UI;
 
 public class SaveQuestAsMenuParams : WindowParams
 {
+    public SaveQuestAsMenuParams(QuestStepData q, DataItem r, Action<string> c = null)
+    {
+        templateData = q;
+        relatedTemplateData = r;
+        OnSaveSuccess = c ?? delegate { };
+    }
+        
+    
     public QuestStepData templateData;
     public DataItem relatedTemplateData;
     public Action<string> OnSaveSuccess = delegate { };

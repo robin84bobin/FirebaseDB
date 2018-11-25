@@ -83,6 +83,15 @@ namespace Data.DataTypes
             }
         }
 
+        public QuestStepData Clone()
+        {
+            return new QuestStepData()
+            {
+                Id = this.Id,
+                typeId = this.typeId,
+                stepType = this.stepType
+            };
+        }
     }
 
 }

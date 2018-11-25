@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Data.DataBase;
 using Global;
+using TMPro;
 using UnityEngine;
 
 namespace Data

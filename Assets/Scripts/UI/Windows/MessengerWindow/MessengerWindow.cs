@@ -16,7 +16,7 @@ public class MessengerWindow : MonoBehaviour {
     void Start()
     {
         ResetView();
-        
+        Init();
         App.InitComplete += Init;
     }
 

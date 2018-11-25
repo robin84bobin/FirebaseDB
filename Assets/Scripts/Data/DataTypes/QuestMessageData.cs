@@ -18,6 +18,20 @@
         /// Message displayed on waiting after step
         /// </summary>
         public float delayAfterStepMessage;// { get; private set; }
+
+        public QuestMessageData Clone()
+        {
+           var q = new QuestMessageData();
+            q.Id = string.Empty;
+            q.text = text;
+            q.delayAfterStep = delayAfterStep;
+            q.delayAfterStepMessage = q.delayAfterStepMessage;
+            q.variants = new QuestVariantData[variants.Length];
+            for (int i = 0; i < variants.Length; i++)
+                q.variants[i] = variants[i].Clone();
+            
+            return q;
+        }
     }
 
 }

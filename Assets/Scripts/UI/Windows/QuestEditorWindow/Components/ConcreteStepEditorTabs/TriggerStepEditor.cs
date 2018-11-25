@@ -31,11 +31,10 @@ public class TriggerStepEditor : AbstractStepEditor
     public override void SaveAs()
     {
         GrabDataFromUI();
-        SaveQuestAsMenu.Show( new SaveQuestAsMenuParams()
-        {
-            templateData = QuestStepData, 
-            relatedTemplateData = _triggerStepData
-        });
+        SaveQuestAsMenu.Show(new SaveQuestAsMenuParams(
+            QuestStepData.Clone(), 
+            _triggerStepData.Clone()
+        ));
     }
     
     internal override void SaveData()

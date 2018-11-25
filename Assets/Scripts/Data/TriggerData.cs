@@ -22,4 +22,16 @@ public class TriggerData : DataItem
     /// Id of step to go if condition is false
     /// </summary>
     public string alterStepId;
+
+    public TriggerData Clone()
+    {
+        return new TriggerData()
+            {
+                alterStepId = this.alterStepId,
+                condition = this.condition,
+                Id = this.Id,
+                targetStepId = this.targetStepId,
+                triggerStepId = this.triggerStepId
+            };
+    }
 }

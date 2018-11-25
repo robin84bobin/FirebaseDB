@@ -16,5 +16,15 @@ public class QuestVariantData
     /// Option message
     /// </summary>
     public string text;// { get; private set; }
-    
+
+    public QuestVariantData Clone()
+    {
+        return new QuestVariantData()
+        {
+            variantId = variantId,
+            parentStepId = parentStepId,
+            targetStepId = targetStepId,
+            text = text
+        };
+    }
 }
