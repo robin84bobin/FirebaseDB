@@ -230,6 +230,7 @@
     <Compile Include="Assets\Scripts\UI\Windows\QuestEditorWindow\CreateQuestMenu.cs" />
     <Compile Include="Assets\Scripts\UI\Windows\QuestEditorWindow\QuestEditorWindow.cs" />
     <Compile Include="Assets\Scripts\UI\Windows\QuestEditorWindow\RemoveQuestMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\Windows\QuestEditorWindow\SaveQuestAsMenu.cs" />
     <None Include="Assets\NGUI\ReadMe - 3.6.1.txt" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 1.shader" />

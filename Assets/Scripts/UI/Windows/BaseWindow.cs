@@ -12,9 +12,9 @@ namespace Assets.Scripts.UI.Windows
             App.UI.HideWindow(this);
         }
 
-        public virtual void OnShowComplete(WindowParams param_ = null)
+        public virtual void OnShowComplete(WindowParams param = null)
         {
-            windowsParameters = param_;
+            windowsParameters = param;
         }
 
         protected virtual void OnHide()

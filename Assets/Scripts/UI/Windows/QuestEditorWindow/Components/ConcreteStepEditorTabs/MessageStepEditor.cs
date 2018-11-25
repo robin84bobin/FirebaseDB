@@ -32,6 +32,16 @@ public class MessageStepEditor : AbstractStepEditor {
         }
     }
 
+    public override void SaveAs()
+    {
+        GrabDataFromUI();
+        SaveQuestAsMenu.Show( new SaveQuestAsMenuParams()
+        {
+            templateData = QuestStepData, 
+            relatedTemplateData = _questMessageData
+        });
+    }
+
     internal override void SaveData()
     {
         GrabDataFromUI();

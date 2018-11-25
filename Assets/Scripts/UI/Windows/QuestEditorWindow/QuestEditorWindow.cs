@@ -82,12 +82,7 @@ namespace UI.Windows.QuestEditorWindow
 
         public void OnSaveAsClick()
         {
-            CreateQuestMenu.Show(
-                new CreateQuestMenuParams()
-                {
-                    templateData = _currentEditor.GetData(),
-                }
-            );
+            _currentEditor.SaveAs();
         }
 
         public void OnRemoveClick()

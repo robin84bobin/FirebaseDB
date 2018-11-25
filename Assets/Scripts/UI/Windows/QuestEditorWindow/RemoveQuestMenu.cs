@@ -26,9 +26,9 @@ public class RemoveQuestMenu : BaseWindow {
         App.UI.Show("RemoveQuestMenu", params_);
     }
 
-    public override void OnShowComplete(WindowParams param_ = null)
+    public override void OnShowComplete(WindowParams param = null)
     {
-        base.OnShowComplete(param_);
+        base.OnShowComplete(param);
         _id = (windowsParameters as RemoveQuestMenuParams).id;
         _idText.text = "id: "+_id;
     }

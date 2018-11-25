@@ -9,4 +9,6 @@ public abstract class AbstractStepEditor : MonoBehaviour
     internal abstract void SaveData();
 
     protected QuestStepData QuestStepData;
+
+    public abstract void SaveAs();
 }

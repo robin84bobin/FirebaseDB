@@ -1,73 +1,55 @@
-﻿using Assets.Scripts.UI.Windows;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System;
 using Assets.Scripts.UI;
+using Assets.Scripts.UI.Windows;
 using Data;
 using Data.DataTypes;
+using UnityEngine;
+using UnityEngine.UI;
 
-
-public class CreateQuestMenuParams : WindowParams
+public class SaveQuestAsMenuParams : WindowParams
 {
     public QuestStepData templateData;
-    public Action<string> OnCreateSuccess = delegate { };
+    public DataItem relatedTemplateData;
+    public Action<string> OnSaveSuccess = delegate { };
 }
 
-
-public class CreateQuestMenu : BaseWindow {
+public class SaveQuestAsMenu : BaseWindow {
+    
 
     [SerializeField] private Text _errorText;
     [SerializeField] private Dropdown _typeDropdown;
     [SerializeField] private InputField _inputField;
 
-    CreateQuestMenuParams parameters;
+    SaveQuestAsMenuParams _parameters;
 
     private string _newId;
-    private string _newType;
 
-    public static void Show(CreateQuestMenuParams params_)
+    public static void Show(SaveQuestAsMenuParams param)
     {
-        App.UI.Show("CreateQuestMenu", params_);
+        App.UI.Show("SaveQuestAsMenu", param);
     }
 
     public override void OnShowComplete(WindowParams param = null)
     {
         base.OnShowComplete(param);
-        parameters = (CreateQuestMenuParams)windowsParameters;
+        _parameters = (SaveQuestAsMenuParams)windowsParameters;
         Init();
     }
 
     private void Init()
     {
-        _typeDropdown.onValueChanged.RemoveAllListeners();
-        _typeDropdown.onValueChanged.AddListener(OnTypeChanged);
-
         List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();
         optionsList.Add(new Dropdown.OptionData(QuestStepType.MESSAGE));
         optionsList.Add(new Dropdown.OptionData(QuestStepType.TRIGGER));
         _typeDropdown.ClearOptions();
         _typeDropdown.AddOptions(optionsList);
-
-        //
-        if (parameters.templateData != null)
-        {   //нельзя менять тип если сохраняем уже существующий шаг
-            _typeDropdown.SelectValue(parameters.templateData.stepType);
-            _typeDropdown.interactable = false;
-        }
-        else
-        {
-            //_typeDropdown.gameObject.SetActive(true);
-            _typeDropdown.interactable = true;
-            _newType = _typeDropdown.options[0].text;
-        }
+        if (_parameters.templateData != null)
+            _typeDropdown.SelectValue(_parameters.templateData.stepType);
+        _typeDropdown.interactable = false;
 
     }
 
-    private void OnTypeChanged(int val)
-    {
-        _newType = _typeDropdown.options[val].text;
-    }
 
     public void OnSaveClick()
     {
@@ -92,14 +74,17 @@ public class CreateQuestMenu : BaseWindow {
 
     private void Save()
     {
-        QuestStepData item = parameters.templateData ?? new QuestStepData() { stepType = _newType };;
+        QuestStepData item = _parameters.templateData;
         item.Id = _newId;
-        if (!string.IsNullOrEmpty(_newType)) item.stepType = _newType;
         item.typeId = _newId;
-        item.Create();
+
+        if (_parameters.relatedTemplateData != null)
+            _parameters.relatedTemplateData.Id = item.typeId;
         
-        if (parameters.OnCreateSuccess != null)
-            parameters.OnCreateSuccess.Invoke(item.Id);
+        item.Save(_parameters.relatedTemplateData);
+        
+        if (_parameters.OnSaveSuccess != null)
+            _parameters.OnSaveSuccess.Invoke(item.Id);
     }
 
 
@@ -114,4 +99,3 @@ public class CreateQuestMenu : BaseWindow {
         windowsParameters = null; //удаляем ссылку на параметр. т.к. там ссылка на колбек
     }
 }
-

@@ -13,9 +13,9 @@ namespace Assets.Scripts.UI.Windows
             App.UI.Show("PreloaderWindow");
         }
 
-        public override void OnShowComplete(WindowParams param_ = null)
+        public override void OnShowComplete(WindowParams param = null)
         {
-            base.OnShowComplete (param_);
+            base.OnShowComplete (param);
 
             GlobalEvents.OnLoadingProgress.Subscribe (OnLoadProgressEvent);
             App.InitComplete += OnLoadComplete;

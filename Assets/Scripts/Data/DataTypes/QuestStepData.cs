@@ -18,27 +18,47 @@ namespace Data.DataTypes
 
         private int _savedBytes;
 
-        public void Save()
+        public void Create()
         {
-            App.Data.Steps.Set(this, Id, true, CreateRelatedData);
+            App.Data.Steps.Set(this, Id, true, delegate(QuestStepData item)
+            {
+                switch (item.stepType)
+                {
+                    case Collections.MESSAGE:
+                        var messageData = new QuestMessageData {Id = item.typeId};
+                        App.Data.MessageSteps.Set(messageData, messageData.Id, true);
+                        break;
+                    case Collections.TRIGGER:
+                        var triggerData = new QuestTriggerStepData {Id = item.typeId};
+                        App.Data.TriggerSteps.Set(triggerData, triggerData.Id, true);
+                        break;
+                    default:
+                        Debug.LogError(this + " Save(): unknown type: " + item.stepType);
+                        break;
+                }
+            });
         }
 
-        private void CreateRelatedData(QuestStepData item)
+
+        public void Save(DataItem relatedData = null)
         {
-            switch (item.stepType)
+            App.Data.Steps.Set(this, Id, true, delegate(QuestStepData item)
             {
-                case Collections.MESSAGE:
-                    var messageData = new QuestMessageData {Id = item.typeId};
-                    App.Data.MessageSteps.Set(messageData, messageData.Id, true);
-                    break;
-                case Collections.TRIGGER:
-                    var triggerData = new QuestTriggerStepData {Id = item.typeId};
-                    App.Data.TriggerSteps.Set(triggerData, triggerData.Id, true);
-                    break;
-                default:
-                    Debug.LogError(this + " Save(): unknown type: " + item.stepType);
-                    break;
-            }
+                switch (item.stepType)
+                {
+                    case Collections.MESSAGE:
+                        var messageData = relatedData as QuestMessageData ?? new QuestMessageData {Id = item.typeId};
+                        App.Data.MessageSteps.Set(messageData, messageData.Id, true);
+                        break;
+                    case Collections.TRIGGER:
+                        var triggerData = relatedData as QuestTriggerStepData?? new QuestTriggerStepData {Id = item.typeId};
+                        App.Data.TriggerSteps.Set(triggerData, triggerData.Id, true);
+                        break;
+                    default:
+                        Debug.LogError(this + " Save(): unknown type: " + item.stepType);
+                        break;
+                }
+            });
         }
 
 
