@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "1036694325886",
-    "firebase_url": "https://text-quest.firebaseio.com",
-    "project_id": "text-quest",
-    "storage_bucket": "text-quest.appspot.com"
+    "project_number": "931646296942",
+    "firebase_url": "https://textquest-test.firebaseio.com",
+    "project_id": "textquest-test",
+    "storage_bucket": "textquest-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1036694325886:android:4afdfd116f177693",
+        "mobilesdk_app_id": "1:931646296942:android:8abdfa7dde857be9",
         "android_client_info": {
-          "package_name": "com.toybox.quest"
+          "package_name": "com.toybox.textquest_test"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1036694325886-dmgugj6kdumhptkr9k049p6vkfd372j5.apps.googleusercontent.com",
+          "client_id": "931646296942-9ivvmcslshrli0smvg5i03dvefagc0de.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD_l8c4ohU5n1U-x4dwUuLWiYfoqnnGRps"
+          "current_key": "AIzaSyBlHiymHc44G6W-ui9kxQuf9BU23na274o"
         }
       ],
       "services": {

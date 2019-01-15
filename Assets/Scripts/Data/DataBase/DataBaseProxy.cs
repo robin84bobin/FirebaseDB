@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Global;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 namespace Data.DataBase
 {
@@ -47,6 +50,7 @@ namespace Data.DataBase
         /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
         void Remove<T>(string collection, string id = "", Action<string> callback = null);
+
     }
 
     public static class DataBaseProxy
@@ -64,7 +68,20 @@ namespace Data.DataBase
         /// <returns></returns>
         private static IDataBaseProxy GetInstance()
         {
-            return new FireBaseDbProxy();
+            var dbProxy = new FireBaseDbProxy();
+            
+            GlobalEvents.OnBackup.Subscribe(DoBackup);
+            return dbProxy;
+        }
+
+        private static void DoBackup(string json)
+        {
+            Debug.Log(json);
+
+            var filePath = Application.streamingAssetsPath + "/backup.json";
+            StreamWriter writer = File.CreateText(filePath);
+            writer.Write(json.ToCharArray());
+            writer.Close();
         }
     }
 }

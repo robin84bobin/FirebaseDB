@@ -9,6 +9,7 @@ namespace Global
     {
         public static readonly GlobalEvent OnDataInited = new GlobalEvent();
         public static readonly GlobalEvent OnStorageLoaded = new GlobalEvent();
+        public static readonly GlobalEventParam<string> OnBackup = new GlobalEventParam<string>();
 
         public static readonly GlobalEventParam<string> OnLoadingProgress = new GlobalEventParam<string>();
         public static readonly GlobalEventParam<KeyCode> OnButton = new GlobalEventParam<KeyCode>();

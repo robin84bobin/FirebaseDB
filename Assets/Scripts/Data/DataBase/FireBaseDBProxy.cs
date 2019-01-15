@@ -18,7 +18,7 @@ namespace Data.DataBase
         private Action _onInitCallback;
 
         private object _lockObject = new object();
-        
+
         #region INITIALIZING
 
         public void Init(Action callback)
@@ -51,10 +51,17 @@ namespace Data.DataBase
 
         private void SetSettings()
         {
-            FirebaseApp.SetEditorDatabaseUrl("https://text-quest.firebaseio.com/");
+            FirebaseApp.SetEditorDatabaseUrl("https://textquest-test.firebaseio.com/");
             DbRoot = FirebaseDatabase.DefaultInstance.RootReference;
-
+            DbRoot.ValueChanged += OnRootChanges;
             _onInitCallback.Invoke();
+            
+        }
+
+        private void OnRootChanges(object sender, ValueChangedEventArgs e)
+        {
+            string json = e.Snapshot.GetRawJsonValue();
+            GlobalEvents.OnBackup.Publish(json);
         }
 
         #endregion
@@ -150,7 +157,7 @@ namespace Data.DataBase
                     }
     
                     if (callback != null) 
-                            callback.Invoke(item);
+                        callback.Invoke(item);
                 }
             );
         }
@@ -171,5 +178,7 @@ namespace Data.DataBase
                 }
             );
         }
+
+
     }
 }
