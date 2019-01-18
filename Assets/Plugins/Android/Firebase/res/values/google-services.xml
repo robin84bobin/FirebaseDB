@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
-  <string name="firebase_database_url" translatable="false">https://text-quest.firebaseio.com</string>
-  <string name="gcm_defaultSenderId" translatable="false">1036694325886</string>
-  <string name="google_storage_bucket" translatable="false">text-quest.appspot.com</string>
-  <string name="project_id" translatable="false">text-quest</string>
-  <string name="google_api_key" translatable="false">AIzaSyD_l8c4ohU5n1U-x4dwUuLWiYfoqnnGRps</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD_l8c4ohU5n1U-x4dwUuLWiYfoqnnGRps</string>
-  <string name="google_app_id" translatable="false">1:1036694325886:android:4afdfd116f177693</string>
-  <string name="default_web_client_id" translatable="false">1036694325886-dmgugj6kdumhptkr9k049p6vkfd372j5.apps.googleusercontent.com</string>
+  <string name="firebase_database_url" translatable="false">https://textquest-test.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">931646296942</string>
+  <string name="google_storage_bucket" translatable="false">textquest-test.appspot.com</string>
+  <string name="project_id" translatable="false">textquest-test</string>
+  <string name="google_api_key" translatable="false">AIzaSyBlHiymHc44G6W-ui9kxQuf9BU23na274o</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBlHiymHc44G6W-ui9kxQuf9BU23na274o</string>
+  <string name="google_app_id" translatable="false">1:931646296942:android:8abdfa7dde857be9</string>
+  <string name="default_web_client_id" translatable="false">931646296942-9ivvmcslshrli0smvg5i03dvefagc0de.apps.googleusercontent.com</string>
 </resources>
