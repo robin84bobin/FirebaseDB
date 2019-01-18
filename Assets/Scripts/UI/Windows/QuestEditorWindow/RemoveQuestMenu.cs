@@ -52,8 +52,5 @@ public class RemoveQuestMenu : BaseWindow {
         Hide();
     }
 
-    private void RemoveRelatedSteps(string obj)
-    {
-        throw new System.NotImplementedException();
-    }
+
 }

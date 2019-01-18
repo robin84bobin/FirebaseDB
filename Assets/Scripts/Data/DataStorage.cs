@@ -78,7 +78,7 @@ namespace Data
         
         #region SET DATA METHODS
 
-        public void Set(T item, string id = "", bool saveNow = false, Action<T> callback = null)
+        public void Set(T item, string id = "", bool saveNow = false, Action<T> onSuccessCallback = null)
         {
             if (ReadOnly)
             {
@@ -86,25 +86,28 @@ namespace Data
                     typeof(T), id));
                 return;
             }
-            
-            if (_items.ContainsKey(id))
+
+            onSuccessCallback += delegate(T obj)
             {
-                _items[id] = item;
-                Debug.Log(
-                    string.Format("Replace data in '{0}' storage.  Id:{1} already exists", CollectionName, id));
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(item.Id))
-                    item.Id = id;
-                _items.Add(item.Id, item);
-                Debug.Log(string.Format("Add data in '{0}' storage. Id:{1}", CollectionName, id));
-                
-                callback += delegate { GlobalEvents.OnAddStorageItem.Publish(item);};
-            }
+                if (_items.ContainsKey(id))
+                {
+                    _items[id] = item;
+                    Debug.Log(
+                        string.Format("Replace data in '{0}' storage.  Id:{1} already exists", CollectionName, id));
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(item.Id))
+                        item.Id = id;
+                    _items.Add(item.Id, item);
+                    Debug.Log(string.Format("Add data in '{0}' storage. Id:{1}", CollectionName, id));
+
+                    GlobalEvents.OnAddStorageItem.Publish(item); 
+                }
+            };
 
             if (saveNow) 
-                DataBaseProxy.Instance.Save(CollectionName, item, item.Id, callback);
+                DataBaseProxy.Instance.Save(CollectionName, item, item.Id, onSuccessCallback);
         }
 
         

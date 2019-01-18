@@ -63,6 +63,7 @@ namespace UI.Windows.QuestEditorWindow.Components
         }
 
 
+
         private void OnAddItem(DataItem item)
         {
             if (item.GetType() != typeof(QuestStepData) )
@@ -94,9 +95,9 @@ namespace UI.Windows.QuestEditorWindow.Components
             string selectedId = GetSelectedText();
             UpdateQuestList();
         
-            if (Dropdown.options.Exists(o => o.text == selectedId))
-                Select(selectedId);
-            else //если выделенный шаг уже удалили из списка
+            if (!Dropdown.options.Exists(o => o.text == selectedId))
+            //    Select(selectedId);
+            //else //если выделенный шаг уже удалили из списка
                 Select(NONE);
         }
 

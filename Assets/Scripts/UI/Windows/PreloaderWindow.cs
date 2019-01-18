@@ -1,3 +1,4 @@
+using Assets.Scripts.UI.Windows.InfoWindows;
 using Global;
 using UnityEngine.UI;
 
@@ -13,9 +14,9 @@ namespace Assets.Scripts.UI.Windows
             App.UI.Show("PreloaderWindow");
         }
 
-        public override void OnShowComplete(WindowParams param = null)
+        public override void OnShowComplete( WindowParams param = null)
         {
-            base.OnShowComplete (param);
+            base.OnShowComplete ( param);
 
             GlobalEvents.OnLoadingProgress.Subscribe (OnLoadProgressEvent);
             App.InitComplete += OnLoadComplete;

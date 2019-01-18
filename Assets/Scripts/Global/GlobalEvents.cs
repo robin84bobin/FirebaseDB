@@ -18,6 +18,7 @@ namespace Global
         public static readonly GlobalEventParam<MessageViewData> OnMessageTypeComplete = new GlobalEventParam<MessageViewData>();
         //
         public static readonly GlobalEventParam<Type> OnStorageUpdated = new GlobalEventParam<Type>();
+        public static readonly GlobalEventParam<Type> OnRemoveStorageData = new GlobalEventParam<Type>();
         public static readonly GlobalEventParam<DataItem> OnAddStorageItem = new GlobalEventParam<DataItem>();
     }
     

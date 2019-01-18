@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.UI.Windows.InfoWindows;
 using Firebase;
 using Firebase.Database;
 using Firebase.Unity.Editor;
@@ -55,7 +56,6 @@ namespace Data.DataBase
             DbRoot = FirebaseDatabase.DefaultInstance.RootReference;
             DbRoot.ValueChanged += OnRootChanges;
             _onInitCallback.Invoke();
-            
         }
 
         private void OnRootChanges(object sender, ValueChangedEventArgs e)
@@ -100,16 +100,6 @@ namespace Data.DataBase
 
             if (!t.Result.Exists && createIfNotExist)
             {
-                /*
-                Debug.LogError(string.Concat(this.ToString(), ":: Collection not exists: ",collection));
-                Dictionary<string, T> rawDict = new Dictionary<string, T>();
-                rawDict.Add("emptyItem", new T());
-                
-                SaveCollection(collection, rawDict, () =>
-                {
-                    Get(collection, callback, createIfNotExist);
-                });*/
-                
                 if (callback != null)
                     callback.Invoke(new Dictionary<string, T>());
                 
@@ -152,7 +142,9 @@ namespace Data.DataBase
                 {
                     if (t.Exception != null)
                     {
-                        Debug.LogError(this + " Error Saving:" + jString + " \n" + t.Exception.ToString());
+                        var message = this + " Error Saving:" + jString + " \n" + t.Exception.ToString();
+                        Debug.LogError(message);
+                        InfoWindow.Show(message);
                         return;
                     }
     
@@ -169,7 +161,9 @@ namespace Data.DataBase
                 {
                     if (t.Exception != null)
                     {
-                        Debug.LogError(this + " Error Removing:" + id + " \n" + t.Exception.ToString());
+                        var message = this + " Error Removing:" + id + " \n" + t.Exception.ToString();
+                        Debug.LogError(message);
+                        InfoWindow.Show(message);
                         return;
                     }
 

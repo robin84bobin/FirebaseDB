@@ -76,6 +76,9 @@ namespace Data.DataBase
 
         private static void DoBackup(string json)
         {
+            if (string.IsNullOrEmpty(json)) 
+                return;
+            
             Debug.Log(json);
 
             var filePath = Application.streamingAssetsPath + "/backup.json";

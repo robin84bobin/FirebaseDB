@@ -63,6 +63,10 @@ namespace UI.Windows.QuestEditorWindow
 
         private void SelectQuest(string id)
         {
+            if (_currentEditor != null && _currentQuestData != null)
+            {
+                _currentEditor.SaveData();
+            }
             _dropdownId.Select(id);
         }
 
@@ -134,10 +138,7 @@ namespace UI.Windows.QuestEditorWindow
 
         private void OnSelectQuest(string Id)
         {
-            if (_currentEditor != null && _currentQuestData != null)
-            {
-                _currentEditor.SaveData();
-            }
+
 
             _currentQuestId = Id;
 

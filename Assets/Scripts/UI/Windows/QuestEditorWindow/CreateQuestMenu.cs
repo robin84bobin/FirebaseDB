@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Text.RegularExpressions;
 using Assets.Scripts.UI;
+using Assets.Scripts.UI.Windows.InfoWindows;
 using Data;
 using Data.DataTypes;
 
@@ -40,6 +42,8 @@ public class CreateQuestMenu : BaseWindow {
 
     private void Init()
     {
+        _inputField.onValueChanged.AddListener(Validate); 
+        
         _typeDropdown.onValueChanged.RemoveAllListeners();
         _typeDropdown.onValueChanged.AddListener(OnTypeChanged);
 
@@ -62,6 +66,16 @@ public class CreateQuestMenu : BaseWindow {
             _newType = _typeDropdown.options[0].text;
         }
 
+    }
+
+    private void Validate(string inputId)
+    {
+        Regex regex = new Regex(@"\$+\.+\]+\[+");
+
+        if (regex.IsMatch(inputId))
+            _errorText.text = (" Недопустимый символ: " + regex.ToString());
+        else
+            _errorText.text = string.Empty;
     }
 
     private void OnTypeChanged(int val)
