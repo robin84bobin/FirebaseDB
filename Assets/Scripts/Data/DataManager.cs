@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Commands;
+using Commands.Data;
 using Data.DataBase;
 using Data.DataTypes;
 
@@ -31,12 +32,12 @@ namespace Data
         {
             OnInitComplete += onSuccess;
 
-            Steps = new DataStorage<QuestStepData>(Collections.STEP);
-            MessageSteps = new DataStorage<QuestMessageData>(Collections.MESSAGE);
-            TriggerSteps = new DataStorage<QuestTriggerStepData>(Collections.TRIGGER);
+            Steps = CreateStorage<QuestStepData>(Collections.STEP);
+            MessageSteps = CreateStorage<QuestMessageData>(Collections.MESSAGE);
+            TriggerSteps = CreateStorage<QuestTriggerStepData>(Collections.TRIGGER);
             
-            UserSteps = new DataStorage<UserQuestStepData>(Collections.USER_STEP);
-            UserMessageHistory = new DataStorage<MessageViewData>(Collections.USER_MESSAGE);
+            UserSteps = CreateStorage<UserQuestStepData>(Collections.USER_STEP);
+            UserMessageHistory = CreateStorage<MessageViewData>(Collections.USER_MESSAGE);
             
             DataBaseProxy.Instance.Init(OnDbInitComplete);
         }
@@ -47,10 +48,13 @@ namespace Data
         /// </summary>
         /// <param name="dataStorage"></param>
         /// <typeparam name="T"></typeparam>
-        internal void RegisterStorage<T>(DataStorage<T> dataStorage) where T : DataItem, new()
+        internal DataStorage<T> CreateStorage<T>(string collectionName) where T : DataItem, new()
         {
+            var dataStorage = new DataStorage<T>(collectionName);
             var command = new InitStorageCommand<T>(dataStorage);
             _initStoragesCommands.Add(command);
+
+            return dataStorage;
         }
 
 

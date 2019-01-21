@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.UI;
 using Assets.Scripts.UI.Windows;
+using Commands;
+using Commands.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,7 +50,7 @@ public class RemoveQuestMenu : BaseWindow {
             return;
         }
 
-        stepData.Remove();
+        CommandManager.Execute(new RemoveQuestStepCommand(stepData));
         Hide();
     }
 

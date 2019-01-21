@@ -16,11 +16,6 @@ namespace Global
 
         void Update()
         {
-            CheckEventQueue();
-        }
-
-        void CheckEventQueue ()
-        {
             lock(_eventLock){
                 while (_eventQueue.Count > 0) {
                     _eventQueue.Dequeue().Execute();

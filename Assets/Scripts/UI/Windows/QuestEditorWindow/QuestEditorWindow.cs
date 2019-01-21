@@ -138,8 +138,6 @@ namespace UI.Windows.QuestEditorWindow
 
         private void OnSelectQuest(string Id)
         {
-
-
             _currentQuestId = Id;
 
             //save story

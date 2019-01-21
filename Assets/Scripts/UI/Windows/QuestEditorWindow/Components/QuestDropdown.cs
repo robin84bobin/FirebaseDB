@@ -58,11 +58,20 @@ namespace UI.Windows.QuestEditorWindow.Components
             }
 
             UpdateQuestList();
+
             GlobalEvents.OnAddStorageItem.Subscribe(OnAddItem);
-            GlobalEvents.OnStorageUpdated.Subscribe(OnStorageUpdate);
+            GlobalEvents.OnRemoveStorageItem.Subscribe(OnRemoveItem);
         }
 
+        private void OnRemoveItem(string id)
+        {
+            //запоминаем выделенный id
+            string selectedId = GetSelectedText();
+            UpdateQuestList();
 
+            if (!Dropdown.options.Exists(o => o.text == selectedId))
+                Select(NONE);
+        }
 
         private void OnAddItem(DataItem item)
         {
@@ -86,7 +95,7 @@ namespace UI.Windows.QuestEditorWindow.Components
         }
 
 
-        private void OnStorageUpdate(Type type)
+  /*      private void OnStorageUpdate(Type type)
         {
             if (type != typeof(QuestStepData) )
                 return;
@@ -99,7 +108,7 @@ namespace UI.Windows.QuestEditorWindow.Components
             //    Select(selectedId);
             //else //если выделенный шаг уже удалили из списка
                 Select(NONE);
-        }
+        }*/
 
         
         private void UpdateQuestList(bool keepSelected = true)
@@ -164,13 +173,7 @@ namespace UI.Windows.QuestEditorWindow.Components
         
         private void OnAddClick()
         {
-            CreateQuestMenu.Show(new CreateQuestMenuParams()
-            {
-                OnCreateSuccess = id =>
-                {
-                    _idSelectOnItemAdd = id;
-                }
-            });
+            CreateQuestMenu.Show();
         }
 
         
@@ -185,7 +188,8 @@ namespace UI.Windows.QuestEditorWindow.Components
             OnQuestSelect = delegate { };
             GotoStep = delegate { };
             GlobalEvents.OnAddStorageItem.Unsubscribe(OnAddItem);
-            GlobalEvents.OnStorageUpdated.Unsubscribe(OnStorageUpdate);
+            GlobalEvents.OnRemoveStorageItem.Unsubscribe(OnRemoveItem);
+            //GlobalEvents.OnStorageUpdated.Unsubscribe(OnStorageUpdate);
         }
     }
 }

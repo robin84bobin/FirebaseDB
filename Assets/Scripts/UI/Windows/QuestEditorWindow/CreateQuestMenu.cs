@@ -8,7 +8,8 @@ using Assets.Scripts.UI;
 using Assets.Scripts.UI.Windows.InfoWindows;
 using Data;
 using Data.DataTypes;
-
+using Commands;
+using Commands.Data;
 
 public class CreateQuestMenuParams : WindowParams
 {
@@ -28,15 +29,14 @@ public class CreateQuestMenu : BaseWindow {
     private string _newId;
     private string _newType;
 
-    public static void Show(CreateQuestMenuParams params_)
+    public static void Show()
     {
-        App.UI.Show("CreateQuestMenu", params_);
+        App.UI.Show("CreateQuestMenu");
     }
 
     public override void OnShowComplete(WindowParams param = null)
     {
         base.OnShowComplete(param);
-        parameters = (CreateQuestMenuParams)windowsParameters;
         Init();
     }
 
@@ -53,19 +53,8 @@ public class CreateQuestMenu : BaseWindow {
         _typeDropdown.ClearOptions();
         _typeDropdown.AddOptions(optionsList);
 
-        //
-        if (parameters.templateData != null)
-        {   //нельзя менять тип если сохраняем уже существующий шаг
-            _typeDropdown.SelectValue(parameters.templateData.stepType);
-            _typeDropdown.interactable = false;
-        }
-        else
-        {
-            //_typeDropdown.gameObject.SetActive(true);
-            _typeDropdown.interactable = true;
-            _newType = _typeDropdown.options[0].text;
-        }
-
+        _typeDropdown.interactable = true;
+        _newType = _typeDropdown.options[0].text;
     }
 
     private void Validate(string inputId)
@@ -106,14 +95,7 @@ public class CreateQuestMenu : BaseWindow {
 
     private void Save()
     {
-        QuestStepData item = parameters.templateData ?? new QuestStepData() { stepType = _newType };;
-        item.Id = _newId;
-        if (!string.IsNullOrEmpty(_newType)) item.stepType = _newType;
-        item.typeId = _newId;
-        item.Create();
-        
-        if (parameters.OnCreateSuccess != null)
-            parameters.OnCreateSuccess.Invoke(item.Id);
+        CommandManager.Execute(new CreateQuestStepCommand(_newId, _newType));
     }
 
 

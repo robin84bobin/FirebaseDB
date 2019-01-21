@@ -135,8 +135,7 @@ namespace Data.DataBase
             
             //TODO. Почитать возможно надо использовать Push() или Transaction? 
             
-            callback += delegate { GlobalEvents.OnStorageUpdated.Publish(typeof(T)); };
-            
+                       
             DbRoot.Child(collection).Child(item.Id).SetRawJsonValueAsync(jString).ContinueWith(
                 delegate(Task t)
                 {

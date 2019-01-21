@@ -2,8 +2,9 @@
 using Data;
 using Data.DataBase;
 
-namespace Commands
+namespace Commands.Data
 {
+
     public class InitStorageCommand<T> : Command where T : DataItem, new()
     {
         private DataStorage<T> _storage;

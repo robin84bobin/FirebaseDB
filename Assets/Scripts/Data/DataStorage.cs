@@ -41,7 +41,6 @@ namespace Data
             CollectionName = collectionName;
             ReadOnly = readOnly;
 
-            App.Data.RegisterStorage(this);
             App.Data.OnInitComplete += InitItems;
         }
 
@@ -66,7 +65,6 @@ namespace Data
                 _items.Remove(id);
                 if (now)
                 {
-                    callback += delegate { GlobalEvents.OnStorageUpdated.Publish(typeof(T));};
                     DataBaseProxy.Instance.Remove<T>(CollectionName, id, callback);
                 }
             }
@@ -87,25 +85,22 @@ namespace Data
                 return;
             }
 
-            onSuccessCallback += delegate(T obj)
+
+            if (_items.ContainsKey(id))
             {
-                if (_items.ContainsKey(id))
-                {
-                    _items[id] = item;
-                    Debug.Log(
-                        string.Format("Replace data in '{0}' storage.  Id:{1} already exists", CollectionName, id));
-                }
-                else
-                {
-                    if (string.IsNullOrEmpty(item.Id))
-                        item.Id = id;
-                    _items.Add(item.Id, item);
-                    Debug.Log(string.Format("Add data in '{0}' storage. Id:{1}", CollectionName, id));
+                _items[id] = item;
+                Debug.Log(
+                    string.Format("Replace data in '{0}' storage.  Id:{1} already exists", CollectionName, id));
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(item.Id))
+                    item.Id = id;
+                _items.Add(item.Id, item);
+                Debug.Log(string.Format("Add data in '{0}' storage. Id:{1}", CollectionName, id));
+            }
 
-                    GlobalEvents.OnAddStorageItem.Publish(item); 
-                }
-            };
-
+            //onSuccessCallback += delegate { GlobalEvents.OnStorageUpdated.Publish(typeof(T)); };
             if (saveNow) 
                 DataBaseProxy.Instance.Save(CollectionName, item, item.Id, onSuccessCallback);
         }
@@ -158,7 +153,7 @@ namespace Data
         {
             if (!_items.ContainsKey(id))
             {
-                Debug.LogError(string.Format("Can't get item from '{0}' storage - Id:{1}", typeof(T), id));
+                Debug.LogWarning(string.Format("Can't get item from '{0}' storage - Id:{1}", typeof(T), id));
                 return default(T);
             }
 
