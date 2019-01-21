@@ -15,6 +15,8 @@ namespace UI.Windows.QuestEditorWindow.Components.ConcreteStepEditorTabs
 
         public void Init(TriggerData data = null)
         {
+            Reset();
+            
             _data = data;
 
             List<Dropdown.OptionData> optList = new List<Dropdown.OptionData>()
@@ -31,11 +33,22 @@ namespace UI.Windows.QuestEditorWindow.Components.ConcreteStepEditorTabs
 
             if (_data != null)
             {
-                _conditionDropdown.value = _conditionDropdown.options.FindIndex( o => o.text == _data.condition );
-                _triggerStepDropdown.Dropdown.value = _triggerStepDropdown.Dropdown.options.FindIndex(o => o.text == _data.triggerStepId);
-                _targetStepDropdown.Dropdown.value =  _targetStepDropdown.Dropdown.options.FindIndex(o => o.text == _data.targetStepId);
-                _alterStepDropdown.Dropdown.value =   _alterStepDropdown.Dropdown.options.FindIndex(o => o.text == _data.alterStepId);
+                _conditionDropdown.value = _conditionDropdown.options.FindIndex(o => o.text == _data.condition);
+                _triggerStepDropdown.Dropdown.value =
+                    _triggerStepDropdown.Dropdown.options.FindIndex(o => o.text == _data.triggerStepId);
+                _targetStepDropdown.Dropdown.value =
+                    _targetStepDropdown.Dropdown.options.FindIndex(o => o.text == _data.targetStepId);
+                _alterStepDropdown.Dropdown.value =
+                    _alterStepDropdown.Dropdown.options.FindIndex(o => o.text == _data.alterStepId);
             }
+        }
+
+        private void Reset()
+        {
+            _conditionDropdown.value = 0;
+            _triggerStepDropdown.Dropdown.value =0;
+            _targetStepDropdown.Dropdown.value =0;
+            _alterStepDropdown.Dropdown.value =0;
         }
 
         internal TriggerData GetTriggerData()
