@@ -20,7 +20,8 @@ public class App : MonoBehaviour
         Init();
         
         Data = new DataManager();
-        Data.Init(OnLoadSuccess);
+        Data.OnInitComplete += OnLoadSuccess;
+        Data.Init();
     }
     
 

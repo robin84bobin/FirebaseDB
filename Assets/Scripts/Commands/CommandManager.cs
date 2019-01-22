@@ -19,10 +19,16 @@ namespace Commands
                 if (i < commands.Length - 1)
                 {
                     var nextCommand = commands[i + 1];
-                    commands[i].OnComplete += () => Execute(nextCommand);
+                    commands[i].OnComplete += () =>
+                    {
+                        Execute(nextCommand);
+                    };
                 }
                 else if (i == commands.Length - 1)
-                    commands[i].OnComplete += onSequenceComplete;
+                    commands[i].OnComplete += () =>
+                    {
+                        onSequenceComplete();
+                    };
                     
             }
 
@@ -36,10 +42,6 @@ namespace Commands
             //AddToUndoStack(command)
         }
 
-        public static void ExecuteAsync(Command command, Action completeCallback)
-        {
-            command.OnComplete += completeCallback;
-            Execute(command);
-        }
+
     }
 }

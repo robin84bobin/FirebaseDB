@@ -11,8 +11,7 @@ namespace Data.DataBase
         /// <summary>
         /// initialize connection to db etc.
         /// </summary>
-        /// <param name="callback"></param>
-        void Init(Action callback);
+        void Init();
 
         /// <summary>
         /// get data list of current type 
@@ -50,6 +49,8 @@ namespace Data.DataBase
         /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
         void Remove<T>(string collection, string id = "", Action<string> callback = null);
+
+        event Action OnInitialized;
 
     }
 

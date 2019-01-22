@@ -40,21 +40,6 @@ namespace Data
         {
             CollectionName = collectionName;
             ReadOnly = readOnly;
-
-            App.Data.OnInitComplete += InitItems;
-        }
-
-        /// <summary>
-        /// после того как все справочные данные загружены
-        /// инициализируем
-        /// </summary>
-        private void InitItems()
-        {
-            App.Data.OnInitComplete -= InitItems;
-            foreach (var item in _items)
-            {
-                item.Value.Init();
-            }
         }
 
         
@@ -70,8 +55,6 @@ namespace Data
             }
             else
                 Debug.LogError(this + ":: Try to remove unexisted item: Id = " + id);
-            
-            
         }
         
         #region SET DATA METHODS

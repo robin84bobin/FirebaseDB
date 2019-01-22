@@ -16,16 +16,15 @@ namespace Data.DataBase
         private FirebaseApp FirebaseApp { get; set; }
         private DatabaseReference DbRoot { get; set; }
 
-        private Action _onInitCallback;
+        public event Action OnInitialized = delegate { };
 
         private object _lockObject = new object();
 
         #region INITIALIZING
 
-        public void Init(Action callback)
+        public void Init()
         {
             Debug.Log(ToString() + ". Init()");
-            _onInitCallback = callback;
             CheckDependencies();
         }
 
@@ -55,7 +54,7 @@ namespace Data.DataBase
             FirebaseApp.SetEditorDatabaseUrl("https://textquest-test.firebaseio.com/");
             DbRoot = FirebaseDatabase.DefaultInstance.RootReference;
             DbRoot.ValueChanged += OnRootChanges;
-            _onInitCallback.Invoke();
+            OnInitialized.Invoke();
         }
 
         private void OnRootChanges(object sender, ValueChangedEventArgs e)

@@ -28,10 +28,8 @@ namespace Data
         
         
 
-        public void Init(Action onSuccess)
+        public void Init()
         {
-            OnInitComplete += onSuccess;
-
             Steps = CreateStorage<QuestStepData>(Collections.STEP);
             MessageSteps = CreateStorage<QuestMessageData>(Collections.MESSAGE);
             TriggerSteps = CreateStorage<QuestTriggerStepData>(Collections.TRIGGER);
@@ -39,7 +37,8 @@ namespace Data
             UserSteps = CreateStorage<UserQuestStepData>(Collections.USER_STEP);
             UserMessageHistory = CreateStorage<MessageViewData>(Collections.USER_MESSAGE);
             
-            DataBaseProxy.Instance.Init(OnDbInitComplete);
+            DataBaseProxy.Instance.OnInitialized += OnDbInitComplete;
+            DataBaseProxy.Instance.Init();
         }
 
         
@@ -60,6 +59,7 @@ namespace Data
 
         private void OnDbInitComplete()
         {
+            DataBaseProxy.Instance.OnInitialized -= OnDbInitComplete;
             CommandManager.ExecuteSequence( OnInitComplete, _initStoragesCommands.ToArray());
         }
 

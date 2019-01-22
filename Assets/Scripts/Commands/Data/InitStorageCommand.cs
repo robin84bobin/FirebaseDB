@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Data;
 using Data.DataBase;
+using UnityEngine;
 
 namespace Commands.Data
 {
@@ -16,6 +17,7 @@ namespace Commands.Data
 
         public override void Execute()
         {
+            Debug.Log(this + " --> " + _storage.CollectionName);
             DataBaseProxy.Instance.Get<T>(_storage.CollectionName, OnGetData);
         }
 
