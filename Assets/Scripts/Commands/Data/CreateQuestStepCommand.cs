@@ -15,6 +15,7 @@ namespace Commands.Data
             QuestStepData item = new QuestStepData();
             item.stepType = type;
             item.Id = id;
+            item.typeId = id;
             _item = item;
         }
 
