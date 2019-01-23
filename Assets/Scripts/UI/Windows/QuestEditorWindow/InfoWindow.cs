@@ -26,7 +26,7 @@ namespace Assets.Scripts.UI.Windows.InfoWindows
         public override void OnShowComplete(WindowParams param = null)
         {
             base.OnShowComplete(param);
-            parameters = (InfoWindowParams)windowsParameters;
+            parameters = (InfoWindowParams)_params;
             _messageText.text = parameters.Message;
         }
         

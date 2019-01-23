@@ -31,7 +31,7 @@ public class RemoveQuestMenu : BaseWindow {
     public override void OnShowComplete(WindowParams param = null)
     {
         base.OnShowComplete(param);
-        _id = (windowsParameters as RemoveQuestMenuParams).id;
+        _id = (_params as RemoveQuestMenuParams).id;
         _idText.text = "id: "+_id;
     }
 
@@ -42,7 +42,7 @@ public class RemoveQuestMenu : BaseWindow {
 
     public void OnRemoveClick()
     {
-        RemoveQuestMenuParams params_ = windowsParameters as RemoveQuestMenuParams;
+        RemoveQuestMenuParams params_ = _params as RemoveQuestMenuParams;
 
         var stepData = App.Data.Steps.Get(params_.id);
         if (stepData == null){

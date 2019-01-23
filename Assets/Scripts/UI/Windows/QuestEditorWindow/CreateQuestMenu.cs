@@ -13,8 +13,8 @@ using Commands.Data;
 
 public class CreateQuestMenuParams : WindowParams
 {
-    public QuestStepData templateData;
     public Action<string> OnCreateSuccess = delegate { };
+    public Action OnCreateCancel = delegate { };
 }
 
 
@@ -29,14 +29,15 @@ public class CreateQuestMenu : BaseWindow {
     private string _newId;
     private string _newType;
 
-    public static void Show()
+    public static void Show(CreateQuestMenuParams param = null)
     {
-        App.UI.Show("CreateQuestMenu");
+        App.UI.Show("CreateQuestMenu", param);
     }
 
     public override void OnShowComplete(WindowParams param = null)
     {
         base.OnShowComplete(param);
+        parameters = (CreateQuestMenuParams) _params;
         Init();
     }
 
@@ -101,13 +102,15 @@ public class CreateQuestMenu : BaseWindow {
 
     public void OnCancelClick()
     {
+        if (parameters != null && parameters.OnCreateCancel != null) 
+            parameters.OnCreateCancel.Invoke();
         Hide();
     }
 
     protected override void OnHide()
     {
         base.OnHide();
-        windowsParameters = null; //удаляем ссылку на параметр. т.к. там ссылка на колбек
+        _params = null; //удаляем ссылку на параметр. т.к. там ссылка на колбек
     }
 }
 

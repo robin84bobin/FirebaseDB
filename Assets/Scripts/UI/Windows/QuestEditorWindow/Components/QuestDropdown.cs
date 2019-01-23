@@ -22,10 +22,6 @@ namespace UI.Windows.QuestEditorWindow.Components
         [SerializeField] private Button _buttonRemove;
         [SerializeField] private Button _buttonGoTo;
         
-        /// <summary>
-        /// for recently added items
-        /// </summary>
-        private string _idSelectOnItemAdd;
 
         public event Action<string> OnQuestSelect = delegate { };
 
@@ -78,16 +74,26 @@ namespace UI.Windows.QuestEditorWindow.Components
             if (item.GetType() != typeof(QuestStepData) )
                 return;
             
-            //запоминаем выделенный id
-            string selectedId = GetSelectedText();
             UpdateQuestList();
 
-            if (!string.IsNullOrEmpty(_idSelectOnItemAdd) && item.Id == _idSelectOnItemAdd)
+            if (_selectOnAdd)
             {
-                Select(_idSelectOnItemAdd);
-                _idSelectOnItemAdd = string.Empty;
+                _selectOnAdd = false;
+                SelectItem(item);
             }
-            else
+        }
+
+        private void SelectItem(DataItem item)
+        {
+            //запоминаем выделенный id
+            string selectedId = GetSelectedText();
+
+            if (Dropdown.options.Exists(o => o.text == item.Id))
+            {
+                Select(item.Id);
+                return;
+            }
+
             if (Dropdown.options.Exists(o => o.text == selectedId))
                 Select(selectedId);
             else //если выделенный шаг уже удалили из списка
@@ -95,22 +101,6 @@ namespace UI.Windows.QuestEditorWindow.Components
         }
 
 
-  /*      private void OnStorageUpdate(Type type)
-        {
-            if (type != typeof(QuestStepData) )
-                return;
-
-            //запоминаем выделенный id
-            string selectedId = GetSelectedText();
-            UpdateQuestList();
-        
-            if (!Dropdown.options.Exists(o => o.text == selectedId))
-            //    Select(selectedId);
-            //else //если выделенный шаг уже удалили из списка
-                Select(NONE);
-        }*/
-
-        
         private void UpdateQuestList(bool keepSelected = true)
         {
             //get _messageViewData
@@ -127,7 +117,7 @@ namespace UI.Windows.QuestEditorWindow.Components
             else if (x.text == null) return -1;
             else if (y.text == null) return 1;
             else return x.text.CompareTo(y.text);
-        });*/
+            });*/
             //fill list
             Dropdown.ClearOptions();
             Dropdown.AddOptions(optionsList);
@@ -170,10 +160,17 @@ namespace UI.Windows.QuestEditorWindow.Components
             RemoveQuestMenu.Show( id );
         }
 
-        
+        /// <summary>
+        /// выделяем свежесозданный шаг только в том questDropdown из которого вызвана команда на его создание
+        /// </summary>
+        private bool _selectOnAdd = false;
         private void OnAddClick()
         {
+            var p = new CreateQuestMenuParams();
+            p.OnCreateCancel = () =>{_selectOnAdd = false;};
             CreateQuestMenu.Show();
+
+            _selectOnAdd = true;
         }
 
         

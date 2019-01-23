@@ -4,7 +4,7 @@ namespace Assets.Scripts.UI.Windows
 {
     public class BaseWindow : MonoBehaviour 
     {
-        protected WindowParams windowsParameters;
+        protected WindowParams _params;
 
         public void Hide ()
         {
@@ -14,11 +14,12 @@ namespace Assets.Scripts.UI.Windows
 
         public virtual void OnShowComplete(WindowParams param = null)
         {
-            windowsParameters = param;
+            _params = param;
         }
 
         protected virtual void OnHide()
         {
+            _params = null;
         }
     }
 }

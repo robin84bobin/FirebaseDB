@@ -41,7 +41,7 @@ public class SaveQuestAsMenu : BaseWindow {
     public override void OnShowComplete(WindowParams param = null)
     {
         base.OnShowComplete(param);
-        _parameters = (SaveQuestAsMenuParams)windowsParameters;
+        _parameters = (SaveQuestAsMenuParams)_params;
         Init();
     }
 
@@ -104,6 +104,6 @@ public class SaveQuestAsMenu : BaseWindow {
     protected override void OnHide()
     {
         base.OnHide();
-        windowsParameters = null; //удаляем ссылку на параметр. т.к. там ссылка на колбек
+        _params = null; //удаляем ссылку на параметр. т.к. там ссылка на колбек
     }
 }
