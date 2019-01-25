@@ -2,16 +2,13 @@
 using UnityEngine;
 using Data;
 using Assets.Scripts.UI;
-using Commands;
-using Commands.Startup;
 using Controllers;
 using Global;
 using UnityEngine.SceneManagement;
 
 public class App : MonoBehaviour
 {
-    
-    
+    public static StartupController startupController { get; private set; }
     public static WindowManager UI { get; private set; }
     
     public static event Action InitComplete = delegate { };
@@ -19,33 +16,24 @@ public class App : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadSceneAsync("Preloader").completed += OnPreloaderLoaded;
+        
+        if (UI == null) 
+            UI = GetComponent<WindowManager>() ?? gameObject.AddComponent<WindowManager>();
+        
+        startupController = new StartupController();
+        
+        SceneManager.LoadSceneAsync(Helper.Scenes.PRELOADER).completed += OnPreloaderLoaded;
     }
 
     private void OnPreloaderLoaded(AsyncOperation obj)
     {
-        Init();
+        startupController.Init();
     }
 
 
-    private void Init()
-    {
-        if (UI == null) 
-            UI = GetComponent<WindowManager>() ?? gameObject.AddComponent<WindowManager>();
 
-        Command[] startupCommands = 
-        {
-            new ValidateApkCommand(), 
-            new InitDataCommand(),
-            new InitUserDataCommand()
-        };
-        CommandManager.ExecuteSequence(OnInitComplete, startupCommands);
-    }
 
-    private void OnInitComplete()
-    {
-        
-    }
+
     
     
     

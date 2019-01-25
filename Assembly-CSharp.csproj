@@ -9,7 +9,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{CF62DBA1-917A-DAD4-6C62-0CA2A8C02472}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -172,6 +173,8 @@
     <Compile Include="Assets\Scripts\Commands\Data\InitStorageCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Data\RemoveQuestStepCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Startup\InitDataCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\Startup\InitSocialServicesCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\Startup\InitUserDataCommand.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\BaseStateMachine.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\IBaseState.cs" />
     <Compile Include="Assets\Scripts\Controllers\UserQuestController.cs" />
@@ -199,6 +202,7 @@
     <Compile Include="Assets\Scripts\Global\EventManager.cs" />
     <Compile Include="Assets\Scripts\Global\GlobalEvents.cs" />
     <Compile Include="Assets\Scripts\Model\QuestStep.cs" />
+    <Compile Include="Assets\Scripts\StartupController.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItem.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItemsContainer.cs" />
     <Compile Include="Assets\Scripts\UI\MessageView.cs" />

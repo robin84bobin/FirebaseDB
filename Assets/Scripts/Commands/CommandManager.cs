@@ -69,5 +69,7 @@ namespace Commands
         /// </summary>
         /// <param name="progress"></param>
         void Set(float progress);
+
+        event Action<float> OnProgress;
     }
 }

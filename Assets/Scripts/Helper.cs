@@ -1,6 +1,5 @@
-namespace DefaultNamespace
-{
-    public class Helper
+
+namespace Helper
     {
         public static class Scenes
         {
@@ -11,4 +10,3 @@ namespace DefaultNamespace
             
         }
     }
-}
