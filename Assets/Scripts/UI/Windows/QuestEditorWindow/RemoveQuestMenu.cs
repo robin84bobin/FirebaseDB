@@ -45,7 +45,7 @@ public class RemoveQuestMenu : BaseWindow {
     {
         RemoveQuestMenuParams params_ = _params as RemoveQuestMenuParams;
 
-        var stepData = DataManager.Steps.Get(params_.id);
+        var stepData = Data.Repository.Steps.Get(params_.id);
         if (stepData == null){
             _errorText.text = "id is not exists!";
             return;

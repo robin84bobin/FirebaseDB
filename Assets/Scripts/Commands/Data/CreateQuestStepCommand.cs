@@ -21,7 +21,7 @@ namespace Commands.Data
 
         public override void Execute()
         {
-            DataManager.Steps.Set(_item, _item.Id, true, CreateRelatedData);
+            global::Data.Repository.Steps.Set(_item, _item.Id, true, CreateRelatedData);
         }
 
         void CreateRelatedData(QuestStepData item)
@@ -30,11 +30,11 @@ namespace Commands.Data
             {
                 case Collections.MESSAGE:
                     var messageData = new QuestMessageData { Id = item.typeId };
-                    DataManager.MessageSteps.Set(messageData, messageData.Id, true, OnCreated);
+                    global::Data.Repository.MessageSteps.Set(messageData, messageData.Id, true, OnCreated);
                     break;
                 case Collections.TRIGGER:
                     var triggerData = new QuestTriggerStepData { Id = item.typeId };
-                    DataManager.TriggerSteps.Set(triggerData, triggerData.Id, true, OnCreated);
+                    global::Data.Repository.TriggerSteps.Set(triggerData, triggerData.Id, true, OnCreated);
                     break;
                 default:
                     Debug.LogError(this + " Save(): unknown type: " + item.stepType);

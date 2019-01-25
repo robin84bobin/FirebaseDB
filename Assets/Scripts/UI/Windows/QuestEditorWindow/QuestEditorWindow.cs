@@ -156,7 +156,7 @@ namespace UI.Windows.QuestEditorWindow
             saveStory = true;
             ///
 
-            _currentQuestData = DataManager.Steps[Id];
+            _currentQuestData = Data.Repository.Steps[Id];
             
             
             if (_currentQuestData == null)

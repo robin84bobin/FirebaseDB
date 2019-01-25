@@ -7,7 +7,7 @@ using Data.DataTypes;
 
 namespace Data
 {
-    public static class DataManager
+    public static class Repository
     {
         public static  DataStorage<UserQuestStepData> UserSteps;
         public static  DataStorage<MessageViewData> UserMessageHistory;
@@ -21,7 +21,7 @@ namespace Data
         private static List<Command> _initStoragesCommands;
 
         
-        static DataManager()
+        static Repository()
         {
             _initStoragesCommands = new List<Command>();
         }

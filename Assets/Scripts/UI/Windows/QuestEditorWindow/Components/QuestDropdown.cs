@@ -104,7 +104,7 @@ namespace UI.Windows.QuestEditorWindow.Components
         private void UpdateQuestList(bool keepSelected = true)
         {
             //get _messageViewData
-            List<QuestStepData> items = DataManager.Steps.GetAll();
+            List<QuestStepData> items = Data.Repository.Steps.GetAll();
         
             //create option list
             List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();

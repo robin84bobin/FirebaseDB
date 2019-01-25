@@ -69,7 +69,7 @@ public class SaveQuestAsMenu : BaseWindow {
             return;
         }
 
-        if (DataManager.Steps.Exists(_newId))
+        if (Data.Repository.Steps.Exists(_newId))
         {
             _errorText.text = "id is already exists!";
             return;

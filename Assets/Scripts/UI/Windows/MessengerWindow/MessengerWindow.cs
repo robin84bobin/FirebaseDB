@@ -67,7 +67,7 @@ public class MessengerWindow : MonoBehaviour {
     
     public void Restart()
     {
-        DataManager.ClearUserData();
+        Data.Repository.ClearUserData();
 
         messages.Clear();
         _scrollPicker.SetData(messages);
@@ -76,7 +76,7 @@ public class MessengerWindow : MonoBehaviour {
 
     private void InitMessages()
     {
-        IEnumerable<MessageViewData> items = DataManager.UserMessageHistory.GetAll();
+        IEnumerable<MessageViewData> items = Data.Repository.UserMessageHistory.GetAll();
         messages.AddRange(items);
         
     }
@@ -119,7 +119,7 @@ public class MessengerWindow : MonoBehaviour {
         ResetVariantButtons();
         if (!messageViewData.isUserMsg)
         {
-            QuestMessageData questStep = DataManager.MessageSteps[messageViewData.parentQuestStepId];
+            QuestMessageData questStep = Data.Repository.MessageSteps[messageViewData.parentQuestStepId];
             for (int i = 0; i < _variantButtons.Length; i++)
             {
                 if (i < questStep.variants.Length)

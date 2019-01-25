@@ -6,8 +6,8 @@ namespace Commands.Startup
     {
         public override void Execute()
         {
-            DataManager.OnInitComplete += OnInitComplete;
-            DataManager.Init();
+            Repository.OnInitComplete += OnInitComplete;
+            Repository.Init();
         }
 
         private void OnInitComplete()

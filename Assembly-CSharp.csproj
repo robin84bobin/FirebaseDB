@@ -182,7 +182,7 @@
     <Compile Include="Assets\Scripts\Data\DataBase\FireBaseDBProxy.cs" />
     <Compile Include="Assets\Scripts\Data\DataFactories\JsonFactories\AbstractJsonFactory.cs" />
     <Compile Include="Assets\Scripts\Data\DataFactories\JsonFactories\JSONFactory.cs" />
-    <Compile Include="Assets\Scripts\Data\DataManager.cs" />
+    <Compile Include="Assets\Scripts\Data\Repository.cs" />
     <Compile Include="Assets\Scripts\Data\DataStorage.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes\QuestMessageData.cs" />
@@ -202,7 +202,6 @@
     <Compile Include="Assets\Scripts\Global\EventManager.cs" />
     <Compile Include="Assets\Scripts\Global\GlobalEvents.cs" />
     <Compile Include="Assets\Scripts\Model\QuestStep.cs" />
-    <Compile Include="Assets\Scripts\StartupController.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItem.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItemsContainer.cs" />
     <Compile Include="Assets\Scripts\UI\MessageView.cs" />
