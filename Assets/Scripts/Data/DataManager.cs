@@ -20,16 +20,6 @@ namespace Data
         
         private static List<Command> _initStoragesCommands;
 
-    /*    private static DataManager _instance;
-
-        public static DataManager Instance
-        {
-            get
-            {
-                if (_instance == null) _instance = new DataManager();
-                return _instance;
-            }
-        }*/
         
         static DataManager()
         {

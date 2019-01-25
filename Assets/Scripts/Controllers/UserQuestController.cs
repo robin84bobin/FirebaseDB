@@ -9,21 +9,21 @@ namespace Controllers
     /// <summary>
     /// class controls steps which user had passed
     /// </summary>
-    public class UserQuestController
+    public static class UserQuestController
     {
-        public string activeStepId { get; private set; }
+        public static string activeStepId { get; private set; }
 
-        public event Action<UserQuestStepData> OnStepComplete = delegate { };
+        public static event Action<UserQuestStepData> OnStepComplete = delegate { };
 
-        private DataStorage<UserQuestStepData> _userStepStorage;
+        private static DataStorage<UserQuestStepData> _userStepStorage;
 
 
-        public void Init()
+        public static void Init()
         {
             _userStepStorage = DataManager.UserSteps;
         }
 
-        public void GoToStep(string questId, string state = UserQuestState.ACTIVE, int variantId = -1)
+        public static void GoToStep(string questId, string state = UserQuestState.ACTIVE, int variantId = -1)
         {
             var step = DataManager.Steps[questId];
 
@@ -54,7 +54,7 @@ namespace Controllers
         
         }
 
-        public void CompleteStep(string questId, int variantId)
+        public static void CompleteStep(string questId, int variantId)
         {
             UserQuestStepData userStep = _userStepStorage.Get(questId);
             if (userStep.state == UserQuestState.COMPLETE)
@@ -87,7 +87,7 @@ namespace Controllers
             //OnStepComplete.Invoke(userStep);
         }
 
-        private void CheckTrigger(QuestTriggerStepData questTriggerStepStep)
+        static  void CheckTrigger(QuestTriggerStepData questTriggerStepStep)
         {
             TriggerData trigger;
             int length = questTriggerStepStep.Triggers.Length;
@@ -124,14 +124,14 @@ namespace Controllers
             }
         }
 
-        public UserQuestStepData GetActiveStep()
+        public static UserQuestStepData GetActiveStep()
         {
             UserQuestStepData activeStep = _userStepStorage.Get(s => s.state == UserQuestState.ACTIVE);
             activeStepId = activeStep.questStepId;
             return activeStep;
         }
 
-        private void CreateMessage(string parentQuestStepId, string text, bool isUserMsg = false)
+        static  void CreateMessage(string parentQuestStepId, string text, bool isUserMsg = false)
         {
             MessageViewData msg = new MessageViewData();
             msg.text = text;
