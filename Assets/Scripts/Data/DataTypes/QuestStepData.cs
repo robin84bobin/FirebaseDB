@@ -23,17 +23,17 @@ namespace Data.DataTypes
 
         public void Save(DataItem relatedData = null)
         {
-            App.Data.Steps.Set(this, Id, true, delegate(QuestStepData item)
+            DataManager.Steps.Set(this, Id, true, delegate(QuestStepData item)
             {
                 switch (item.stepType)
                 {
                     case Collections.MESSAGE:
                         var messageData = relatedData as QuestMessageData ?? new QuestMessageData {Id = item.typeId};
-                        App.Data.MessageSteps.Set(messageData, messageData.Id, true);
+                        DataManager.MessageSteps.Set(messageData, messageData.Id, true);
                         break;
                     case Collections.TRIGGER:
                         var triggerData = relatedData as QuestTriggerStepData?? new QuestTriggerStepData {Id = item.typeId};
-                        App.Data.TriggerSteps.Set(triggerData, triggerData.Id, true);
+                        DataManager.TriggerSteps.Set(triggerData, triggerData.Id, true);
                         break;
                     default:
                         Debug.LogError(this + " Save(): unknown type: " + item.stepType);

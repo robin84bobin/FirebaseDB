@@ -21,7 +21,7 @@ namespace Commands.Data
             System.Action<string> callback = delegate { }; 
             callback += RemoveRelatedData;
             callback += GlobalEvents.OnRemoveStorageItem.Publish;
-            App.Data.Steps.Remove(_data.Id, true, RemoveRelatedData);
+            DataManager.Steps.Remove(_data.Id, true, RemoveRelatedData);
         }
 
         void RemoveRelatedData(string id)
@@ -29,10 +29,10 @@ namespace Commands.Data
             switch (_data.stepType)
             {
                 case Collections.MESSAGE:
-                    App.Data.MessageSteps.Remove(_data.typeId, true, OnRemoved);
+                    DataManager.MessageSteps.Remove(_data.typeId, true, OnRemoved);
                     break;
                 case Collections.TRIGGER:
-                    App.Data.TriggerSteps.Remove(_data.typeId, true , OnRemoved);
+                    DataManager.TriggerSteps.Remove(_data.typeId, true , OnRemoved);
                     break;
                 default:
                     Debug.LogError(this + " Remove(): unknown type: " + _data.stepType);

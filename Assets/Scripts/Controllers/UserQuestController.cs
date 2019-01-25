@@ -20,26 +20,26 @@ namespace Controllers
 
         public void Init()
         {
-            _userStepStorage = App.Data.UserSteps;
+            _userStepStorage = DataManager.UserSteps;
         }
 
         public void GoToStep(string questId, string state = UserQuestState.ACTIVE, int variantId = -1)
         {
-            var step = App.Data.Steps[questId];
+            var step = DataManager.Steps[questId];
 
             if (step == null)
                 return;
 
             if (step.stepType == QuestStepType.TRIGGER)
             {
-                QuestTriggerStepData questTriggerStepStep = App.Data.TriggerSteps[step.typeId];
+                QuestTriggerStepData questTriggerStepStep = DataManager.TriggerSteps[step.typeId];
                 CheckTrigger(questTriggerStepStep);
                 return;
             }
 
             if (step.stepType == QuestStepType.MESSAGE)
             {
-                QuestMessageData messageStep = App.Data.MessageSteps[step.typeId];
+                QuestMessageData messageStep = DataManager.MessageSteps[step.typeId];
                 UserQuestStepData userStep = new UserQuestStepData();
                 userStep.questStepId = questId;
                 userStep.state = state;
@@ -49,7 +49,7 @@ namespace Controllers
                 if (variantId > 0)
                     CompleteStep(questId, variantId);
 
-                App.Data.UserSteps.Set(userStep, questId);
+                DataManager.UserSteps.Set(userStep, questId);
             }
         
         }
@@ -63,10 +63,10 @@ namespace Controllers
                 return;
             }
 
-            QuestStepData questQuestStepData = App.Data.Steps[questId];
+            QuestStepData questQuestStepData = DataManager.Steps[questId];
             if (questQuestStepData.stepType == QuestStepType.MESSAGE)
             {
-                QuestMessageData messageStep = App.Data.MessageSteps[questQuestStepData.typeId];
+                QuestMessageData messageStep = DataManager.MessageSteps[questQuestStepData.typeId];
                 if (variantId < messageStep.variants.Length)
                 {
                     QuestVariantData variant = messageStep.variants[variantId];
@@ -138,7 +138,7 @@ namespace Controllers
             msg.isUserMsg = isUserMsg;
             msg.parentQuestStepId = parentQuestStepId;
 
-            App.Data.UserMessageHistory.Set(msg);
+            DataManager.UserMessageHistory.Set(msg);
             GlobalEvents.OnMessageNew.Publish(msg);
         }
     }

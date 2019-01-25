@@ -171,6 +171,7 @@
     <Compile Include="Assets\Scripts\Commands\Data\CreateQuestStepCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Data\InitStorageCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Data\RemoveQuestStepCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\Startup\InitDataCommand.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\BaseStateMachine.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\IBaseState.cs" />
     <Compile Include="Assets\Scripts\Controllers\UserQuestController.cs" />

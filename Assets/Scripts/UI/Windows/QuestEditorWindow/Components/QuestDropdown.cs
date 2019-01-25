@@ -104,7 +104,7 @@ namespace UI.Windows.QuestEditorWindow.Components
         private void UpdateQuestList(bool keepSelected = true)
         {
             //get _messageViewData
-            List<QuestStepData> items = App.Data.Steps.GetAll();
+            List<QuestStepData> items = DataManager.Steps.GetAll();
         
             //create option list
             List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();
@@ -167,8 +167,11 @@ namespace UI.Windows.QuestEditorWindow.Components
         private void OnAddClick()
         {
             var p = new CreateQuestMenuParams();
-            p.OnCreateCancel = () =>{_selectOnAdd = false;};
-            CreateQuestMenu.Show();
+            p.OnCreateCancel = () =>
+            {
+                _selectOnAdd = false;
+            };
+            CreateQuestMenu.Show(p);
 
             _selectOnAdd = true;
         }
@@ -176,7 +179,8 @@ namespace UI.Windows.QuestEditorWindow.Components
         
         public string GetSelectedText()
         {
-            return Dropdown.options[Dropdown.value].text;
+            var o = Dropdown.options[Dropdown.value];
+            return o!=null?o.text:NONE;
         }
         
         

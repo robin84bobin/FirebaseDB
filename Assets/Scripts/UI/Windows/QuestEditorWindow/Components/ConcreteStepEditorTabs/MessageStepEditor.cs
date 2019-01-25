@@ -20,7 +20,7 @@ public class MessageStepEditor : AbstractStepEditor {
     internal override void Init(QuestStepData questStepData)
     {
         QuestStepData = questStepData;
-        QuestMessageData questMessageData = App.Data.MessageSteps[QuestStepData.typeId];
+        QuestMessageData questMessageData = DataManager.MessageSteps[QuestStepData.typeId];
         _messageInput.text = questMessageData.text;
         _id = questMessageData.Id;
 
@@ -43,8 +43,8 @@ public class MessageStepEditor : AbstractStepEditor {
     internal override void SaveData()
     {
         GrabDataFromUI();
-        App.Data.Steps.Set(QuestStepData, QuestStepData.Id, true);
-        App.Data.MessageSteps.Set(_questMessageData, _questMessageData.Id, true);
+        DataManager.Steps.Set(QuestStepData, QuestStepData.Id, true);
+        DataManager.MessageSteps.Set(_questMessageData, _questMessageData.Id, true);
     }
 
     internal override QuestStepData GetData()

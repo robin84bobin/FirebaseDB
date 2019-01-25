@@ -7,28 +7,38 @@ using Data.DataTypes;
 
 namespace Data
 {
-    public class DataManager
+    public static class DataManager
     {
-        public  DataStorage<UserQuestStepData> UserSteps;
-        public  DataStorage<MessageViewData> UserMessageHistory;
+        public static  DataStorage<UserQuestStepData> UserSteps;
+        public static  DataStorage<MessageViewData> UserMessageHistory;
         
-        public  DataStorage<QuestStepData> Steps;
-        public  DataStorage<QuestTriggerStepData> TriggerSteps;
-        public  DataStorage<QuestMessageData> MessageSteps;
+        public static  DataStorage<QuestStepData> Steps;
+        public static  DataStorage<QuestTriggerStepData> TriggerSteps;
+        public static  DataStorage<QuestMessageData> MessageSteps;
 
-        public event Action OnInitComplete = delegate { };
+        public  static  event Action OnInitComplete = delegate { };
         
-        private List<Command> _initStoragesCommands;
+        private static List<Command> _initStoragesCommands;
 
+    /*    private static DataManager _instance;
+
+        public static DataManager Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new DataManager();
+                return _instance;
+            }
+        }*/
         
-        public DataManager()
+        static DataManager()
         {
             _initStoragesCommands = new List<Command>();
         }
         
         
 
-        public void Init()
+        public static void Init()
         {
             Steps = CreateStorage<QuestStepData>(Collections.STEP);
             MessageSteps = CreateStorage<QuestMessageData>(Collections.MESSAGE);
@@ -47,7 +57,7 @@ namespace Data
         /// </summary>
         /// <param name="dataStorage"></param>
         /// <typeparam name="T"></typeparam>
-        internal DataStorage<T> CreateStorage<T>(string collectionName) where T : DataItem, new()
+        static DataStorage<T> CreateStorage<T>(string collectionName) where T : DataItem, new()
         {
             var dataStorage = new DataStorage<T>(collectionName);
             var command = new InitStorageCommand<T>(dataStorage);
@@ -57,14 +67,14 @@ namespace Data
         }
 
 
-        private void OnDbInitComplete()
+        static void OnDbInitComplete()
         {
             DataBaseProxy.Instance.OnInitialized -= OnDbInitComplete;
             CommandManager.ExecuteSequence( OnInitComplete, _initStoragesCommands.ToArray());
         }
 
 
-        public void ClearUserData()
+        public static void ClearUserData()
         {
             UserSteps.Clear();
             UserMessageHistory.Clear();

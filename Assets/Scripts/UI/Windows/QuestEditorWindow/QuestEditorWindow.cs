@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.UI.Windows;
+using Data;
 using Data.DataTypes;
 using Global;
 using UI.Windows.QuestEditorWindow.Components;
@@ -155,7 +156,7 @@ namespace UI.Windows.QuestEditorWindow
             saveStory = true;
             ///
 
-            _currentQuestData = App.Data.Steps[Id];
+            _currentQuestData = DataManager.Steps[Id];
             
             
             if (_currentQuestData == null)

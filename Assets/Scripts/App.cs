@@ -9,7 +9,6 @@ public class App : MonoBehaviour
 {
     public static WindowManager UI { get; private set; }
     public static UserQuestController UserQuestController { get; private set; }
-    public static DataManager Data { get; private set; }
     
     public static event Action InitComplete = delegate { };
     
@@ -19,9 +18,7 @@ public class App : MonoBehaviour
 
         Init();
         
-        Data = new DataManager();
-        Data.OnInitComplete += OnLoadSuccess;
-        Data.Init();
+        
     }
     
 

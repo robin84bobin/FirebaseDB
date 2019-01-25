@@ -2,6 +2,7 @@
 using Assets.Scripts.UI.Windows;
 using Commands;
 using Commands.Data;
+using Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,7 +45,7 @@ public class RemoveQuestMenu : BaseWindow {
     {
         RemoveQuestMenuParams params_ = _params as RemoveQuestMenuParams;
 
-        var stepData = App.Data.Steps.Get(params_.id);
+        var stepData = DataManager.Steps.Get(params_.id);
         if (stepData == null){
             _errorText.text = "id is not exists!";
             return;

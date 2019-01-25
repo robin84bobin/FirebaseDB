@@ -19,7 +19,7 @@ public class TriggerStepEditor : AbstractStepEditor
             return;
         }
         
-        QuestTriggerStepData sourceData = App.Data.TriggerSteps[questStepData.typeId];
+        QuestTriggerStepData sourceData = DataManager.TriggerSteps[questStepData.typeId];
         _id = sourceData.Id;
         for (int i = 0; i < _triggerEditors.Length; i++)
         {
@@ -40,8 +40,8 @@ public class TriggerStepEditor : AbstractStepEditor
     internal override void SaveData()
     {
         GrabDataFromUI();
-        App.Data.Steps.Set(QuestStepData, QuestStepData.Id, true);
-        App.Data.TriggerSteps.Set(_triggerStepData, _triggerStepData.Id, true);
+        DataManager.Steps.Set(QuestStepData, QuestStepData.Id, true);
+        DataManager.TriggerSteps.Set(_triggerStepData, _triggerStepData.Id, true);
     }
 
     internal override QuestStepData GetData()

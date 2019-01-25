@@ -35,9 +35,9 @@ public class UserQuestStepData : DataItem
 
     public QuestMessageData GetQuestStep()
     {
-        var step = App.Data.Steps[questStepId];
+        var step = DataManager.Steps[questStepId];
         if (step.stepType == QuestStepType.MESSAGE)
-            return App.Data.MessageSteps[step.typeId];
+            return DataManager.MessageSteps[step.typeId];
         return null;
     }
 }
