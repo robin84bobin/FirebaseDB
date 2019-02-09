@@ -70,11 +70,8 @@ namespace Controllers
                 if (variantId < messageStep.variants.Length)
                 {
                     QuestVariantData variant = messageStep.variants[variantId];
-                    //Complete step
                     userStep.Complete(variantId);
-                    //Create message with variant text
                     CreateMessage(questId, variant.text, true);
-                    //Go to target step
                     GoToStep(variant.targetStepId);
                 }
                 else

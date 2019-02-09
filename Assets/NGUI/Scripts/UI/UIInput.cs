@@ -271,13 +271,7 @@ public class UIInput : MonoBehaviour
 			if (mDoInit) Init();
 			mDrawStart = 0;
 
-			// BB10's implementation has a bug in Unity
- #if UNITY_4_3
-			if (Application.platform == RuntimePlatform.BB10Player)
- #else
-			if (Application.platform == RuntimePlatform.BlackBerryPlayer)
- #endif
-				value = value.Replace("\\b", "\b");
+
 
 			// Validate all input
 			value = Validate(value);

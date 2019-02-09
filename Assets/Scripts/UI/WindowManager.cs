@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Assets.Scripts.UI.Windows;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.UI
 {
@@ -11,15 +13,24 @@ namespace Assets.Scripts.UI
         void Awake()
         {
             Init ();
+            SceneManager.sceneUnloaded += onChangeScene;
         }
+
+        private void onChangeScene(Scene scene)
+        {
+            HideAllWindows();
+            UiRoot.transform.DestroyChildren();
+        }
+
 
         private List<BaseWindow> _shownWindows;
         void Init()
         {
-            if (UiRoot == null) UiRoot = FindObjectOfType<Canvas>();
-            if (UiRoot == null) return;
-            GameObject.DontDestroyOnLoad(UiRoot.gameObject);
-            GameObject.DontDestroyOnLoad(this.gameObject);
+            UiRoot = FindObjectOfType<Canvas>();
+            if (UiRoot == null) 
+                throw new NullReferenceException(this + ":: no UIRoot found in scene ");
+            DontDestroyOnLoad(UiRoot.gameObject);
+            DontDestroyOnLoad(this.gameObject);
             _shownWindows = new List<BaseWindow>();
         }
 
@@ -53,6 +64,7 @@ namespace Assets.Scripts.UI
                 t.localScale = Vector3.one;
                 go.layer = parent.layer;
                 go.SetActive(true);
+                
             }
 
             return go.GetComponent<BaseWindow> ();

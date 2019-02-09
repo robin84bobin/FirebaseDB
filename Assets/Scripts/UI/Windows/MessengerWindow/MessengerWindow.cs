@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using Data;
 using Global;
 using UnityEngine;
@@ -49,7 +50,7 @@ public class MessengerWindow : MonoBehaviour {
         }
         else
         {
-            App.UserQuestController.GoToStep("start");
+            UserQuestController.GoToStep("start");
         }
        
     }
@@ -71,7 +72,7 @@ public class MessengerWindow : MonoBehaviour {
 
         messages.Clear();
         _scrollPicker.SetData(messages);
-        App.UserQuestController.GoToStep("start");
+        UserQuestController.GoToStep("start");
     }
 
     private void InitMessages()

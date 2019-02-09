@@ -9,8 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{CF62DBA1-917A-DAD4-6C62-0CA2A8C02472}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -182,7 +181,6 @@
     <Compile Include="Assets\Scripts\Data\DataBase\FireBaseDBProxy.cs" />
     <Compile Include="Assets\Scripts\Data\DataFactories\JsonFactories\AbstractJsonFactory.cs" />
     <Compile Include="Assets\Scripts\Data\DataFactories\JsonFactories\JSONFactory.cs" />
-    <Compile Include="Assets\Scripts\Data\Repository.cs" />
     <Compile Include="Assets\Scripts\Data\DataStorage.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes.cs" />
     <Compile Include="Assets\Scripts\Data\DataTypes\QuestMessageData.cs" />
@@ -194,6 +192,7 @@
     <Compile Include="Assets\Scripts\Data\QuestStepType.cs" />
     <Compile Include="Assets\Scripts\Data\QuestTriggerCondition.cs" />
     <Compile Include="Assets\Scripts\Data\QuestVariantData.cs" />
+    <Compile Include="Assets\Scripts\Data\Repository.cs" />
     <Compile Include="Assets\Scripts\Data\TriggerData.cs" />
     <Compile Include="Assets\Scripts\Data\User\UserQuestState.cs" />
     <Compile Include="Assets\Scripts\Data\User\UserQuestStepData.cs" />
@@ -201,6 +200,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Global\EventManager.cs" />
     <Compile Include="Assets\Scripts\Global\GlobalEvents.cs" />
+    <Compile Include="Assets\Scripts\Helper.cs" />
     <Compile Include="Assets\Scripts\Model\QuestStep.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItem.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItemsContainer.cs" />

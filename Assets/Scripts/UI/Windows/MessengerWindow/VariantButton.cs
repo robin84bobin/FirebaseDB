@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Controllers;
+using UnityEngine;
 
 public class VariantButton : MonoBehaviour {
 
@@ -32,6 +33,6 @@ public class VariantButton : MonoBehaviour {
     private void OnBtnClick()
     {
         if (_variantData == null) return;
-        App.UserQuestController.CompleteStep(_variantData.parentStepId, _variantData.variantId);
+        UserQuestController.CompleteStep(_variantData.parentStepId, _variantData.variantId);
     }
 }

@@ -11,11 +11,11 @@ using UnityEngine.SceneManagement;
 public class App : MonoBehaviour
 {
     public static WindowManager UI { get; private set; }
-    
+
     public static event Action<float> OnInitProgress = delegate { };
     public static event Action InitComplete = delegate { };
-    
-    void Awake()
+
+    void Start()
     {
         DontDestroyOnLoad(gameObject);
         
@@ -25,12 +25,7 @@ public class App : MonoBehaviour
         SceneManager.LoadSceneAsync(Helper.Scenes.PRELOADER).completed += OnPreloaderLoaded;
     }
 
-    private void OnPreloaderLoaded(AsyncOperation obj)
-    {
-        InitApp();
-    }
-
-    private void InitApp()
+    private void OnPreloaderLoaded(AsyncOperation a)
     {
         Command[] startupCommands = 
         {
@@ -38,9 +33,7 @@ public class App : MonoBehaviour
             new InitDataCommand(),
             new InitUserDataCommand()
         };
-    
-        CommandManager
-            .ExecuteSequence(InitComplete, startupCommands)
-            .OnProgress += OnInitProgress;
+
+        CommandManager.ExecuteSequence(InitComplete, OnInitProgress, startupCommands);
     }
 }
