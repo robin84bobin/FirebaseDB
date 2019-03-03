@@ -166,8 +166,10 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
     <Compile Include="Assets\Scripts\App.cs" />
+    <Compile Include="Assets\Scripts\AppStarter.cs" />
     <Compile Include="Assets\Scripts\Commands\Command.cs" />
     <Compile Include="Assets\Scripts\Commands\CommandManager.cs" />
+    <Compile Include="Assets\Scripts\Commands\CommandSequence.cs" />
     <Compile Include="Assets\Scripts\Commands\Data\CreateQuestStepCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Data\InitStorageCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Data\RemoveQuestStepCommand.cs" />

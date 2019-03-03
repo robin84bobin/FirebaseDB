@@ -19,6 +19,8 @@ namespace Global
         //
         public static readonly GlobalEventParam<string> OnRemoveStorageItem = new GlobalEventParam<string>();
         public static readonly GlobalEventParam<DataItem> OnAddStorageItem = new GlobalEventParam<DataItem>();
+
+        public static readonly GlobalEventParam<string> LoadScene = new GlobalEventParam<string>();
     }
     
     

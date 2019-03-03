@@ -18,7 +18,6 @@ public class MessengerWindow : MonoBehaviour {
     {
         ResetView();
         Init();
-        App.InitComplete += Init;
     }
 
     private void ResetView()
@@ -27,16 +26,10 @@ public class MessengerWindow : MonoBehaviour {
             varButton.ResetView();
     }
 
-    private IEnumerator DelayInit()
-    {
-        yield return new WaitForSeconds(2f);
-        Init();
-    }
+
 
     private void Init()
     {
-        App.InitComplete -= Init;
-        
         GlobalEvents.OnMessageNew.Subscribe(ShowNewMessage);
         GlobalEvents.OnMessageTypeComplete.Subscribe(OnTypeMessageComplete);
         InitMessages();
