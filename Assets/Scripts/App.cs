@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 using Data;
 using Assets.Scripts.UI;
@@ -12,7 +13,6 @@ public class App : MonoBehaviour
 {
     public static WindowManager UI { get; private set; }
 
-    public static event Action<float> OnInitProgress = delegate { };
     public static event Action InitComplete = delegate { };
 
     void Start()
@@ -22,18 +22,21 @@ public class App : MonoBehaviour
         if (UI == null) 
             UI = GetComponent<WindowManager>() ?? gameObject.AddComponent<WindowManager>();
         
-        SceneManager.LoadSceneAsync(Helper.Scenes.PRELOADER).completed += OnPreloaderLoaded;
-    }
-
-    private void OnPreloaderLoaded(AsyncOperation a)
-    {
-        Command[] startupCommands = 
-        {
+        
+        CommandSequence startupCommands = new CommandSequence(
+            new InitPreloaderCommand(),
             new ValidateApkCommand(), 
             new InitDataCommand(),
             new InitUserDataCommand()
+        );
+        startupCommands.OnComplete += ()=>
+        {
+            InitComplete.Invoke();
         };
-
-        CommandManager.ExecuteSequence(InitComplete, OnInitProgress, startupCommands);
+        startupCommands.OnProgress += p =>
+        {
+            GlobalEvents.OnLoadingProgress.Publish((p * 100) + "%");
+        };
+        CommandManager.Execute(startupCommands);
     }
 }

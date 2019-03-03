@@ -7,7 +7,6 @@ namespace Assets.Scripts.UI.Windows
     public class PreloaderWindow : BaseWindow 
     {
         public Text loadingStatusText;
-        public Button startButton;
 
         public static void Show()
         {
@@ -19,11 +18,8 @@ namespace Assets.Scripts.UI.Windows
             base.OnShowComplete ( param);
 
             GlobalEvents.OnLoadingProgress.Subscribe (OnLoadProgressEvent);
-            App.InitComplete += OnLoadComplete;
 
             loadingStatusText.text = "please wait...";
-            startButton.onClick.AddListener (OnStartButton);
-            startButton.gameObject.SetActive(false);
         }
 
 
@@ -32,23 +28,17 @@ namespace Assets.Scripts.UI.Windows
             loadingStatusText.text = message_;
         }
 
-        void OnLoadComplete ()
-        {
-            loadingStatusText.text = "Loading Complete!";
-            startButton.gameObject.SetActive(true);
-        }
+   
 
         protected override void OnHide ()
         {
             base.OnHide ();
             GlobalEvents.OnLoadingProgress.Unsubscribe(OnLoadProgressEvent);
-            App.InitComplete -= OnLoadComplete;
         }
 
         public void OnStartButton ()
         {
             Hide ();
-           // Main.Inst.game.LoadCurrentLevel();
         }
     }
 }

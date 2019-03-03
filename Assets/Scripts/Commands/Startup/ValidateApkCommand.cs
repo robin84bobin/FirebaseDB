@@ -1,12 +1,10 @@
-using Controllers;
-
 namespace Commands.Startup
 {
-    public class InitUserDataCommand : Command
+    public class ValidateApkCommand : Command
     {
         public override void Execute()
         {
-            UserQuestController.Init();
+            //TODO
             Complete();
         }
     }

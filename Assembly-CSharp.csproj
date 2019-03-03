@@ -174,6 +174,7 @@
     <Compile Include="Assets\Scripts\Commands\Startup\InitDataCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Startup\InitSocialServicesCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\Startup\InitUserDataCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\Startup\ValidateApkCommand.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\BaseStateMachine.cs" />
     <Compile Include="Assets\Scripts\CommonComponents\StateSwitcher\IBaseState.cs" />
     <Compile Include="Assets\Scripts\Controllers\UserQuestController.cs" />

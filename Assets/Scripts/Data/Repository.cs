@@ -60,7 +60,9 @@ namespace Data
         static void OnDbInitComplete()
         {
             DataBaseProxy.Instance.OnInitialized -= OnDbInitComplete;
-            CommandManager.ExecuteSequence( OnInitComplete, _initStoragesCommands.ToArray());
+            CommandSequence sequence = new CommandSequence(_initStoragesCommands.ToArray());
+                sequence.OnComplete += () => OnInitComplete.Invoke();
+            CommandManager.Execute( sequence );
         }
 
 
