@@ -10,6 +10,8 @@ public class MessageStepEditor : AbstractStepEditor {
     [SerializeField]    VariantEditor[] _variants;
     #endregion
 
+    [Zenject.Inject] private Repository _repository;
+    
     private void ResetVariants()
     {
         for (int i = 0; i < _variants.Length; i++)
@@ -20,7 +22,7 @@ public class MessageStepEditor : AbstractStepEditor {
     internal override void Init(QuestStepData questStepData)
     {
         QuestStepData = questStepData;
-        QuestMessageData questMessageData = Data.Repository.MessageSteps[QuestStepData.typeId];
+        QuestMessageData questMessageData = _repository.MessageSteps[QuestStepData.typeId];
         _messageInput.text = questMessageData.text;
         _id = questMessageData.Id;
 
@@ -43,8 +45,8 @@ public class MessageStepEditor : AbstractStepEditor {
     internal override void SaveData()
     {
         GrabDataFromUI();
-        Repository.Steps.Set(QuestStepData, QuestStepData.Id, true);
-        Repository.MessageSteps.Set(_questMessageData, _questMessageData.Id, true);
+        _repository.Steps.Set(QuestStepData, QuestStepData.Id, true);
+        _repository.MessageSteps.Set(_questMessageData, _questMessageData.Id, true);
     }
 
     internal override QuestStepData GetData()

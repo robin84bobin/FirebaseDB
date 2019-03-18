@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Assets.Scripts.Factories.DataFactories.JsonFactories;
 using Data;
+using Data.DataBase;
 using InternalNewtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -18,6 +19,28 @@ namespace Assets.Scripts.Data.DB
         {
             //init smthng...
         }
+
+        public void Get<T>(string collection, Action<Dictionary<string, T>> callback, bool createIfNotExist = true) where T : DataItem, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveCollection<T>(string collection, Dictionary<string, T> items, Action callback = null) where T : DataItem, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save<T>(string collection, T item, string id = "", Action<T> callback = null) where T : DataItem, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove<T>(string collection, string id = "", Action<string> callback = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public event Action OnInitialized;
 
         public double LastUpdateTime(string tableName_)
         {

@@ -12,6 +12,8 @@ namespace UI.Windows.QuestEditorWindow
 {
     public class QuestEditorWindow : BaseWindow 
     {
+        [Zenject.Inject] private Repository _repository;
+        
         #region COMPONENTS
 
         [SerializeField] private Dropdown _dropdownType;
@@ -22,6 +24,8 @@ namespace UI.Windows.QuestEditorWindow
         private AbstractStepEditor _currentEditor;
 
         #endregion
+        
+        
 
         string _currentQuestId = string.Empty;
         private QuestStepData _currentQuestData;
@@ -156,7 +160,7 @@ namespace UI.Windows.QuestEditorWindow
             saveStory = true;
             ///
 
-            _currentQuestData = Data.Repository.Steps[Id];
+            _currentQuestData =  _repository.Steps[Id];
             
             
             if (_currentQuestData == null)

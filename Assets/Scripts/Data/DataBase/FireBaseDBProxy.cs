@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Assets.Scripts.UI.Windows.InfoWindows;
 using Firebase;
@@ -17,8 +18,6 @@ namespace Data.DataBase
         private DatabaseReference DbRoot { get; set; }
 
         public event Action OnInitialized = delegate { };
-
-        private object _lockObject = new object();
 
         #region INITIALIZING
 
@@ -171,6 +170,7 @@ namespace Data.DataBase
             );
         }
 
+        
 
     }
 }

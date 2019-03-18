@@ -1,15 +1,20 @@
 ﻿using System;
 using Commands;
 using Commands.Startup;
+using Data;
+using Data.DataBase;
 using Global;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 public class AppStarter
 {
     public static event Action InitComplete = delegate { };
+
     
     public void Start()
     {
+        
         CommandSequence startupCommands = new CommandSequence(
             new InitPreloaderCommand(),
             new ValidateApkCommand(), 

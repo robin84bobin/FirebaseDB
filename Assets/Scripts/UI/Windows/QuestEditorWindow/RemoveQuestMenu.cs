@@ -18,6 +18,8 @@ public class SaveQuestDialog : BaseWindow
 
 public class RemoveQuestMenu : BaseWindow {
 
+    [Zenject.Inject] private Repository _repository;
+    
     [SerializeField] private Text _errorText;
     [SerializeField] private Text _idText;
 
@@ -45,7 +47,7 @@ public class RemoveQuestMenu : BaseWindow {
     {
         RemoveQuestMenuParams params_ = _params as RemoveQuestMenuParams;
 
-        var stepData = Data.Repository.Steps.Get(params_.id);
+        var stepData =  _repository.Steps.Get(params_.id);
         if (stepData == null){
             _errorText.text = "id is not exists!";
             return;

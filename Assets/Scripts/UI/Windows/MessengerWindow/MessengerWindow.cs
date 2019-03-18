@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class MessengerWindow : MonoBehaviour {
 
+    [Zenject.Inject] private Repository _repository;
+    
     [SerializeField] private ScrollPicker _scrollPicker;
     [SerializeField] private VariantButton[] _variantButtons;
 
@@ -61,7 +63,7 @@ public class MessengerWindow : MonoBehaviour {
     
     public void Restart()
     {
-        Data.Repository.ClearUserData();
+        _repository.ClearUserData();
 
         messages.Clear();
         _scrollPicker.SetData(messages);
@@ -70,7 +72,7 @@ public class MessengerWindow : MonoBehaviour {
 
     private void InitMessages()
     {
-        IEnumerable<MessageViewData> items = Data.Repository.UserMessageHistory.GetAll();
+        IEnumerable<MessageViewData> items = _repository.UserMessageHistory.GetAll();
         messages.AddRange(items);
         
     }
@@ -113,7 +115,7 @@ public class MessengerWindow : MonoBehaviour {
         ResetVariantButtons();
         if (!messageViewData.isUserMsg)
         {
-            QuestMessageData questStep = Data.Repository.MessageSteps[messageViewData.parentQuestStepId];
+            QuestMessageData questStep = _repository.MessageSteps[messageViewData.parentQuestStepId];
             for (int i = 0; i < _variantButtons.Length; i++)
             {
                 if (i < questStep.variants.Length)

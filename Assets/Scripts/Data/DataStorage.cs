@@ -5,6 +5,7 @@ using Data.DataBase;
 using Global;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Data
 {
@@ -15,7 +16,8 @@ namespace Data
             get { return _items.Count; }
         }
 
-
+        [Inject] private IDataBaseProxy _dataBase;
+        
         private bool ReadOnly { get; set; }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace Data
                 _items.Remove(id);
                 if (now)
                 {
-                    DataBaseProxy.Instance.Remove<T>(CollectionName, id, callback);
+                    _dataBase.Remove<T>(CollectionName, id, callback);
                 }
             }
             else
@@ -85,7 +87,7 @@ namespace Data
 
             //onSuccessCallback += delegate { GlobalEvents.OnStorageUpdated.Publish(typeof(T)); };
             if (saveNow) 
-                DataBaseProxy.Instance.Save(CollectionName, item, item.Id, onSuccessCallback);
+                _dataBase.Save(CollectionName, item, item.Id, onSuccessCallback);
         }
 
         
@@ -97,7 +99,7 @@ namespace Data
                 return;
             }
 
-            DataBaseProxy.Instance.SaveCollection(CollectionName, _items);
+            _dataBase.SaveCollection(CollectionName, _items);
         }
 
         

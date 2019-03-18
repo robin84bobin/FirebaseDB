@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TriggerStepEditor : AbstractStepEditor
 {
+    [Zenject.Inject] private Repository _repository;
 
     [SerializeField] TriggerEditor[] _triggerEditors;
 
@@ -19,7 +20,7 @@ public class TriggerStepEditor : AbstractStepEditor
             return;
         }
         
-        QuestTriggerStepData sourceData = Data.Repository.TriggerSteps[questStepData.typeId];
+        QuestTriggerStepData sourceData =  _repository.TriggerSteps[questStepData.typeId];
         _id = sourceData.Id;
         for (int i = 0; i < _triggerEditors.Length; i++)
         {
@@ -40,8 +41,8 @@ public class TriggerStepEditor : AbstractStepEditor
     internal override void SaveData()
     {
         GrabDataFromUI();
-        Data.Repository.Steps.Set(QuestStepData, QuestStepData.Id, true);
-        Data.Repository.TriggerSteps.Set(_triggerStepData, _triggerStepData.Id, true);
+         _repository.Steps.Set(QuestStepData, QuestStepData.Id, true);
+         _repository.TriggerSteps.Set(_triggerStepData, _triggerStepData.Id, true);
     }
 
     internal override QuestStepData GetData()

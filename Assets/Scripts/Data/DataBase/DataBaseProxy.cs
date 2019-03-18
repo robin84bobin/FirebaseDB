@@ -9,7 +9,7 @@ namespace Data.DataBase
     public interface IDataBaseProxy
     {
         /// <summary>
-        /// initialize connection to db etc.
+        /// connect to db etc.
         /// </summary>
         void Init();
 
@@ -54,7 +54,7 @@ namespace Data.DataBase
 
     }
 
-    public static class DataBaseProxy
+ /*   public static class DataBaseProxy
     {
         private static IDataBaseProxy _instance;
 
@@ -71,23 +71,11 @@ namespace Data.DataBase
         {
             var dbProxy = new FireBaseDbProxy();
             
-            GlobalEvents.OnBackup.Subscribe(DoBackup);
+            
             return dbProxy;
         }
 
-        private static void DoBackup(string json)
-        {
-            if (string.IsNullOrEmpty(json)) 
-                return;
-            
-            Debug.Log(json);
-
-            var filePath = Application.streamingAssetsPath + "/backup.json";
-            StreamWriter writer = File.CreateText(filePath);
-            writer.Write(json.ToCharArray());
-            writer.Close();
-        }
-    }
+    }*/
 }
 
 

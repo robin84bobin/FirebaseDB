@@ -5,6 +5,8 @@
 /// </summary>
 public class UserQuestStepData : DataItem
 {
+    [Zenject.Inject] private Repository _repository;
+    
     /// <summary>
     /// Quest step id
     /// </summary>
@@ -35,9 +37,9 @@ public class UserQuestStepData : DataItem
 
     public QuestMessageData GetQuestStep()
     {
-        var step = Data.Repository.Steps[questStepId];
+        var step = _repository.Steps[questStepId];
         if (step.stepType == QuestStepType.MESSAGE)
-            return Data.Repository.MessageSteps[step.typeId];
+            return _repository.MessageSteps[step.typeId];
         return null;
     }
 }

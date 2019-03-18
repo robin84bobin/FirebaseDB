@@ -24,6 +24,8 @@ public class CreateQuestMenu : BaseWindow {
     [SerializeField] private Dropdown _typeDropdown;
     [SerializeField] private InputField _inputField;
 
+    [Zenject.Inject] private Repository _repository;
+    
     CreateQuestMenuParams parameters;
 
     private string _newId;
@@ -83,7 +85,7 @@ public class CreateQuestMenu : BaseWindow {
             return;
         }
 
-        if (Data.Repository.Steps.Exists(_newId))
+        if (_repository.Steps.Exists(_newId))
         {
             _errorText.text = "id is already exists!";
             return;

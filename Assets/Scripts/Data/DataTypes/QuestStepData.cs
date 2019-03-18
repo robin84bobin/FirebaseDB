@@ -1,11 +1,12 @@
-﻿using System;
-using InternalNewtonsoft.Json;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Data.DataTypes
 {
     public class QuestStepData : DataItem
     {
+        [Zenject.Inject] private Repository _repository;
+
+
         /// <summary>
         /// Type of step. Collection name in dataBase
         /// </summary>
@@ -18,22 +19,19 @@ namespace Data.DataTypes
 
         private int _savedBytes;
 
-
-
-
         public void Save(DataItem relatedData = null)
         {
-            Repository.Steps.Set(this, Id, true, delegate(QuestStepData item)
+            _repository.Steps.Set(this, Id, true, delegate(QuestStepData item)
             {
                 switch (item.stepType)
                 {
                     case Collections.MESSAGE:
                         var messageData = relatedData as QuestMessageData ?? new QuestMessageData {Id = item.typeId};
-                        Repository.MessageSteps.Set(messageData, messageData.Id, true);
+                        _repository.MessageSteps.Set(messageData, messageData.Id, true);
                         break;
                     case Collections.TRIGGER:
                         var triggerData = relatedData as QuestTriggerStepData?? new QuestTriggerStepData {Id = item.typeId};
-                        Repository.TriggerSteps.Set(triggerData, triggerData.Id, true);
+                        _repository.TriggerSteps.Set(triggerData, triggerData.Id, true);
                         break;
                     default:
                         Debug.LogError(this + " Save(): unknown type: " + item.stepType);

@@ -1,8 +1,10 @@
 using System;
+using System.Runtime.InteropServices;
 using Assets.Scripts.UI.Windows;
 using Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Commands.Startup
 {
@@ -23,10 +25,18 @@ namespace Commands.Startup
     
     public class InitDataCommand : Command
     {
+        private Repository _repository;
+
+        [Inject]
+        public InitDataCommand(Repository repository = null)
+        {
+            _repository = repository;
+        }
+        
         public override void Execute()
         {
-            Repository.OnInitComplete += OnInitComplete;
-            Repository.Init();
+            _repository.OnInitComplete += OnInitComplete;
+            _repository.Init();
         }
 
         private void OnInitComplete()

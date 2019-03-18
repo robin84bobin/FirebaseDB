@@ -11,6 +11,8 @@ namespace UI.Windows.QuestEditorWindow.Components
 {
     public class QuestDropdown : MonoBehaviour {
 
+        [Zenject.Inject] private Repository _repository;
+        
         public event Action<string> GotoStep = delegate { };
 
         public const string NONE = "None";
@@ -104,7 +106,7 @@ namespace UI.Windows.QuestEditorWindow.Components
         private void UpdateQuestList(bool keepSelected = true)
         {
             //get _messageViewData
-            List<QuestStepData> items = Data.Repository.Steps.GetAll();
+            List<QuestStepData> items =  _repository.Steps.GetAll();
         
             //create option list
             List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();

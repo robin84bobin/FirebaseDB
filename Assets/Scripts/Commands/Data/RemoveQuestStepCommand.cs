@@ -9,6 +9,7 @@ namespace Commands.Data
 
     public class RemoveQuestStepCommand : Command 
     {
+        [Zenject.Inject] private Repository _repository;
         private readonly QuestStepData _data;
 
         public RemoveQuestStepCommand(QuestStepData data)
@@ -21,7 +22,7 @@ namespace Commands.Data
             System.Action<string> callback = delegate { }; 
             callback += RemoveRelatedData;
             callback += GlobalEvents.OnRemoveStorageItem.Publish;
-            global::Data.Repository.Steps.Remove(_data.Id, true, RemoveRelatedData);
+             _repository.Steps.Remove(_data.Id, true, RemoveRelatedData);
         }
 
         void RemoveRelatedData(string id)
@@ -29,10 +30,10 @@ namespace Commands.Data
             switch (_data.stepType)
             {
                 case Collections.MESSAGE:
-                    global::Data.Repository.MessageSteps.Remove(_data.typeId, true, OnRemoved);
+                     _repository.MessageSteps.Remove(_data.typeId, true, OnRemoved);
                     break;
                 case Collections.TRIGGER:
-                    global::Data.Repository.TriggerSteps.Remove(_data.typeId, true , OnRemoved);
+                     _repository.TriggerSteps.Remove(_data.typeId, true , OnRemoved);
                     break;
                 default:
                     Debug.LogError(this + " Remove(): unknown type: " + _data.stepType);

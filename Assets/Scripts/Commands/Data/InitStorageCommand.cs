@@ -2,12 +2,14 @@
 using Data;
 using Data.DataBase;
 using UnityEngine;
+using Zenject;
 
 namespace Commands.Data
 {
 
     public class InitStorageCommand<T> : Command where T : DataItem, new()
     {
+        [Inject] private IDataBaseProxy _dataBase;
         private DataStorage<T> _storage;
 
         public InitStorageCommand(DataStorage<T> storage)
@@ -18,7 +20,7 @@ namespace Commands.Data
         public override void Execute()
         {
             Debug.Log(this + " --> " + _storage.CollectionName);
-            DataBaseProxy.Instance.Get<T>(_storage.CollectionName, OnGetData);
+            _dataBase.Get<T>(_storage.CollectionName, OnGetData);
         }
 
         private void OnGetData(Dictionary<string, T> items)

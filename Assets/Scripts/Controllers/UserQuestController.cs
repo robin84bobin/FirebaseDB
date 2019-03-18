@@ -11,6 +11,9 @@ namespace Controllers
     /// </summary>
     public static class UserQuestController
     {
+        [Zenject.Inject] private static Repository _repository;
+        
+        
         public static string activeStepId { get; private set; }
 
         public static event Action<UserQuestStepData> OnStepComplete = delegate { };
@@ -20,26 +23,26 @@ namespace Controllers
 
         public static void Init()
         {
-            _userStepStorage = Data.Repository.UserSteps;
+            _userStepStorage = _repository.UserSteps;
         }
 
         public static void GoToStep(string questId, string state = UserQuestState.ACTIVE, int variantId = -1)
         {
-            var step = Data.Repository.Steps[questId];
+            var step = _repository.Steps[questId];
 
             if (step == null)
                 return;
 
             if (step.stepType == QuestStepType.TRIGGER)
             {
-                QuestTriggerStepData questTriggerStepStep = Data.Repository.TriggerSteps[step.typeId];
+                QuestTriggerStepData questTriggerStepStep = _repository.TriggerSteps[step.typeId];
                 CheckTrigger(questTriggerStepStep);
                 return;
             }
 
             if (step.stepType == QuestStepType.MESSAGE)
             {
-                QuestMessageData messageStep = Data.Repository.MessageSteps[step.typeId];
+                QuestMessageData messageStep = _repository.MessageSteps[step.typeId];
                 UserQuestStepData userStep = new UserQuestStepData();
                 userStep.questStepId = questId;
                 userStep.state = state;
@@ -49,7 +52,7 @@ namespace Controllers
                 if (variantId > 0)
                     CompleteStep(questId, variantId);
 
-                Data.Repository.UserSteps.Set(userStep, questId);
+                _repository.UserSteps.Set(userStep, questId);
             }
         
         }
@@ -63,10 +66,10 @@ namespace Controllers
                 return;
             }
 
-            QuestStepData questQuestStepData = Data.Repository.Steps[questId];
+            QuestStepData questQuestStepData = _repository.Steps[questId];
             if (questQuestStepData.stepType == QuestStepType.MESSAGE)
             {
-                QuestMessageData messageStep = Data.Repository.MessageSteps[questQuestStepData.typeId];
+                QuestMessageData messageStep = _repository.MessageSteps[questQuestStepData.typeId];
                 if (variantId < messageStep.variants.Length)
                 {
                     QuestVariantData variant = messageStep.variants[variantId];
@@ -134,8 +137,8 @@ namespace Controllers
             msg.text = text;
             msg.isUserMsg = isUserMsg;
             msg.parentQuestStepId = parentQuestStepId;
-
-            Data.Repository.UserMessageHistory.Set(msg);
+            
+            _repository.UserMessageHistory.Set(msg);
             GlobalEvents.OnMessageNew.Publish(msg);
         }
     }
