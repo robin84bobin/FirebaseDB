@@ -11,6 +11,7 @@ public class AppStarter
 {
     public static event Action InitComplete = delegate { };
 
+    [Inject] private InitDataCommand _initDataCommand;
     
     public void Start()
     {
@@ -18,7 +19,7 @@ public class AppStarter
         CommandSequence startupCommands = new CommandSequence(
             new InitPreloaderCommand(),
             new ValidateApkCommand(), 
-            new InitDataCommand(),
+            _initDataCommand,
             new InitUserDataCommand()
             
         );

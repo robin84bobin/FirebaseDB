@@ -25,14 +25,8 @@ namespace Commands.Startup
     
     public class InitDataCommand : Command
     {
-        private Repository _repository;
+        [Inject] private Repository _repository;
 
-        [Inject]
-        public InitDataCommand(Repository repository = null)
-        {
-            _repository = repository;
-        }
-        
         public override void Execute()
         {
             _repository.OnInitComplete += OnInitComplete;

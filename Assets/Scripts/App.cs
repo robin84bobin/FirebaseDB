@@ -10,7 +10,7 @@ public class App : MonoBehaviour
 {
     public static WindowManager UI { get; private set; }
 
-    
+    [Inject] private AppStarter _appStarter;
 
     void Start()
     {
@@ -21,10 +21,7 @@ public class App : MonoBehaviour
         if (UI == null) 
             UI = GetComponent<WindowManager>() ?? gameObject.AddComponent<WindowManager>();
         
-        //ProjectContext.Instance.Container.BindInterfacesAndSelfTo<Repository>().AsSingle();
-        //ProjectContext.Instance.Container.Bind<IDataBaseProxy>().To<FireBaseDbProxy>().AsSingle();
-        
-        new AppStarter().Start();
+        _appStarter.Start();
         
     }
 
