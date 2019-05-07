@@ -59,6 +59,8 @@ namespace UI.Windows.QuestEditorWindow.Components
 
             GlobalEvents.OnAddStorageItem.Subscribe(OnAddItem);
             GlobalEvents.OnRemoveStorageItem.Subscribe(OnRemoveItem);
+            
+            Resources.LoadAsync<>()
         }
 
         private void OnRemoveItem(string id)

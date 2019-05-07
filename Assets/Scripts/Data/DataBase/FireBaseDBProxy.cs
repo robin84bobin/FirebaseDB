@@ -131,7 +131,7 @@ namespace Data.DataBase
                 item.Id = id;
             var jString = JsonConvert.SerializeObject(item);
             
-            //TODO. Почитать возможно надо использовать Push() или Transaction? 
+            //TODO. Возможно надо использовать Push() или Transaction? 
             
                        
             DbRoot.Child(collection).Child(item.Id).SetRawJsonValueAsync(jString).ContinueWith(

@@ -13,7 +13,8 @@ namespace Data
 {
     public class Repository : IRepository
     {
-        [Inject] private IDataBaseProxy _dataBase;
+        // 
+        private IDataBaseProxy _dataBase;
         
         public DataStorage<UserQuestStepData> UserSteps;
         public DataStorage<MessageViewData> UserMessageHistory;
@@ -27,8 +28,9 @@ namespace Data
         private List<Command> _initStoragesCommands;
 
         
-        public Repository()
+        public Repository(IDataBaseProxy dataBase)
         {
+            _dataBase = dataBase;
             _initStoragesCommands = new List<Command>();
             GlobalEvents.OnBackup.Subscribe(DoBackup);
         }
@@ -88,6 +90,11 @@ namespace Data
             StreamWriter writer = File.CreateText(filePath);
             writer.Write(json.ToCharArray());
             writer.Close();
+        }
+
+        public void Tick()
+        {
+            Debug.Log(this + " : Tick : " + Time.time);
         }
     }
 

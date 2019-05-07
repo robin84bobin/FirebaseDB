@@ -10,7 +10,13 @@ public class App : MonoBehaviour
 {
     public static WindowManager UI { get; private set; }
 
-    [Inject] private AppStarter _appStarter;
+    private AppStarter _appStarter;
+
+    [Inject] 
+    void Construct(AppStarter appStarter)
+    {
+        _appStarter = appStarter;
+    }
 
     void Start()
     {

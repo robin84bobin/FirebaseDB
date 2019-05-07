@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
 using Assets.Scripts.UI.Windows;
 using Data;
 using UnityEngine;
@@ -37,5 +35,6 @@ namespace Commands.Startup
         {
             Complete();
         }
+
     }
 }

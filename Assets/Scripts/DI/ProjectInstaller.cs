@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Commands.Startup;
 using Data;
 using Data.DataBase;
@@ -9,10 +10,17 @@ namespace DI
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<Repository>().AsSingle();
             Container.BindInterfacesAndSelfTo<AppStarter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Repository>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TestClass>().AsSingle();
             Container.BindInterfacesAndSelfTo<InitDataCommand>().AsTransient();
             Container.Bind<IDataBaseProxy>().To<FireBaseDbProxy>().AsSingle();
+
+            Container.DeclareSignal<TestSignal>();
         }
+    }
+
+    public class TestSignal 
+    {
     }
 }

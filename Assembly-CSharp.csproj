@@ -205,6 +205,7 @@
     <Compile Include="Assets\Scripts\Global\GlobalEvents.cs" />
     <Compile Include="Assets\Scripts\Helper.cs" />
     <Compile Include="Assets\Scripts\Model\QuestStep.cs" />
+    <Compile Include="Assets\Scripts\TestClass.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItem.cs" />
     <Compile Include="Assets\Scripts\UI\BaseScrollItemsContainer.cs" />
     <Compile Include="Assets\Scripts\UI\MessageView.cs" />
